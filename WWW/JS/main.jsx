@@ -9,6 +9,12 @@ window.SetConfig = (e) => {
 }
 
 function UploadConfig() {
+
+    if (Config.Location == -1) {
+        //Config Hasn't Loaded Yet
+        return;
+    }
+
     var ev = new CustomEvent("uploadConfig");
     ev.newConfig = JSON.stringify(Config);
     document.body.dispatchEvent(ev);
