@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>SamsidParty_TopNotify</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>WWW\Image\Icon.ico</ApplicationIcon>
+    <ApplicationManifest>WWW\Meta\manifest.xml</ApplicationManifest>
+    <PackageId>TopNotify</PackageId>
+    <AssemblyName>TopNotify</AssemblyName>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Users\SamarthCat\Documents\Certificates\SamsidParty Private.pfx</AssemblyOriginatorKeyFile>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <UseWindowsForms>True</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="WWW\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="WebFramework">
+      <HintPath>Z:\Programming Stuff\WebFramework\WebFramework\bin\Release\net6.0\WebFramework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

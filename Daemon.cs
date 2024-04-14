@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Windows.Forms;
+
+namespace SamsidParty_TopNotify
+{
+    public class Daemon
+    {
+        public InterceptorManager Manager;
+
+        public Daemon() {
+            SetupTrayIcon();
+            Thread managerThread = new Thread(CreateManager);
+            managerThread.Start();
+        }
+
+        public void SetupTrayIcon()
+        {
+            //Use WinForms Methods To Create A Tray Icon
+            NotifyIcon notify = new NotifyIcon();
+            notify.Visible = true;
+            notify.Icon = Util.FindAppIcon();
+            notify.Text = "SamsidParty Top Notify";
+            notify.DoubleClick += new EventHandler(LaunchSettingsMode);
+            notify.ContextMenuStrip = new ContextMenuStrip();
+            notify.ContextMenuStrip.Items.Add("Quit TopNotify");
+            notify.ContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(Quit);
+        }
+
+        public void Quit(object Sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        public void LaunchSettingsMode(object Sender, EventArgs e)
+        {
+            var exe = System.Environment.ProcessPath;
+            var psi = new ProcessStartInfo(exe, "--settings");
+            Process.Start(psi);
+        }
+
+        public void CreateManager()
+        {
+            Manager = new InterceptorManager();
+            Manager.Start();
+        }
+
+        public void MainLoop()
+        {
+            Application.Run();
+        }
+    }
+}
