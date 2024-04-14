@@ -40,6 +40,12 @@ namespace SamsidParty_TopNotify
         public override void Start()
         {
             base.Start();
+            Reflow();
+        }
+
+        public override void Reflow()
+        {
+            base.Reflow();
             hwnd = FindWindow("Windows.UI.Core.CoreWindow", "New notification");
             MainDisplayWidth = Screen.PrimaryScreen.Bounds.Width;
             MainDisplayHeight = Screen.PrimaryScreen.Bounds.Height;

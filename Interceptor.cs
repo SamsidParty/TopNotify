@@ -11,6 +11,12 @@ namespace SamsidParty_TopNotify
         public Settings Settings { get { return InterceptorManager.Instance.CurrentSettings; } }
           
 
+        //Run Often Just To Rediscover Windows/Configs And Such
+        public virtual void Reflow()
+        {
+
+        }
+
         public virtual void Start()
         {
             

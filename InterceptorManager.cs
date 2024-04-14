@@ -13,6 +13,9 @@ namespace SamsidParty_TopNotify
         public static InterceptorManager Instance;
         public List<Interceptor> Interceptors = new();
         public Settings CurrentSettings;
+        public int TimeSinceReflow = 0;
+
+        public const int ReflowTimeout = 50;
 
         public void Start()
         {
@@ -39,11 +42,24 @@ namespace SamsidParty_TopNotify
         {
             while (true)
             {
-                Thread.Sleep(10);
+                TimeSinceReflow++;
+
+                if (TimeSinceReflow > ReflowTimeout)
+                {
+                    TimeSinceReflow = 0;
+
+                    foreach (Interceptor i in Interceptors)
+                    {
+                        i.Reflow();
+                    }
+                }
+
                 foreach (Interceptor i in Interceptors)
                 {
                     i.Update();
                 }
+
+                Thread.Sleep(10);
             }
         }
 
