@@ -24,6 +24,7 @@ public class Program
         {
             if (Settings.Get().EnableDebugNotifications)
             {
+                Console.WriteLine("Started Settings GUI");
                 NotificationTester.Toast("Debug Notification", "Started Settings GUI");
             }
 

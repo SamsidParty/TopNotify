@@ -18,6 +18,7 @@ namespace SamsidParty_TopNotify
 
             if (Settings.Get().EnableDebugNotifications)
             {
+                Console.WriteLine("Interceptor Daemon Started");
                 NotificationTester.Toast("Debug Notification", "Interceptor Daemon Started");
             }
 
@@ -50,7 +51,15 @@ namespace SamsidParty_TopNotify
             {
                 var exe = Util.FindExe();
                 var psi = new ProcessStartInfo(exe, "--settings");
-                Process.Start(psi);
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardError = true;
+                psi.UseShellExecute = false;
+                var proc = Process.Start(psi);
+                proc.OutputDataReceived += (sender, e) => { Util.Log(e.Data); };
+                proc.ErrorDataReceived += (sender, e) => { Util.LogError(new Exception(e.Data)); };
+                proc.BeginOutputReadLine();
+                proc.BeginErrorReadLine();
+                proc.WaitForExit(10000);
             }
             catch (Exception ex)
             {
