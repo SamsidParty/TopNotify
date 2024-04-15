@@ -15,6 +15,12 @@ namespace SamsidParty_TopNotify
         public InterceptorManager Manager;
 
         public Daemon() {
+
+            if (Settings.Get().EnableDebugNotifications)
+            {
+                NotificationTester.Toast("Debug Notification", "Interceptor Daemon Started");
+            }
+
             SetupTrayIcon();
             Thread managerThread = new Thread(CreateManager);
             managerThread.Start();
@@ -40,7 +46,7 @@ namespace SamsidParty_TopNotify
 
         public void LaunchSettingsMode(object Sender, EventArgs e)
         {
-            var exe = System.Environment.ProcessPath;
+            var exe = Util.FindExe();
             var psi = new ProcessStartInfo(exe, "--settings");
             Process.Start(psi);
         }

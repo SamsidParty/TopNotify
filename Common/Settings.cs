@@ -13,7 +13,7 @@ namespace SamsidParty_TopNotify
     {
         public NotifyLocation Location = NotifyLocation.TopRight;
         public bool RunOnStartup = true;
-
+        public bool EnableDebugNotifications = false;
 
         public static Settings Get()
         {

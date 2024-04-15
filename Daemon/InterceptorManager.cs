@@ -25,7 +25,7 @@ namespace SamsidParty_TopNotify
             FileSystemWatcher watcher = new FileSystemWatcher();
             watcher.Path = Path.GetDirectoryName(Settings.GetFilePath());
             watcher.NotifyFilter = NotifyFilters.LastWrite;
-            watcher.Filter = "*";
+            watcher.Filter = "*.json";
             watcher.Changed += new FileSystemEventHandler(OnSettingsChanged);
             watcher.EnableRaisingEvents = true;
 

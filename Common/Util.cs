@@ -40,5 +40,10 @@ namespace SamsidParty_TopNotify
             return new Icon(path);
         }
 
+        public static string FindExe()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotify.exe");
+        }
+
     }
 }
