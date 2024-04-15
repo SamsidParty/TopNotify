@@ -48,6 +48,7 @@ namespace SamsidParty_TopNotify
 
         public static void Log(string text)
         {
+            Console.WriteLine(text);
             File.AppendAllLines(Settings.GetLogPath(), new String[] { "[" + DateTime.Now.ToString() + "] " + text });
         }
 

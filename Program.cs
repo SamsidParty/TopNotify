@@ -20,6 +20,9 @@ public class Program
         //Settings Mode Shows A GUI That Can Be Used To Configure The App
         //These Mode Switches Ensure All Functions Of The App Use The Same Executable
 
+        Util.Log("Working Directory: " + Environment.CurrentDirectory);
+        Util.Log("Base Directory: " + AppDomain.CurrentDomain.BaseDirectory);
+
         if (args.Contains("--settings"))
         {
             if (Settings.Get().EnableDebugNotifications)
@@ -47,6 +50,7 @@ public class Program
 
         //Change Color Based On Theme (light, dark)
         TitlebarColor = new ThemeBasedColor(Color.FromArgb(255, 255, 255), Color.FromArgb(22, 22, 22));
+
 
         WindowManager.Options = new WindowOptions() {
             TitlebarColor = TitlebarColor,
