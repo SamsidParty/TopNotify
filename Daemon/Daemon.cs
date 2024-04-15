@@ -41,6 +41,21 @@ namespace SamsidParty_TopNotify
 
         public void Quit(object Sender, EventArgs e)
         {
+            //Kill Other Instances
+            var instances = Process.GetProcessesByName("TopNotify");
+            foreach (var instance in instances)
+            {
+                if (instance.Id != Process.GetCurrentProcess().Id)
+                {
+                    try
+                    {
+                        instance.Kill();
+                    }
+                    catch { }
+                }
+            }
+           
+
             Environment.Exit(0);
         }
 
