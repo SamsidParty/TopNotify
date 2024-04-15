@@ -24,7 +24,7 @@ public class Program
         {
             if (Settings.Get().EnableDebugNotifications)
             {
-                NotificationTester.Toast("Debug Notification", "Attempted To Start Settings GUI");
+                NotificationTester.Toast("Debug Notification", "Started Settings GUI");
             }
 
             AppManager.Validate(args);

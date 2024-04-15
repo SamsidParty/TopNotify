@@ -40,6 +40,22 @@ namespace SamsidParty_TopNotify
             return settingsFile;
         }
 
+        public static string GetLogPath()
+        {
+            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var appFolder = Path.Combine(localAppData, "SamsidParty", "TopNotify");
+            if (!Directory.Exists(appFolder))
+            {
+                Directory.CreateDirectory(appFolder);
+            }
+            var logFile = Path.Combine(appFolder, "Log.txt");
+            if (!File.Exists(logFile))
+            {
+                File.WriteAllText(logFile, "[Start Of Log File]\n");
+            }
+            return logFile;
+        }
+
         public static void Validate(Settings settings)
         {
             if (settings.RunOnStartup)

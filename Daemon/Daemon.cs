@@ -46,9 +46,16 @@ namespace SamsidParty_TopNotify
 
         public void LaunchSettingsMode(object Sender, EventArgs e)
         {
-            var exe = Util.FindExe();
-            var psi = new ProcessStartInfo(exe, "--settings");
-            Process.Start(psi);
+            try
+            {
+                var exe = Util.FindExe();
+                var psi = new ProcessStartInfo(exe, "--settings");
+                Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                Util.LogError(ex);
+            }
         }
 
         public void CreateManager()
