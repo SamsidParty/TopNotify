@@ -49,7 +49,7 @@ public class Program
         //DevTools.HotReload("C:\\Users\\SamarthCat\\Documents\\Programming Stuff\\TopNotify\\TopNotify IV\\WWW");
 
         //Change Color Based On Theme (light, dark)
-        TitlebarColor = new ThemeBasedColor(Color.FromArgb(255, 255, 255), Color.FromArgb(22, 22, 22));
+        TitlebarColor = new ThemeBasedColor(Color.FromArgb(255, 255, 255), Color.FromArgb(34, 34, 34));
 
 
         WindowManager.Options = new WindowOptions() {
