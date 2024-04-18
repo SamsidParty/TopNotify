@@ -109,7 +109,7 @@ h2 {
     font-size: 30px;
 }
 
-button {
+.buttonContainer button {
     font-weight: 550 !important;
     border-radius: 3px !important;
     background-color: var(--col-primary) !important;

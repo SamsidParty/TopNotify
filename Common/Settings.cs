@@ -13,7 +13,12 @@ namespace SamsidParty_TopNotify
     {
         public NotifyLocation Location = NotifyLocation.TopRight;
         public bool RunOnStartup = true;
+        public bool EnableClickThrough = false; // Not Available Yet
         public bool EnableDebugNotifications = false;
+
+
+        // From 0 To 5 (0 Is Fully Opaque, 5 Is Mostly Transparent)
+        public byte Opacity = 0;
 
         public static Settings Get()
         {

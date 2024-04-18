@@ -1,12 +1,21 @@
 var Config = {
     Location: -1,
-    RunOnStartup: true
+    RunOnStartup: true,
+    Opacity: 0
 }
 
 window.SetConfig = (e) => {
     Config = JSON.parse(e);
     window.setRerender(Math.random());
 }
+
+const lightTheme = NextUI.createTheme({
+    type: 'light'
+})
+  
+const darkTheme = NextUI.createTheme({
+    type: 'dark'
+})
 
 function UploadConfig() {
 
@@ -27,7 +36,7 @@ function App() {
     window.setRerender = setRerender;
 
     return (
-        <NextUI.NextUIProvider>
+        <NextUI.NextUIProvider theme={(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? darkTheme : lightTheme}>
             <h2>Settings</h2>
 
             <NextUI.Spacer></NextUI.Spacer>
@@ -41,7 +50,7 @@ function App() {
 
             <div className="divider"></div>
 
-            <div className="flexx facenter fillx gap20">
+            <div className="flexx facenter fillx gap20 buttonContainer">
                 <label>Spawn Test Notification</label>
                 <Button css={{ marginLeft: "auto" }} className="iconButton" auto onPress={SpawnTestNotification}>
                     &#xea99;
@@ -56,6 +65,14 @@ function App() {
                     &#xea99;
                 </Switch>
             </div>
+
+            <div className="divider"></div>
+
+            <div className="flexy fillx gap20">
+                <label>Notification Opacity</label>
+                <NextUI.Pagination onChange={ChangeOpacity} page={6 - Config.Opacity} rounded onlyDots total={6} />
+            </div>
+
         </NextUI.NextUIProvider>
     )
 }
@@ -66,6 +83,12 @@ function SpawnTestNotification() {
 
 function ChangeLocation(location) {
     Config.Location = location;
+    UploadConfig();
+    window.setRerender(Math.random());
+}
+
+function ChangeOpacity(opacity) {
+    Config.Opacity = (6 - opacity);
     UploadConfig();
     window.setRerender(Math.random());
 }

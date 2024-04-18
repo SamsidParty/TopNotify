@@ -66,6 +66,12 @@ namespace SamsidParty_TopNotify
         public void OnSettingsChanged(object sender, EventArgs e)
         {
             CurrentSettings = Settings.Get();
+
+            foreach (Interceptor i in Interceptors)
+            {
+                i.Restart();
+                i.Reflow();
+            }
         }
     }
 }
