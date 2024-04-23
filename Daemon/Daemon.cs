@@ -65,8 +65,6 @@ namespace SamsidParty_TopNotify
             {
                 var exe = Util.FindExe();
                 var psi = new ProcessStartInfo(exe, "--settings");
-                psi.RedirectStandardOutput = true;
-                psi.RedirectStandardError = true;
                 psi.UseShellExecute = false;
                 psi.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 var proc = Process.Start(psi);

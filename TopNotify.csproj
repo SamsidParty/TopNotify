@@ -47,6 +47,9 @@
     <Reference Include="WebFramework">
       <HintPath>Z:\Programming Stuff\WebFramework\WebFramework\bin\Release\net6.0\WebFramework.dll</HintPath>
     </Reference>
+    <Reference Include="WebFramework.PT">
+      <HintPath>WebFramework.PT.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

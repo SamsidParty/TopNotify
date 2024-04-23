@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using WebFramework;
 using SamsidParty_TopNotify;
+using WebFramework.PT;
 
 public class Program
 {
@@ -31,6 +32,7 @@ public class Program
                 NotificationTester.Toast("Debug Notification", "Started Settings GUI");
             }
 
+            PTWindowProvider.Activate();
             AppManager.Validate(args);
             App();
         }
