@@ -18,12 +18,20 @@ namespace SamsidParty_TopNotify
         {
             var ci = CultureInfo.CurrentUICulture;
 
-            //Currently Only Supports French
+            //Currently Only A Handful Of Lanugages
             //Open An Issue To Request A Language
             //ISO 639-1 Format
             if (ci.TwoLetterISOLanguageName.ToUpper() == "FR")
             {
                 return "Nouvelle notification";
+            }            
+            else if (ci.TwoLetterISOLanguageName.ToUpper() == "PL")
+            {
+                return "Nowe powiadomienie";
+            }            
+            else if (ci.TwoLetterISOLanguageName.ToUpper() == "ES")
+            {
+                return "Notificación nueva";
             }
 
             return "New notification";
