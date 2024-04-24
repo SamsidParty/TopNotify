@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WebFramework.Backend;
 
 namespace SamsidParty_TopNotify
 {
@@ -33,11 +34,25 @@ namespace SamsidParty_TopNotify
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder strText, int maxCount);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextLength(IntPtr hWnd);
+
         const UInt32 WM_CLOSE = 0x0010;
         const short SWP_NOMOVE = 0X2;
         const short SWP_NOSIZE = 1;
         const short SWP_NOZORDER = 0X4;
         const int SWP_SHOWWINDOW = 0x0040;
+
+        [DllImport("IVPluginTopNotify.dll")]
+        private static extern bool Gui_RealEnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+
+        public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         #endregion
 
@@ -57,6 +72,27 @@ namespace SamsidParty_TopNotify
             base.Restart();
         }
 
+        // Modified From https://stackoverflow.com/a/20276701/18071273
+        public static IEnumerable<IntPtr> FindCoreWindows()
+        {
+            IntPtr found = IntPtr.Zero;
+            List<IntPtr> windows = new List<IntPtr>();
+
+            Gui_RealEnumWindows(delegate (IntPtr hwnd, IntPtr param)
+            {
+                var classGet = new StringBuilder(1024);
+                GetClassName(hwnd, classGet, classGet.Capacity);
+                if (classGet.ToString() == "Windows.UI.Core.CoreWindow")
+                {
+                    windows.Add(hwnd);
+                }
+
+                return true;
+            }, IntPtr.Zero);
+
+            return windows;
+        }
+
         public override void Reflow()
         {
             base.Reflow();
@@ -69,6 +105,25 @@ namespace SamsidParty_TopNotify
                 ScaleFactor = 1f;
                 WindowOpacity.ApplyToWindow(hwnd);
                 WindowClickThrough.ApplyToWindow(hwnd);
+
+                Update();
+
+                //The Notification Isn't In A Supported Language
+                if (hwnd == IntPtr.Zero)
+                {
+                    //The Notification Window Is The Only One That Is 396 x 152
+                    foreach (var win in FindCoreWindows())
+                    {
+                        Rectangle rect = new Rectangle();
+                        GetWindowRect(win, ref rect);
+
+                        if ((MainDisplayWidth - rect.X) == 396)
+                        {
+                            hwnd = win;
+                        }
+                    }
+                }
+
             }
             catch { }
         }
