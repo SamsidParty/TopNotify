@@ -19,6 +19,8 @@ Currently Supported Languages Are As Follows (Only For The Interceptor, The UI R
 
 - English
 - French
+- Polski
+- Spanish
 
 # Installation
 
