@@ -70,7 +70,7 @@ function App() {
 
             <div className="flexy fillx gap20">
                 <label>Notification Opacity</label>
-                <NextUI.Pagination onChange={ChangeOpacity} page={6 - Config.Opacity} rounded onlyDots total={6} />
+                <NextUI.Pagination onChange={ChangeOpacity} page={Math.round(6 - Config.Opacity)} rounded onlyDots total={6} />
             </div>
 
         </NextUI.NextUIProvider>
