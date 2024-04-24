@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -63,8 +64,8 @@ namespace SamsidParty_TopNotify
             try
             {
                 hwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.GetNotificationName());
-                MainDisplayWidth = Screen.PrimaryScreen.Bounds.Width;
-                MainDisplayHeight = Screen.PrimaryScreen.Bounds.Height;
+                MainDisplayWidth = TrayIcon.Screen.Bounds.Width;
+                MainDisplayHeight = TrayIcon.Screen.Bounds.Height;
                 ScaleFactor = 1f;
                 WindowOpacity.ApplyToWindow(hwnd);
                 WindowClickThrough.ApplyToWindow(hwnd);

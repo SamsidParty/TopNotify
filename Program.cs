@@ -40,7 +40,6 @@ public class Program
         else
         {
             Background = new Daemon();
-            Background.MainLoop();
         }
 
     }

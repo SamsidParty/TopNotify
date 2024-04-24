@@ -13,7 +13,7 @@
     <SignAssembly>False</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\SamarthCat\Documents\Certificates\SamsidParty Private.pfx</AssemblyOriginatorKeyFile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <UseWindowsForms>True</UseWindowsForms>
+    <UseWindowsForms>False</UseWindowsForms>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -42,6 +42,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.Security.Permissions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace SamsidParty_TopNotify
 {
@@ -21,69 +20,17 @@ namespace SamsidParty_TopNotify
                 NotificationTester.Toast("Debug Notification", "Interceptor Daemon Started");
             }
 
-            SetupTrayIcon();
+            TrayIcon.Setup();
             Thread managerThread = new Thread(CreateManager);
             managerThread.Start();
-        }
 
-        public void SetupTrayIcon()
-        {
-            //Use WinForms Methods To Create A Tray Icon
-            NotifyIcon notify = new NotifyIcon();
-            notify.Visible = true;
-            notify.Icon = Util.FindAppIcon();
-            notify.Text = "SamsidParty Top Notify";
-            notify.DoubleClick += new EventHandler(LaunchSettingsMode);
-            notify.ContextMenuStrip = new ContextMenuStrip();
-            notify.ContextMenuStrip.Items.Add("Quit TopNotify");
-            notify.ContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(Quit);
-        }
-
-        public void Quit(object Sender, EventArgs e)
-        {
-            //Kill Other Instances
-            var instances = Process.GetProcessesByName("TopNotify");
-            foreach (var instance in instances)
-            {
-                if (instance.Id != Process.GetCurrentProcess().Id)
-                {
-                    try
-                    {
-                        instance.Kill();
-                    }
-                    catch { }
-                }
-            }
-           
-
-            Environment.Exit(0);
-        }
-
-        public void LaunchSettingsMode(object Sender, EventArgs e)
-        {
-            try
-            {
-                var exe = Util.FindExe();
-                var psi = new ProcessStartInfo(exe, "--settings");
-                psi.UseShellExecute = false;
-                psi.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                var proc = Process.Start(psi);
-            }
-            catch (Exception ex)
-            {
-                Util.LogError(ex);
-            }
+            TrayIcon.MainLoop();
         }
 
         public void CreateManager()
         {
             Manager = new InterceptorManager();
             Manager.Start();
-        }
-
-        public void MainLoop()
-        {
-            Application.Run();
         }
     }
 }
