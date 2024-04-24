@@ -6,21 +6,9 @@ Move Windows Notifications To The Top Of The Screen
 # Supported Windows Versions
 
 - Windows 11 (All Versions)
-- Windows 10 22H2 (Requires WebView2 Runtime)
+- Windows 10 22H2+ (Requires WebView2 Runtime)
 
 Earlier Versions Of Windows 10 May Work, But Have Not Been Tested And Are Not Officially Supported.
-
-# What If It Doesn't Work?
-
-The Notification Interceptor Code Varies By System Language And Needs To Be Implemented Differently For Each One.
-To Request A Language, Please Open An Issue (Or A Pull Request If You Know What You're Doing) 
-
-Currently Supported Languages Are As Follows (Only For The Interceptor, The UI Remains In English For Now):
-
-- English
-- French
-- Polski
-- Spanish
 
 # Installation
 
