@@ -13,8 +13,10 @@ Earlier Versions Of Windows 10 May Work, But Have Not Been Tested And Are Not Of
 # What If It Doesn't Work?
 
 The Notification Interceptor Code Varies By System Language And Needs To Be Implemented Differently For Each One.
-To Request A Language, Please Open An Issue (Or A Pull Request If You Know What You're Doing)
+To Request A Language, Please Open An Issue (Or A Pull Request If You Know What You're Doing) 
+
 Currently Supported Languages Are As Follows:
+
 - English
 - French
 
