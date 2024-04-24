@@ -62,7 +62,7 @@ namespace SamsidParty_TopNotify
 
             try
             {
-                hwnd = FindWindow("Windows.UI.Core.CoreWindow", "New notification");
+                hwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.GetNotificationName());
                 MainDisplayWidth = Screen.PrimaryScreen.Bounds.Width;
                 MainDisplayHeight = Screen.PrimaryScreen.Bounds.Height;
                 ScaleFactor = 1f;
