@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Buffers;
 using System.Reflection;
 using SamsidParty_TopNotify;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace SamsidParty_TopNotify
 {
@@ -14,12 +15,10 @@ namespace SamsidParty_TopNotify
     {
         public static void Toast(string title, string content)
         {
-            //Call The NotifyIcon.ShowBalloonTip Method
-            NotifyIcon notify = new NotifyIcon();
-            notify.Visible = true;
-            notify.Icon = Util.FindAppIcon();
-            notify.ShowBalloonTip(1000, title, content, ToolTipIcon.None);
-            notify.Dispose();
+            new ToastContentBuilder()
+                .AddText(title)
+                .AddText(content)
+                .Show();
         }
     }
 }

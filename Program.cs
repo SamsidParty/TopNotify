@@ -4,6 +4,7 @@ using System.Drawing;
 using WebFramework;
 using SamsidParty_TopNotify;
 using WebFramework.PT;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 public class Program
 {
@@ -64,6 +65,9 @@ public class Program
         WebScript.Register<Frontend>("frontend");
 
         await AppManager.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW"), OnReady);
+
+        //Clean Up
+        ToastNotificationManagerCompat.Uninstall();
     }
 
     public static async Task OnReady(WebWindow w)
