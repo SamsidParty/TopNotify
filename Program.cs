@@ -34,7 +34,7 @@ public class Program
             }
 
             PTWindowProvider.Activate();
-            AppManager.Validate(args);
+            AppManager.Validate(args, "SamsidParty", "TopNotify");
             App();
         }
         else
