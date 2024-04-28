@@ -12,12 +12,6 @@ Move Windows Notifications To The Top Of The Screen
 
 Earlier Versions Of Windows 10 May Work, But Have Not Been Tested And Are Not Officially Supported.
 
-# Dynamic Reflow
-
-Dynamic reflow is a system that caches the window handles of the notifications, allowing for reducing CPU usage.
-Instead of finding the window every interception update, it uses the cached one. 
-When the cached handle eventually expires, the reflow system will find a new one and cache that.
-
 # Installation
 
 - Download The Latest Release From The [Releases](https://github.com/SamsidParty/TopNotify/releases) Page
