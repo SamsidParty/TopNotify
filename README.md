@@ -12,6 +12,9 @@ Move Windows Notifications To The Top Of The Screen
 
 Earlier Versions Of Windows 10 May Work, But Have Not Been Tested And Are Not Officially Supported.
 
+# Technical Details
+You can find technical details in [Technical.md](https://github.com/SamsidParty/TopNotify/blob/main/Docs/Technical.md)
+
 # Installation
 
 - Download The Latest Release From The [Releases](https://github.com/SamsidParty/TopNotify/releases) Page
