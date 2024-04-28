@@ -23,7 +23,16 @@ namespace SamsidParty_TopNotify
         public static Settings Get()
         {
             var path = GetFilePath();
-            return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(path));
+
+            var content = "";
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var textReader = new StreamReader(fileStream))
+            {
+                content = textReader.ReadToEnd();
+            }
+
+
+            return JsonConvert.DeserializeObject<Settings>(content);
         }
 
         public static string GetFilePath()
