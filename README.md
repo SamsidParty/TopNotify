@@ -1,6 +1,8 @@
 # TopNotify
 Move Windows Notifications To The Top Of The Screen
 
+![TopNotify Header](/Docs/HeaderDarkOptimized.webp)
+
 ![TopNotify Screenshot](/Docs/Screenshot1.png)
 
 # Supported Windows Versions
