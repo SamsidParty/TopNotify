@@ -47,8 +47,8 @@ public class Program
     public static async Task App()
     {
 
-        //DevTools.Enable();
-        //DevTools.HotReload("C:\\Users\\SamarthCat\\Documents\\Programming Stuff\\TopNotify\\TopNotify\\WWW");
+        DevTools.Enable();
+        DevTools.HotReload("http://127.0.0.1:25631"); // Vite Dev URL
 
         //Change Color Based On Theme (light, dark)
         TitlebarColor = new ThemeBasedColor(Color.FromArgb(255, 255, 255), Color.FromArgb(34, 34, 34));
