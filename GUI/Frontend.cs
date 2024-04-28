@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebFramework;
+using WebFramework.Backend;
 
 namespace SamsidParty_TopNotify
 {
     public class Frontend : WebScript
     {
+        bool isSaving = false;
+
         public override async Task DOMContentLoaded()
         {
             Document.Body.AddEventListener("spawnTestNotification", SpawnTestNotification);
@@ -32,8 +35,20 @@ namespace SamsidParty_TopNotify
         //Write Settings File
         public async void UploadConfig(JSEvent e)
         {
-            File.WriteAllText(Settings.GetFilePath(), e.Data["newConfig"].ToString());
-            Settings.Validate(Settings.Get());
+            isSaving = true;
+            try
+            {
+                File.WriteAllText(Settings.GetFilePath(), e.Data["newConfig"].ToString());
+                Settings.Validate(Settings.Get());
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.ToString());
+            }
+
+            await Task.Delay(100); // Prevent Crashing Daemon From Spamming Button
+
+            isSaving = false;
         }
     }
 }
