@@ -22,6 +22,12 @@ window.SetConfig = (e) => {
     window.setRerender(rerender + 1);
 }
 
+window.isUWP = false;
+window.SetIsUWP = (e) => {
+    console.log("Setting UWP Mode To " + e);
+    window.isUWP = (e == "True" ? true : false);
+}
+
 function UploadConfig() {
 
     if (Config.Location == -1) {
@@ -72,12 +78,19 @@ function App() {
 
             <Divider />
 
-            <div className="flexx facenter fillx gap20">
-                <label>Run On Startup</label>
-                <Switch onChange={(e) => ChangeSwitch("RunOnStartup", e)} isChecked={Config.RunOnStartup} style={{ marginLeft: "auto" }} size='lg' />
-            </div>
-
-            <Divider />
+            {
+                window.isUWP ? //Don't Show Run On Startup Switch On UWP, It's Managed By Windows
+                (<></>) : (
+                    <>
+                        <div className="flexx facenter fillx gap20">
+                            <label>Run On Startup</label>
+                            <Switch onChange={(e) => ChangeSwitch("RunOnStartup", e)} isChecked={Config.RunOnStartup} style={{ marginLeft: "auto" }} size='lg' />
+                        </div>
+        
+                        <Divider />
+                    </>
+                )
+            }
 
             <div className="flexx facenter fillx gap20">
                 <label>Enable Click-Through</label>
