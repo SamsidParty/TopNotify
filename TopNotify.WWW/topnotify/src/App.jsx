@@ -31,6 +31,10 @@ function App() {
     window.rerender = rerender;
     window.setRerender = setRerender;
 
+    //Load Drag Page
+    if (rerender == -1) {
+        window.location.href = "?drag";
+    }
     
     return (
         <div className={'app' + ((rerender > 0) ? " loaded" : "")}>
@@ -91,6 +95,11 @@ function ChangeLocation(location) {
     Config.Location = location;
     UploadConfig();
     window.setRerender(rerender + 1);
+
+    //Open Position Picker Page
+    if (location == 4) {
+        setRerender(-1);
+    }
 }
 
 function ChangeOpacity(opacity) {

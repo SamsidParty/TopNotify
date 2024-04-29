@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import CustomPosition from './CustomPosition.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
 
@@ -36,9 +37,15 @@ if (window.location.hostname != "localhost") {
 }
 
 
+var MainMethod = App;
+
+if (window.location.href.includes("?drag")) {
+    MainMethod = CustomPosition;
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <ChakraProvider>
-        <App />
+        <MainMethod/>
     </ChakraProvider>
 ,
 )

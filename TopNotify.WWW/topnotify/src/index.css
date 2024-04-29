@@ -144,6 +144,16 @@ label {
     font-size: 14px;
 }
 
+.dragMode h2 {
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.dragMode p {
+    font-size: 12px;
+    margin-top: 3px;
+}
+
 .iconButton {
     width: 30px !important;
     min-width: 0px !important;
