@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import * as NextUI from "@nextui-org/react"
-import { Button, Switch } from '@chakra-ui/react'
+import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, } from '@chakra-ui/react'
 
 var Config = {
     Location: -1,
@@ -10,7 +10,7 @@ var Config = {
 
 window.SetConfig = (e) => {
     Config = JSON.parse(e);
-    window.setRerender(Math.random());
+    window.setRerender(rerender + 1);
 }
 
 function UploadConfig() {
@@ -23,12 +23,13 @@ function UploadConfig() {
     var ev = new CustomEvent("uploadConfig");
     ev.newConfig = JSON.stringify(Config);
     document.body.dispatchEvent(ev);
-    window.setRerender(Math.random());
+    window.setRerender(rerender + 1);
 }
 
 function App() {
 
-    var [rerender, setRerender] = useState(Math.random());
+    var [rerender, setRerender] = useState(0);
+    window.rerender = rerender;
     window.setRerender = setRerender;
 
     
@@ -37,17 +38,17 @@ function App() {
             <h2>Settings</h2>
 
             <div className="locationCard">
-                <div className="notifyLocation tl"><Button onClick={() => ChangeLocation(0)} flat auto>{Config.Location == 0 ? "\uea5e" : "\ued27"}</Button></div>
-                <div className="notifyLocation tr"><Button onClick={() => ChangeLocation(1)} flat auto>{Config.Location == 1 ? "\uea5e" : "\ued27"}</Button></div>
-                <div className="notifyLocation bl"><Button onClick={() => ChangeLocation(2)} flat auto>{Config.Location == 2 ? "\uea5e" : "\ued27"}</Button></div>
-                <div className="notifyLocation br"><Button onClick={() => ChangeLocation(3)} flat auto>{Config.Location == 3 ? "\uea5e" : "\ued27"}</Button></div>
+                <div className="notifyLocation tl"><Button onClick={() => ChangeLocation(0)}>{Config.Location == 0 ? "\uea5e" : "\ued27"}</Button></div>
+                <div className="notifyLocation tr"><Button onClick={() => ChangeLocation(1)}>{Config.Location == 1 ? "\uea5e" : "\ued27"}</Button></div>
+                <div className="notifyLocation bl"><Button onClick={() => ChangeLocation(2)}>{Config.Location == 2 ? "\uea5e" : "\ued27"}</Button></div>
+                <div className="notifyLocation br"><Button onClick={() => ChangeLocation(3)}>{Config.Location == 3 ? "\uea5e" : "\ued27"}</Button></div>
             </div>
 
             <div className="divider"></div>
 
             <div className="flexx facenter fillx gap20 buttonContainer">
                 <label>Spawn Test Notification</label>
-                <Button style={{ marginLeft: "auto" }} className="iconButton" auto onClick={SpawnTestNotification}>
+                <Button style={{ marginLeft: "auto" }} className="iconButton" onClick={SpawnTestNotification}>
                     &#xea99;
                 </Button>
             </div>
@@ -62,8 +63,21 @@ function App() {
             <div className="divider"></div>
 
             <div className="flexy fillx gap20">
-                <label>Notification Opacity</label>
-                <NextUI.Pagination onChange={ChangeOpacity} page={Math.round(6 - Config.Opacity)} rounded onlyDots total={6} />
+                <label>Notification Transparency</label>
+                {
+                    //Slider Is In Uncontrolled Mode For Performance Reasons
+                    //So We Need To Wait For The Config To Load Before Setting The Default Value
+                    (rerender == 0) ? 
+                    (<></>) :
+                    (
+                        <Slider onChangeEnd={ChangeOpacity} defaultValue={Config.Opacity * 20}>
+                            <SliderTrack>
+                                <SliderFilledTrack />
+                            </SliderTrack>
+                            <SliderThumb />
+                        </Slider>
+                    )
+                }
             </div>
         </>
     )
@@ -76,19 +90,19 @@ function SpawnTestNotification() {
 function ChangeLocation(location) {
     Config.Location = location;
     UploadConfig();
-    window.setRerender(Math.random());
+    window.setRerender(rerender + 1);
 }
 
 function ChangeOpacity(opacity) {
-    Config.Opacity = (6 - opacity);
+    Config.Opacity = (opacity * 0.05);
     UploadConfig();
-    window.setRerender(Math.random());
+    window.setRerender(rerender + 1);
 }
 
 function ChangeSwitch(key, e) {
     Config[key] = e.target.checked;
     UploadConfig();
-    window.setRerender(Math.random());
+    window.setRerender(rerender + 1);
 }
 
 export default App
