@@ -87,6 +87,7 @@ namespace SamsidParty_TopNotify
 
         public static void CreateStartupShortcut()
         {
+            if (Util.FindExe().Contains("WindowsApps")) { return; } // App Is In An MSIX Container
             RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
             if (rk.GetValue("TopNotify") == null)
@@ -97,6 +98,7 @@ namespace SamsidParty_TopNotify
 
         public static void DeleteStartupShortcut()
         {
+            if (Util.FindExe().Contains("WindowsApps")) { return; } // App Is In An MSIX Container
             RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
             if (rk.GetValue("TopNotify") != null)
