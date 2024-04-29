@@ -6,6 +6,15 @@ import './index.css'
 
 window.serverURL = "http://" + window.location.host + "/";
 
+//Chakra UI Color Mode
+var defaultTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
+localStorage.setItem("chakra-ui-color-mode", defaultTheme);
+document.documentElement.setAttribute("data-theme", defaultTheme);
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    location.reload();
+});
+
 //For UWP
 if (navigator.gamepadInputEmulation) {
     navigator.gamepadInputEmulation = "gamepad";
