@@ -109,6 +109,8 @@ h2 {
     margin: 0 !important;
     line-height: 40px;
     font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.05em;
 }
 
 .buttonContainer button {

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import * as NextUI from "@nextui-org/react"
 import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, } from '@chakra-ui/react'
 
 var Config = {
