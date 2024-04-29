@@ -36,13 +36,11 @@ function App() {
         <>
             <h2>Settings</h2>
 
-            <NextUI.Spacer></NextUI.Spacer>
-
             <div className="locationCard">
-                <div className="notifyLocation tl"><NextUI.Button onPress={() => ChangeLocation(0)} flat auto>{Config.Location == 0 ? "\uea5e" : "\ued27"}</NextUI.Button></div>
-                <div className="notifyLocation tr"><NextUI.Button onPress={() => ChangeLocation(1)} flat auto>{Config.Location == 1 ? "\uea5e" : "\ued27"}</NextUI.Button></div>
-                <div className="notifyLocation bl"><NextUI.Button onPress={() => ChangeLocation(2)} flat auto>{Config.Location == 2 ? "\uea5e" : "\ued27"}</NextUI.Button></div>
-                <div className="notifyLocation br"><NextUI.Button onPress={() => ChangeLocation(3)} flat auto>{Config.Location == 3 ? "\uea5e" : "\ued27"}</NextUI.Button></div>
+                <div className="notifyLocation tl"><Button onClick={() => ChangeLocation(0)} flat auto>{Config.Location == 0 ? "\uea5e" : "\ued27"}</Button></div>
+                <div className="notifyLocation tr"><Button onClick={() => ChangeLocation(1)} flat auto>{Config.Location == 1 ? "\uea5e" : "\ued27"}</Button></div>
+                <div className="notifyLocation bl"><Button onClick={() => ChangeLocation(2)} flat auto>{Config.Location == 2 ? "\uea5e" : "\ued27"}</Button></div>
+                <div className="notifyLocation br"><Button onClick={() => ChangeLocation(3)} flat auto>{Config.Location == 3 ? "\uea5e" : "\ued27"}</Button></div>
             </div>
 
             <div className="divider"></div>

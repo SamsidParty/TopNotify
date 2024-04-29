@@ -63,6 +63,7 @@ body {
     background-position: center;
     border-radius: 5px;
     position: relative;
+    margin-top: 20px;
 }
 
 .locationCard .notifyLocation {
@@ -82,6 +83,7 @@ body {
     background-color: transparent !important;
     color: var(--col-text) !important;
     font-size: 30px !important;
+    font-weight: 500 !important;
 }
 
 .locationCard .notifyLocation.tl {
