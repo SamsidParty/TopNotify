@@ -1,6 +1,16 @@
 import { useState } from 'react'
 import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
 
+import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogCloseButton,
+} from '@chakra-ui/react'
+
 var Config = {
     Location: -1,
     RunOnStartup: true,
@@ -30,6 +40,8 @@ function App() {
     var [rerender, setRerender] = useState(0);
     window.rerender = rerender;
     window.setRerender = setRerender;
+
+    var [isCTWarningOpen, setIsCTWarningOpen] = useState(false);
 
     //Load Drag Page
     if (rerender == -1) {
@@ -63,6 +75,33 @@ function App() {
             <div className="flexx facenter fillx gap20">
                 <label>Run On Startup</label>
                 <Switch onChange={(e) => ChangeSwitch("RunOnStartup", e)} isChecked={Config.RunOnStartup} style={{ marginLeft: "auto" }} size='lg' />
+            </div>
+
+            <Divider />
+
+            <div className="flexx facenter fillx gap20">
+                <label>Enable Click-Through</label>
+                <Switch onChange={(e) => { ChangeSwitch("EnableClickThrough", e); setIsCTWarningOpen(e.target.checked); }} isChecked={Config.EnableClickThrough} style={{ marginLeft: "auto" }} size='lg' />
+                <AlertDialog
+                    blockScrollOnMount={false}
+                    motionPreset='slideInBottom'
+                    onClose={() => setIsCTWarningOpen(false)}
+                    isOpen={isCTWarningOpen}
+                    isCentered
+                >
+                    <AlertDialogOverlay />
+
+                    <AlertDialogContent>
+                    <AlertDialogHeader>Warning</AlertDialogHeader>
+                    <AlertDialogCloseButton />
+                    <AlertDialogBody>
+                        Click-Through Currently Can't Be Disabled Unless You Restart Your Computer.
+                        Additionally, Note That You Can't Interact With Notifications When Click-Through Is Enabled
+                    </AlertDialogBody>
+                    <AlertDialogFooter>
+                    </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
 
             <Divider />
