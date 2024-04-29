@@ -117,6 +117,16 @@ body {
     bottom: 15px;
 }
 
+.locationCard .notifyLocation.custom {
+    top: calc(50% - 25px);
+    left: calc(50% - 80px);
+    width: 160px;
+}
+
+.locationCard .notifyLocation.custom p {
+    font-size: 18px;
+}
+
 h2 {
     margin: 0 !important;
     line-height: 40px;
