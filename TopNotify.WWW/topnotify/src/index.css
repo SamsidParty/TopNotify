@@ -10,6 +10,17 @@
 }
 
 
+.app {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.app.loaded {
+    transition: opacity 0.3s, transform 0.3s;
+    opacity: 1;
+    transform: scale(1);
+}
+
 * {
     font-family: Main, Icon;
     color: var(--col-text);
