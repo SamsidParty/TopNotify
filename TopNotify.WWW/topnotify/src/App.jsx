@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import * as NextUI from "@nextui-org/react"
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, Switch } from '@chakra-ui/react'
 
 var Config = {
     Location: -1,
@@ -56,9 +56,7 @@ function App() {
 
             <div className="flexx facenter fillx gap20">
                 <label>Run On Startup</label>
-                <NextUI.Switch onChange={(e) => ChangeSwitch("RunOnStartup", e)} checked={Config.RunOnStartup} css={{ marginLeft: "auto" }}>
-                    &#xea99;
-                </NextUI.Switch>
+                <Switch onChange={(e) => ChangeSwitch("RunOnStartup", e)} isChecked={Config.RunOnStartup} style={{ marginLeft: "auto" }} size='lg' />
             </div>
 
             <div className="divider"></div>

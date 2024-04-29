@@ -25,8 +25,7 @@
     --col-contrast: #3B3043;
     --col-disabled: #251F29;
 
-    --nextui-colors-primary: var(--col-primary) !important;
-    --nextui-colors-primarySolidHover: var(--col-primary) !important;
+    --chakra-colors-blue-500: var(--col-primary) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,7 +49,7 @@ body {
     padding-top: 7px;
     overflow: hidden;
     height: 100vh;
-    background-color: var(--col-bg);
+    background-color: var(--col-bg) !important;
 }
 
 
