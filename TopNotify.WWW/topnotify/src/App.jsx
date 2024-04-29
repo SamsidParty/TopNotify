@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import * as NextUI from "@nextui-org/react"
+import { Button, ButtonGroup } from '@chakra-ui/react'
 
 var Config = {
     Location: -1,
@@ -48,9 +49,9 @@ function App() {
 
             <div className="flexx facenter fillx gap20 buttonContainer">
                 <label>Spawn Test Notification</label>
-                <NextUI.Button css={{ marginLeft: "auto" }} className="iconButton" auto onPress={SpawnTestNotification}>
+                <Button style={{ marginLeft: "auto" }} className="iconButton" auto onClick={SpawnTestNotification}>
                     &#xea99;
-                </NextUI.Button>
+                </Button>
             </div>
 
             <div className="divider"></div>
