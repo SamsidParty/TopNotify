@@ -113,7 +113,6 @@ h2 {
 .buttonContainer button {
     font-weight: 550 !important;
     border-radius: 3px !important;
-    background-color: var(--col-primary) !important;
 }
 
 label {
@@ -122,9 +121,16 @@ label {
 
 .iconButton {
     width: 30px !important;
+    min-width: 0px !important;
     height: 30px !important;
     padding: 2px !important;
-    font-size: 17px;
+    font-size: 17px !important;
+    color: white !important;
+    background-color: var(--col-primary) !important;
+}
+
+.iconButton:hover {
+    opacity: 0.8;
 }
 
 .divider {
