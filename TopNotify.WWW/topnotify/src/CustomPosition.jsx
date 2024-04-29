@@ -21,7 +21,7 @@ export default function CustomPosition() {
     }
 
     document.body.style.padding = "0";
-    document.body.style.paddingLeft = "15px";
+    document.body.style.paddingLeft = "3vw";
 
     return (
         <div className={'dragMode app' + ((rerender > 0) ? " loaded" : "")}>
