@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, } from '@chakra-ui/react'
+import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
 
 var Config = {
     Location: -1,
@@ -43,7 +43,7 @@ function App() {
                 <div className="notifyLocation br"><Button onClick={() => ChangeLocation(3)}>{Config.Location == 3 ? "\uea5e" : "\ued27"}</Button></div>
             </div>
 
-            <div className="divider"></div>
+            <Divider />
 
             <div className="flexx facenter fillx gap20 buttonContainer">
                 <label>Spawn Test Notification</label>
@@ -52,14 +52,14 @@ function App() {
                 </Button>
             </div>
 
-            <div className="divider"></div>
+            <Divider />
 
             <div className="flexx facenter fillx gap20">
                 <label>Run On Startup</label>
                 <Switch onChange={(e) => ChangeSwitch("RunOnStartup", e)} isChecked={Config.RunOnStartup} style={{ marginLeft: "auto" }} size='lg' />
             </div>
 
-            <div className="divider"></div>
+            <Divider />
 
             <div className="flexy fillx gap20">
                 <label>Notification Transparency</label>

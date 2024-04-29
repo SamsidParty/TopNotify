@@ -37,6 +37,7 @@
     --col-disabled: #251F29;
 
     --chakra-colors-blue-500: var(--col-primary) !important;
+    --chakra-colors-blue-200: var(--col-primary) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -147,10 +148,8 @@ label {
     opacity: 0.8;
 }
 
-.divider {
+.chakra-divider {
     width: 100%;
-    height: 2px;
-    background-color: var(--col-tertiary);
     margin-top: 10px;
     margin-bottom: 10px;
 }
