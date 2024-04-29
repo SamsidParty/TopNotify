@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { NextUIProvider, createTheme } from '@nextui-org/react';
+import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
 
 window.serverURL = "http://" + window.location.host + "/";
@@ -35,9 +36,12 @@ const darkTheme = createTheme({
 })
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <NextUIProvider theme={(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? darkTheme : lightTheme}>
-        <App />
-    </NextUIProvider>,
+    <ChakraProvider>
+        <NextUIProvider theme={(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? darkTheme : lightTheme}>
+            <App />
+        </NextUIProvider>
+    </ChakraProvider>
+,
 )
 
 //TODO: Come Up With A Better Solution Than This
