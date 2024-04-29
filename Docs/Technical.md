@@ -1,6 +1,6 @@
 # Interceptors
 
-The TopNotify Demon is made up of different interceptors.  
+The TopNotify Daemon is made up of different interceptors.  
 Each interceptor is supposed to handle a different notification type (eg. NativeInterceptor).  
 An interceptor is comprised of a few main functions:  
 
