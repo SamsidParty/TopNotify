@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
 using System.Threading.Tasks;
 using WebFramework.Backend;
 
@@ -100,9 +101,9 @@ namespace SamsidParty_TopNotify
             try
             {
                 hwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.GetNotificationName());
-                MainDisplayWidth = TrayIcon.Screen.Bounds.Width;
-                MainDisplayHeight = TrayIcon.Screen.Bounds.Height;
-                ScaleFactor = 1f;
+                MainDisplayWidth = ResolutionFinder.GetResolution().Width;
+                MainDisplayHeight = ResolutionFinder.GetResolution().Height;
+                ScaleFactor = ResolutionFinder.GetScale();
                 WindowOpacity.ApplyToWindow(hwnd);
                 WindowClickThrough.ApplyToWindow(hwnd);
 
@@ -135,8 +136,8 @@ namespace SamsidParty_TopNotify
             Rectangle NotifyRect = new Rectangle();
             GetWindowRect(hwnd, ref NotifyRect);
 
-            NotifyRect.Width = NotifyRect.Width - NotifyRect.X;
-            NotifyRect.Height = NotifyRect.Height - NotifyRect.Y;
+            NotifyRect.Width = (int)((NotifyRect.Width - NotifyRect.X * ScaleFactor));
+            NotifyRect.Height = (int)((NotifyRect.Height - NotifyRect.Y * ScaleFactor));
 
             if (Settings.Location == NotifyLocation.TopLeft)
             {
@@ -149,11 +150,11 @@ namespace SamsidParty_TopNotify
             }
             else if (Settings.Location == NotifyLocation.BottomLeft)
             {
-                SetWindowPos(hwnd, 0, 0, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f * ScaleFactor), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, 0, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomRight) // Default In Windows, But Here For Completeness Sake
             {
-                SetWindowPos(hwnd, 0, MainDisplayWidth - NotifyRect.Width, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f * ScaleFactor), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, MainDisplayWidth - NotifyRect.Width, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else // Custom Position
             {
