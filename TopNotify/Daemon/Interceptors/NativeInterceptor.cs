@@ -151,8 +151,14 @@ namespace SamsidParty_TopNotify
             {
                 SetWindowPos(hwnd, 0, 0, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f * ScaleFactor), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
-            //BottomRight Does Nothing Because It's The Default In Windows
-
+            else if (Settings.Location == NotifyLocation.BottomRight) // Default In Windows, But Here For Completeness Sake
+            {
+                SetWindowPos(hwnd, 0, MainDisplayWidth - NotifyRect.Width, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f * ScaleFactor), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            }
+            else // Custom Position
+            {
+                SetWindowPos(hwnd, 0, Settings.CustomPositionX, Settings.CustomPositionY, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            }
 
         }
     }

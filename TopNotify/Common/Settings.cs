@@ -20,6 +20,9 @@ namespace SamsidParty_TopNotify
         // From 0 To 5 (0 Is Fully Opaque, 5 Is Mostly Transparent)
         public float Opacity = 0;
 
+        public int CustomPositionX = 0;
+        public int CustomPositionY = 0;
+
         public static Settings Get()
         {
             var path = GetFilePath();
@@ -108,6 +111,7 @@ namespace SamsidParty_TopNotify
         TopLeft,
         TopRight,
         BottomLeft,
-        BottomRight
+        BottomRight,
+        Custom
     }
 }
