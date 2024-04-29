@@ -33,7 +33,7 @@ function App() {
 
     
     return (
-        <>
+        <div className={'app' + ((rerender > 0) ? " loaded" : "")}>
             <h2>Settings</h2>
 
             <div className="locationCard">
@@ -69,7 +69,7 @@ function App() {
                     (rerender == 0) ? 
                     (<></>) :
                     (
-                        <Slider onChangeEnd={ChangeOpacity} defaultValue={Config.Opacity * 20}>
+                        <Slider size="lg" onChangeEnd={ChangeOpacity} defaultValue={Config.Opacity * 20}>
                             <SliderTrack>
                                 <SliderFilledTrack />
                             </SliderTrack>
@@ -78,7 +78,7 @@ function App() {
                     )
                 }
             </div>
-        </>
+        </div>
     )
 }
 
