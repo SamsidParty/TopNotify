@@ -33,6 +33,7 @@ function App() {
 
     //Load Drag Page
     if (rerender == -1) {
+        CallCSharp("SamsidParty_TopNotify.Frontend, TopNotify", "EnterDragMode");
         window.location.href = "?drag";
     }
     

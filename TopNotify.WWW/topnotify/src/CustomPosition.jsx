@@ -20,10 +20,6 @@ export default function CustomPosition() {
         window.location.href = "/";
     }
 
-    if (rerender == 0) {
-        CallCSharp("SamsidParty_TopNotify.Frontend, TopNotify", "EnterDragMode"); // Tell C# To Resize The Window To Be The Same Size As Notifications
-    }
-
     document.body.style.padding = "0";
     document.body.style.paddingLeft = "15px";
 
