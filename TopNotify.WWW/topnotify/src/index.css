@@ -59,7 +59,7 @@ body {
     flex-direction: column;
     padding: 20px;
     padding-top: 7px;
-    overflow: hidden;
+    overflow: auto;
     height: 100vh;
     background-color: var(--col-bg) !important;
 }
@@ -145,13 +145,14 @@ label {
 }
 
 .dragMode h2 {
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 4vw;
+    line-height: 4vw;
 }
 
 .dragMode p {
-    font-size: 12px;
-    margin-top: 3px;
+    margin-top: 1.5vw;
+    font-size: 3vw;
+    line-height: 4vw;
 }
 
 .iconButton {
