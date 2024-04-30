@@ -28,8 +28,10 @@ Earlier Versions Of Windows 10 May Work, But Have Not Been Tested And Are Not Of
 # Technical Details
 You can find technical details in [Technical.md](https://github.com/SamsidParty/TopNotify/blob/main/Docs/Technical.md)
 
-# Installation
+# Manual Installation
 
+> We Don't Recommend Doing This, Please Get It From The Microsoft Store To Get Auto Updates.
+> 
 - Download The Latest Release From The [Releases](https://github.com/SamsidParty/TopNotify/releases) Page
 - Extract The ZIP Into A *Permanent* Location (Not Your Downloads Folder)
 - Run TopNotify.exe
