@@ -2,6 +2,8 @@
 Move Windows Notifications Anywhere On The Screen.  
 Includes Top Left, Top Right, & Bottom Left As Presets, But You Can Place Them Anywhere.
 
+[![Get It From Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/productId/9PFMDK0QHKQJ?ocid=pdpshare)
+
 ![TopNotify Header](/Docs/HeaderDarkOptimized.webp)
 
 ![TopNotify Screenshot](/Docs/Screenshot1.png)
