@@ -61,7 +61,7 @@ body {
     padding-top: 7px;
     overflow: auto;
     height: 100vh;
-    background-color: var(--col-bg) !important;
+    background-color: transparent !important;
 }
 
 
