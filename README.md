@@ -6,6 +6,8 @@ Includes Top Left, Top Right, & Bottom Left As Presets, But You Can Place Them A
 
 ![TopNotify Header](/Docs/HeaderDarkOptimized.webp)
 
+![Dissolving Distractions](/Docs/Marketing2.webp)
+
 ![TopNotify Screenshot](/Docs/Screenshot1.png)
 
 
