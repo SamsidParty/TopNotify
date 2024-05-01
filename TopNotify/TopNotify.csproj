@@ -40,6 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="WebFramework.dll" />
+    <None Remove="WebFramework.PT.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
@@ -52,7 +57,7 @@
 
   <ItemGroup>
     <Reference Include="WebFramework">
-      <HintPath>Z:\Programming Stuff\WebFramework\WebFramework\bin\Release\net6.0\WebFramework.dll</HintPath>
+      <HintPath>WebFramework.dll</HintPath>
     </Reference>
     <Reference Include="WebFramework.PT">
       <HintPath>WebFramework.PT.dll</HintPath>
