@@ -59,7 +59,7 @@ public class Program
             StartWidthHeight = new Rectangle(400, 600, 520, 780),
             LockWidthHeight = true,
             EnableAcrylic = true,
-            IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "Icon.ico")
+            IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "IconSmall.png")
         };
 
         WebScript.Register<Frontend>("frontend");
