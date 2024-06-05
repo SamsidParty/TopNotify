@@ -53,6 +53,9 @@ namespace SamsidParty_TopNotify
                 var defaultSettings = JsonConvert.SerializeObject(new Settings(), Formatting.Indented);
                 File.WriteAllText(settingsFile, defaultSettings);
                 Validate(Get());
+
+                //Show First Launch Notification
+                NotificationTester.Toast("TopNotify Has Been Installed", "You Can Find The Settings For TopNotify In The System Tray");
             }
             return settingsFile;
         }
