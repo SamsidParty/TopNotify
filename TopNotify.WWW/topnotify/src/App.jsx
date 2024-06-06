@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
+import { DebugMenu } from './DebugMenu'
 
 import {
     AlertDialog,
@@ -57,6 +58,9 @@ function App() {
     
     return (
         <div className={'app' + ((rerender > 0) ? " loaded" : "")}>
+
+            <DebugMenu></DebugMenu>
+
             <h2>Settings</h2>
 
             <div className="locationCard">
