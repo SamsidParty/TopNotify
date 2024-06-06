@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WebFramework.Backend;
 
 namespace SamsidParty_TopNotify
 {
@@ -42,19 +43,8 @@ namespace SamsidParty_TopNotify
 
         public static string FindExe()
         {
-            Log("Exe Located: " + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotify.exe"));
+            Logger.LogInfo("Exe Located: " + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotify.exe"));
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotify.exe");
-        }
-
-        public static void Log(string text)
-        {
-            Console.WriteLine(text);
-            File.AppendAllLines(Settings.GetLogPath(), new String[] { "[" + DateTime.Now.ToString() + "] " + text });
-        }
-
-        public static void LogError(Exception err)
-        {
-            Log("[ERROR]" + err.Message);
         }
     }
 }

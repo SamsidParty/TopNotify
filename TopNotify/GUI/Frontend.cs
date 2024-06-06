@@ -99,7 +99,6 @@ namespace SamsidParty_TopNotify
         [JSFunction("OpenAppFolder")]
         public static async Task OpenAppFolder()
         {
-            Logger.LogWarning(await SharedIO.File.GetAppdataDirectory());
             Process.Start("explorer.exe", await SharedIO.File.GetAppdataDirectory());
         }
     }
