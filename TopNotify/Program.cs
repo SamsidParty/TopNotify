@@ -5,6 +5,7 @@ using WebFramework;
 using SamsidParty_TopNotify;
 using WebFramework.PT;
 using Microsoft.Toolkit.Uwp.Notifications;
+using WebFramework.Backend;
 
 public class Program
 {
@@ -22,11 +23,9 @@ public class Program
         //Settings Mode Shows A GUI That Can Be Used To Configure The App
         //These Mode Switches Ensure All Functions Of The App Use The Same Executable
 
-        Util.Log("Working Directory: " + Environment.CurrentDirectory);
-        Util.Log("Base Directory: " + AppDomain.CurrentDomain.BaseDirectory);
-
         if (args.Contains("--settings"))
         {
+
             if (Settings.Get().EnableDebugNotifications)
             {
                 Console.WriteLine("Started Settings GUI");
@@ -49,6 +48,7 @@ public class Program
 
         DevTools.Enable();
         DevTools.HotReload("http://127.0.0.1:25631"); // Vite Dev URL
+        Logger.ForceOpenConsole();
 
         //Change Color Based On Theme (light, dark)
         TitlebarColor = new ThemeBasedColor(Color.FromArgb(255, 255, 255), Color.FromArgb(34, 34, 34));
