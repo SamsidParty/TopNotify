@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using WebFramework.Backend;
 
 namespace SamsidParty_TopNotify
 {
@@ -124,7 +125,7 @@ namespace SamsidParty_TopNotify
             }
             catch (Exception ex)
             {
-                Util.LogError(ex);
+                Logger.LogError(ex.ToString());
             }
         }
 

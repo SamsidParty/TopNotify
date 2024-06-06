@@ -23,8 +23,13 @@ public class Program
         //Settings Mode Shows A GUI That Can Be Used To Configure The App
         //These Mode Switches Ensure All Functions Of The App Use The Same Executable
 
+        AppManager.Publisher = "SamsidParty";
+        AppManager.AppID = "TopNotify";
+
         if (args.Contains("--settings"))
         {
+
+            Logger.SetFileName("gui");
 
             if (Settings.Get().EnableDebugNotifications)
             {
@@ -38,6 +43,7 @@ public class Program
         }
         else
         {
+            Logger.SetFileName("daemon");
             Background = new Daemon();
         }
 
