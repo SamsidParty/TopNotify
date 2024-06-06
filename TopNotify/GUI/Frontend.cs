@@ -95,5 +95,12 @@ namespace SamsidParty_TopNotify
 
             isSaving = false;
         }
+
+        [JSFunction("OpenAppFolder")]
+        public static async Task OpenAppFolder()
+        {
+            Logger.LogWarning(await SharedIO.File.GetAppdataDirectory());
+            Process.Start("explorer.exe", await SharedIO.File.GetAppdataDirectory());
+        }
     }
 }

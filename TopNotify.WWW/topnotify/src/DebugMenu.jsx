@@ -32,7 +32,7 @@ export function DebugMenu() {
                     <DrawerBody>
                         <div className="flexx facenter fillx gap20 buttonContainer">
                             <label>Open App Folder</label>
-                            <Button style={{ marginLeft: "auto" }} className="iconButton" onClick={() => {}}>
+                            <Button style={{ marginLeft: "auto" }} className="iconButton" onClick={() => { OpenAppFolder(); }}>
                                 &#xea99;
                             </Button>
                         </div>
