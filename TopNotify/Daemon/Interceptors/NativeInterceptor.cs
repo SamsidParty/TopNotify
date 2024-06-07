@@ -8,8 +8,9 @@ using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using WebFramework.Backend;
+using TopNotify.Common;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Daemon
 {
     public class NativeInterceptor : Interceptor
     {

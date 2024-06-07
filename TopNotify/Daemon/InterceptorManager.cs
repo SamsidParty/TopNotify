@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Common;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Daemon
 {
     public class InterceptorManager
     {

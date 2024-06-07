@@ -6,8 +6,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using TopNotify.Common;
+using TopNotify.GUI;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Daemon
 {
     public class Daemon
     {

@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebFramework.Backend;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Common
 {
     public class Util
     {
