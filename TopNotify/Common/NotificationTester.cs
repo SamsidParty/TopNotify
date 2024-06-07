@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Buffers;
 using System.Reflection;
-using SamsidParty_TopNotify;
 using Microsoft.Toolkit.Uwp.Notifications;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Common
 {
     public class NotificationTester
     {

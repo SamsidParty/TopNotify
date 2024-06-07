@@ -5,9 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Common;
 using WebFramework.Backend;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.GUI
 {
     public class TrayIcon
     {

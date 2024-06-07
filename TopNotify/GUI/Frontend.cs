@@ -6,11 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Common;
+using TopNotify.Daemon;
 using WebFramework;
 using WebFramework.Backend;
 using WebFramework.PT;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.GUI
 {
     public class Frontend : WebScript
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Daemon
 {
     public class Language
     {

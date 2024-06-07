@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Daemon
 {
     public class WindowOpacity
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
-namespace SamsidParty_TopNotify
+namespace TopNotify.Common
 {
     [Serializable]
     public class Settings
