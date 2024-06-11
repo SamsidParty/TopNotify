@@ -40,8 +40,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="IVPluginTopNotify.dll" />
     <None Remove="WebFramework.dll" />
     <None Remove="WebFramework.PT.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="IVPluginTopNotify.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

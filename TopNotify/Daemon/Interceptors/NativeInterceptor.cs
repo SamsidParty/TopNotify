@@ -102,6 +102,12 @@ namespace TopNotify.Daemon
             try
             {
                 hwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.GetNotificationName());
+
+                if (Settings.EnableDebugForceFallbackMode)
+                {
+                    hwnd = 0; // Always use fallback mode if this setting is enabled
+                }
+
                 MainDisplayWidth = ResolutionFinder.GetResolution().Width;
                 MainDisplayHeight = ResolutionFinder.GetResolution().Height;
                 ScaleFactor = ResolutionFinder.GetScale();

@@ -12,11 +12,12 @@ import {
     AlertDialogCloseButton,
 } from '@chakra-ui/react'
 
-var Config = {
+window.Config = {
     Location: -1,
     RunOnStartup: true,
     Opacity: 0
 }
+
 
 window.SetConfig = (e) => {
     Config = JSON.parse(e);
@@ -167,7 +168,7 @@ function ChangeOpacity(opacity) {
     window.setRerender(rerender + 1);
 }
 
-function ChangeSwitch(key, e) {
+window.ChangeSwitch = function (key, e) {
     Config[key] = e.target.checked;
     UploadConfig();
     window.setRerender(rerender + 1);

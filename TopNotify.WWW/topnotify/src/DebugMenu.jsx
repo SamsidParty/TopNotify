@@ -6,9 +6,10 @@ import {
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
-    DrawerCloseButton,
-    Button
+    DrawerCloseButton
 } from '@chakra-ui/react'
+
+import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
 
 import { useState } from 'react'
 
@@ -35,6 +36,13 @@ export function DebugMenu() {
                             <Button style={{ marginLeft: "auto" }} className="iconButton" onClick={() => { OpenAppFolder(); }}>
                                 &#xea99;
                             </Button>
+                        </div>
+
+                        <Divider />
+
+                        <div className="flexx facenter fillx gap20">
+                            <label>Force Fallback Interceptor</label>
+                            <Switch onChange={(e) => ChangeSwitch("EnableDebugForceFallbackMode", e)} isChecked={Config.EnableDebugForceFallbackMode} style={{ marginLeft: "auto" }} size='lg' />
                         </div>
                     </DrawerBody>
 
