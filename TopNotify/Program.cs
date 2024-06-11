@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define TRACE // Enable Trace.WriteLine
+
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using WebFramework;
