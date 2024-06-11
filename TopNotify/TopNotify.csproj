@@ -40,6 +40,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="BUILD\**" />
+    <Compile Remove="MSIX\**" />
+    <EmbeddedResource Remove="BUILD\**" />
+    <EmbeddedResource Remove="MSIX\**" />
+    <None Remove="BUILD\**" />
+    <None Remove="MSIX\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="IVPluginTopNotify.dll" />
     <None Remove="WebFramework.dll" />
     <None Remove="WebFramework.PT.dll" />
