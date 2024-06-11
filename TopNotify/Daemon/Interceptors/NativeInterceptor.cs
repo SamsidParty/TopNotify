@@ -101,23 +101,21 @@ namespace TopNotify.Daemon
 
             try
             {
-                hwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.GetNotificationName());
+                var foundHwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.GetNotificationName());
 
                 if (Settings.EnableDebugForceFallbackMode)
                 {
-                    hwnd = 0; // Always use fallback mode if this setting is enabled
+                    foundHwnd = 0; // Always use fallback mode if this setting is enabled
                 }
 
                 MainDisplayWidth = ResolutionFinder.GetResolution().Width;
                 MainDisplayHeight = ResolutionFinder.GetResolution().Height;
                 ScaleFactor = ResolutionFinder.GetScale();
-                WindowOpacity.ApplyToWindow(hwnd);
-                WindowClickThrough.ApplyToWindow(hwnd);
 
                 Update();
 
                 //The Notification Isn't In A Supported Language
-                if (hwnd == IntPtr.Zero)
+                if (foundHwnd == IntPtr.Zero)
                 {
                     //The Notification Window Is The Only One That Is 396 x 152
                     foreach (var win in FindCoreWindows())
@@ -125,12 +123,18 @@ namespace TopNotify.Daemon
                         Rectangle rect = new Rectangle();
                         GetWindowRect(win, ref rect);
 
+                        Logger.LogInfo((MainDisplayWidth - rect.X).ToString());
                         if ((MainDisplayWidth - rect.X) == 396)
                         {
-                            hwnd = win;
+                            foundHwnd = win;
                         }
                     }
                 }
+
+                hwnd = foundHwnd;
+
+                WindowOpacity.ApplyToWindow(hwnd);
+                WindowClickThrough.ApplyToWindow(hwnd);
 
             }
             catch { }
