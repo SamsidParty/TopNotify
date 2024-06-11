@@ -1,5 +1,4 @@
-#pragma once
-#include <windows.h>
+#include <Windows.h>
 
 #define STATUS_BUFFER_TOO_SMALL 0xC0000023
 
@@ -15,7 +14,7 @@ typedef NTSTATUS(WINAPI* NtUserBuildHwndList)
 	UINT  in_Max,
 	HWND* out_List,
 	UINT* out_Cnt
-);
+	);
 
 // many thanks to: https://stackoverflow.com/questions/38205375/enumwindows-function-in-win10-enumerates-only-desktop-apps
 HWND* _Gui_BuildWindowList
