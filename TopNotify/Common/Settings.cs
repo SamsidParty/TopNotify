@@ -13,9 +13,11 @@ namespace TopNotify.Common
     {
         public NotifyLocation Location = NotifyLocation.TopRight;
         public bool RunOnStartup = true;
-        public bool EnableClickThrough = false; // Not Available Yet
-        public bool EnableDebugNotifications = false;
+        public bool EnableClickThrough = false;
 
+        //Debug
+        public bool EnableDebugNotifications = false;
+        public bool EnableDebugForceFallbackMode = false;
 
         // From 0 To 5 (0 Is Fully Opaque, 5 Is Mostly Transparent)
         public float Opacity = 0;
