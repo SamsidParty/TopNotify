@@ -4,7 +4,7 @@ import { useState } from "react";
 addEventListener("keyup", (e) => {
     if (e.key == "Escape" && window.location.href.includes("?drag")) {
         //Exit Drag Mode
-        CallCSharp("SamsidParty_TopNotify.Frontend, TopNotify", "ExitDragMode");
+        window.ExitDragMode();
         setRerender(-2);
     }
 })
