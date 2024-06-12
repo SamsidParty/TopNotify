@@ -32,9 +32,11 @@ namespace TopNotify.Common
             AppManager.Publisher = "SamsidParty";
             AppManager.AppID = "TopNotify";
 
+            if (args.Contains("--debug-process")) { Debugger.Launch(); } // Start Debugging
+
             if (args.Contains("--settings"))
             {
-
+                //Open The GUI App In Settings Mode
                 Logger.SetFileName("gui");
 
                 if (Settings.Get().EnableDebugNotifications)
@@ -49,6 +51,7 @@ namespace TopNotify.Common
             }
             else
             {
+                //Open The Background Daemon
                 Logger.SetFileName("daemon");
                 Background = new Daemon.Daemon();
             }

@@ -34,6 +34,7 @@ namespace TopNotify.GUI
             dynamic menuStrip = null;
             dynamic handler = null;
 
+            //Find WinForms Types
             foreach (Type type in WinForms.GetExportedTypes())
             {
                 if (type.Name == "Application")
@@ -119,7 +120,7 @@ namespace TopNotify.GUI
             try
             {
                 var exe = Util.FindExe();
-                var psi = new ProcessStartInfo(exe, "--settings");
+                var psi = new ProcessStartInfo(exe, "--settings" + (Debugger.IsAttached ? " --debug-process" : "")); // Use Debug Args If Needed
                 psi.UseShellExecute = false;
                 psi.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 var proc = Process.Start(psi);
