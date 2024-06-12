@@ -41,6 +41,7 @@ namespace TopNotify.GUI
         //Called By JavaScript
         //Resizes The Window To Be The Same Size As A Notification
         //The User Then Drags The Window To The Position Of The Notification
+        [JSFunction("EnterDragMode")]
         public static void EnterDragMode()
         {
             Logger.LogInfo("Entering Drag Mode");
@@ -54,6 +55,7 @@ namespace TopNotify.GUI
 
         //Called By JavaScript
         //Captures Window Position And Resizes The Window To Be The Default
+        [JSFunction("ExitDragMode")]
         public static void ExitDragMode()
         {
             Logger.LogInfo("Exiting Drag Mode");
