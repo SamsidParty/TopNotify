@@ -43,6 +43,8 @@ namespace TopNotify.GUI
         //The User Then Drags The Window To The Position Of The Notification
         public static void EnterDragMode()
         {
+            Logger.LogInfo("Entering Drag Mode");
+
             var native = (WindowManager.MainWindow as PTWebWindow).Native;
             var currentConfig = Settings.Get();
 
@@ -54,6 +56,8 @@ namespace TopNotify.GUI
         //Captures Window Position And Resizes The Window To Be The Default
         public static void ExitDragMode()
         {
+            Logger.LogInfo("Exiting Drag Mode");
+
             var native = (WindowManager.MainWindow as PTWebWindow).Native;
             var hwnd = (IntPtr)native.WindowHandle;
 
