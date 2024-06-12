@@ -40,7 +40,21 @@ namespace TopNotify.Common
             return JsonConvert.DeserializeObject<Settings>(content);
         }
 
+        /// <summary>
+        /// Returns The Full Path Of The Settings File
+        /// </summary>
         public static string GetFilePath()
+        {
+            var defaultSettings = JsonConvert.SerializeObject(new Settings(), Formatting.Indented);
+            var value = GetFilePath("Settings.json", Encoding.UTF8.GetBytes(defaultSettings));
+            return value;
+        }
+
+        /// <summary>
+        /// Returns The Full Path Of fileName Located In TopNotify's AppData Directory
+        /// Uses defaultValue if the file doesn't exist
+        /// </summary>
+        public static string GetFilePath(string fileName, byte[] defaultValue)
         {
             var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var appFolder = Path.Combine(localAppData, "SamsidParty", "TopNotify");
@@ -48,34 +62,17 @@ namespace TopNotify.Common
             {
                 Directory.CreateDirectory(appFolder);
             }
-            var settingsFile = Path.Combine(appFolder, "Settings.json");
-            if (!File.Exists(settingsFile))
+            var file = Path.Combine(appFolder, fileName);
+            if (!File.Exists(file))
             {
-                //Create Default Settings File
-                var defaultSettings = JsonConvert.SerializeObject(new Settings(), Formatting.Indented);
-                File.WriteAllText(settingsFile, defaultSettings);
+                //Create Default File
+                File.WriteAllBytes(file, defaultValue);
                 Validate(Get());
 
                 //Show First Launch Notification
                 NotificationTester.Toast("TopNotify Has Been Installed", "You Can Find The Settings For TopNotify In The System Tray");
             }
-            return settingsFile;
-        }
-
-        public static string GetLogPath()
-        {
-            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var appFolder = Path.Combine(localAppData, "SamsidParty", "TopNotify");
-            if (!Directory.Exists(appFolder))
-            {
-                Directory.CreateDirectory(appFolder);
-            }
-            var logFile = Path.Combine(appFolder, "Log.txt");
-            if (!File.Exists(logFile))
-            {
-                File.WriteAllText(logFile, "[Start Of Log File]\n");
-            }
-            return logFile;
+            return file;
         }
 
         public static void Validate(Settings settings)
