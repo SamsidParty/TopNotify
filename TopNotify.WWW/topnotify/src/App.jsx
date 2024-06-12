@@ -77,7 +77,7 @@ function App() {
             <div className="flexx facenter fillx gap20 buttonContainer">
                 <label>Spawn Test Notification</label>
                 <Button style={{ marginLeft: "auto" }} className="iconButton" onClick={SpawnTestNotification}>
-                    &#xea99;
+                    &#xede3;
                 </Button>
             </div>
 
