@@ -26,6 +26,9 @@ namespace TopNotify.Common
         public int CustomPositionX = 0;
         public int CustomPositionY = 0;
 
+        // Relative Path To The WAV File Stored In WWW/Audio, Without .wav Extension
+        public string SoundPath = "windows/win11";
+
         public static Settings Get()
         {
             var path = GetFilePath();
@@ -57,12 +60,7 @@ namespace TopNotify.Common
         /// </summary>
         public static string GetFilePath(string fileName, byte[] defaultValue)
         {
-            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var appFolder = Path.Combine(localAppData, "SamsidParty", "TopNotify");
-            if (!Directory.Exists(appFolder))
-            {
-                Directory.CreateDirectory(appFolder);
-            }
+            var appFolder = GetAppDataFolder();
             var file = Path.Combine(appFolder, fileName);
             if (!File.Exists(file))
             {
@@ -78,6 +76,19 @@ namespace TopNotify.Common
 
             }
             return file;
+        }
+
+        public static string GetAppDataFolder()
+        {
+            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var appFolder = Path.Combine(localAppData, "SamsidParty", "TopNotify");
+
+            if (!Directory.Exists(appFolder))
+            {
+                Directory.CreateDirectory(appFolder);
+            }
+
+            return appFolder;
         }
 
         public static void Validate(Settings settings)
