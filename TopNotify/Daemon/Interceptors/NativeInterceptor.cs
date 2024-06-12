@@ -105,14 +105,12 @@ namespace TopNotify.Daemon
 
                 if (Settings.EnableDebugForceFallbackMode)
                 {
-                    foundHwnd = 0; // Always use fallback mode if this setting is enabled
+                    foundHwnd = IntPtr.Zero; // Always use fallback mode if this setting is enabled
                 }
 
                 MainDisplayWidth = ResolutionFinder.GetResolution().Width;
                 MainDisplayHeight = ResolutionFinder.GetResolution().Height;
                 ScaleFactor = ResolutionFinder.GetScale();
-
-                Update();
 
                 //The Notification Isn't In A Supported Language
                 if (foundHwnd == IntPtr.Zero)
@@ -122,8 +120,9 @@ namespace TopNotify.Daemon
                     {
                         Rectangle rect = new Rectangle();
                         GetWindowRect(win, ref rect);
+                        StringBuilder sb = new StringBuilder();
+                        GetWindowText(hwnd, sb, 260);
 
-                        Logger.LogInfo((MainDisplayWidth - rect.X).ToString());
                         if ((MainDisplayWidth - rect.X) == 396)
                         {
                             foundHwnd = win;
@@ -131,8 +130,12 @@ namespace TopNotify.Daemon
                     }
                 }
 
-                hwnd = foundHwnd;
+                if (foundHwnd != IntPtr.Zero)
+                {
+                    hwnd = foundHwnd;
+                }
 
+                Update();
                 WindowOpacity.ApplyToWindow(hwnd);
                 WindowClickThrough.ApplyToWindow(hwnd);
 
