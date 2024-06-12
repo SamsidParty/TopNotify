@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/react'
 
 import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
-
 import { useState } from 'react'
+import "./NotificationSound";
 
 export function DebugMenu() {
 
@@ -44,6 +44,13 @@ export function DebugMenu() {
                             <label>Force Fallback Interceptor</label>
                             <Switch onChange={(e) => ChangeSwitch("EnableDebugForceFallbackMode", e)} isChecked={Config.EnableDebugForceFallbackMode} style={{ marginLeft: "auto" }} size='lg' />
                         </div>
+
+                        <label>[EXPERIMENTAL] Notification Sound</label>
+                        {
+                            window.NotificationSoundList.map((l_soundPath) => {
+                                return (<><Button onClick={() => { ChangeValue("SoundPath", l_soundPath); }}>{l_soundPath}</Button><br></br></>)
+                            })
+                        }
                     </DrawerBody>
 
                     <DrawerFooter>

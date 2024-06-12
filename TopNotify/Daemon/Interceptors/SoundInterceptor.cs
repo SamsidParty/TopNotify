@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Pipes;
@@ -10,15 +11,13 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Common;
 using WebFramework.Backend;
 
 namespace TopNotify.Daemon
 {
     public class SoundInterceptor : Interceptor
     {
-        //The Path Of The TopNotify wav File
-        public static string SoundPath = Common.Settings.GetFilePath("topnotify.wav", null);
-
         /// <summary>
         /// Sets The Notification Sound In The Registry To The TopNotify Wav File
         /// </summary>
@@ -27,31 +26,31 @@ namespace TopNotify.Daemon
             try
             {
                 var key = Registry.CurrentUser.OpenSubKey("AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current", true);
-                key.SetValue("", SoundPath); // Sets (Default) Value In Registry
+                key.SetValue("", GetFullSoundPath(Settings.SoundPath)); // Sets (Default) Value In Registry
                 key.Close();
             }
             catch (Exception ex) { Logger.LogError(ex.ToString()); }
         }
 
         /// <summary>
-        /// Sets The Permissions For The Sound File And Makes Sure It's Not Empty
+        /// Sets The Permissions For The Sound File And Makes Sure It Exists
         /// </summary>
         private void EnsureSoundValidity()
         {
-            var fileInfo = new FileInfo(SoundPath);
+            if (!Directory.Exists(Path.GetDirectoryName(GetFullSoundPath(Settings.SoundPath))))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(GetFullSoundPath(Settings.SoundPath)));
+            }
 
-            //Check If File Is Empty, If It Is, Write The Default Sound To It
-            var fileSize = fileInfo.Length;
-            if (fileSize == 0) { 
-                var defaultFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Audio", "windows", "win11.wav");
-
-                //Overwrite Instead Of Copying
-                //Prevents Resetting Permissions
-                var defaultBytes = File.ReadAllBytes(defaultFile);
-                File.WriteAllBytes(SoundPath, defaultBytes);
+            if (!File.Exists(GetFullSoundPath(Settings.SoundPath)))
+            {
+                //Copy The File If It Doesn't Exist
+                Logger.LogInfo("Copying Sound File Into" +  GetFullSoundPath(Settings.SoundPath));
+                File.Copy(GetSourceSoundPath(Settings.SoundPath), GetFullSoundPath(Settings.SoundPath));
             }
 
             //Check Permissions, Add "ALL APPLICATION PACKAGES" If Needed
+            var fileInfo = new FileInfo(GetFullSoundPath(Settings.SoundPath));
             var fileSecurity = fileInfo.GetAccessControl();
             var perms = fileSecurity.GetAccessRules(true, false, typeof(SecurityIdentifier));
             var hasAllAppPerms = false;
@@ -77,23 +76,36 @@ namespace TopNotify.Daemon
 
         }
 
+
         /// <summary>
-        /// Applies A Notification Sound
-        /// soundToUse Should Be An Absolute Path To A wav File
+        /// Gets The Full Path Of A Sound From It's Relative Path
         /// </summary>
-        public static void ApplySound(string soundFile)
+        public static string GetFullSoundPath(string soundRelativePath)
         {
-            //Overwrite Instead Of Copying
-            //Prevents Resetting Permissions
-            var soundBytes = File.ReadAllBytes(soundFile);
-            File.WriteAllBytes(SoundPath, soundBytes);
+            return Path.Combine(Common.Settings.GetAppDataFolder(), "NotificationSounds", soundRelativePath.Replace("/", "\\") + ".wav");
         }
+
+        /// <summary>
+        /// Gets The Path Of The Sound Built In The Application Folder
+        /// </summary>
+        public static string GetSourceSoundPath(string soundRelativePath)
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Audio", soundRelativePath.Replace("/", "\\") + ".wav");
+        }
+
 
         public override void Reflow()
         {
             base.Reflow();
             InstallSoundInRegistry();
             EnsureSoundValidity();
+        }
+
+        public override void Start()
+        {
+            InstallSoundInRegistry();
+            EnsureSoundValidity();
+            base.Start();
         }
     }
 }

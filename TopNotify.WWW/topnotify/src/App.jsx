@@ -15,7 +15,8 @@ import {
 window.Config = {
     Location: -1,
     RunOnStartup: true,
-    Opacity: 0
+    Opacity: 0,
+    SoundPath: "windows/win11"
 }
 
 
@@ -170,6 +171,12 @@ function ChangeOpacity(opacity) {
 
 window.ChangeSwitch = function (key, e) {
     Config[key] = e.target.checked;
+    UploadConfig();
+    window.setRerender(rerender + 1);
+}
+
+window.ChangeValue = function (key, e) {
+    Config[key] = e;
     UploadConfig();
     window.setRerender(rerender + 1);
 }
