@@ -16,7 +16,8 @@ namespace TopNotify.Daemon
 {
     public class SoundInterceptor : Interceptor
     {
-        public string AudioPath = Common.Settings.GetFilePath("topnotify.wav", null);
+        //The Path Of The TopNotify wav File
+        public static string SoundPath = Common.Settings.GetFilePath("topnotify.wav", null);
 
         /// <summary>
         /// Sets The Notification Sound In The Registry To The TopNotify Wav File
@@ -26,7 +27,7 @@ namespace TopNotify.Daemon
             try
             {
                 var key = Registry.CurrentUser.OpenSubKey("AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current", true);
-                key.SetValue("", AudioPath); // Sets (Default) Value In Registry
+                key.SetValue("", SoundPath); // Sets (Default) Value In Registry
                 key.Close();
             }
             catch (Exception ex) { Logger.LogError(ex.ToString()); }
@@ -37,7 +38,7 @@ namespace TopNotify.Daemon
         /// </summary>
         private void EnsureSoundValidity()
         {
-            var fileInfo = new FileInfo(AudioPath);
+            var fileInfo = new FileInfo(SoundPath);
 
             //Check If File Is Empty, If It Is, Write The Default Sound To It
             var fileSize = fileInfo.Length;
@@ -47,7 +48,7 @@ namespace TopNotify.Daemon
                 //Overwrite Instead Of Copying
                 //Prevents Resetting Permissions
                 var defaultBytes = File.ReadAllBytes(defaultFile);
-                File.WriteAllBytes(AudioPath, defaultBytes);
+                File.WriteAllBytes(SoundPath, defaultBytes);
             }
 
             //Check Permissions, Add "ALL APPLICATION PACKAGES" If Needed
@@ -74,6 +75,18 @@ namespace TopNotify.Daemon
                 fileInfo.SetAccessControl(fileSecurity);
             }
 
+        }
+
+        /// <summary>
+        /// Applies A Notification Sound
+        /// soundToUse Should Be An Absolute Path To A wav File
+        /// </summary>
+        public static void ApplySound(string soundFile)
+        {
+            //Overwrite Instead Of Copying
+            //Prevents Resetting Permissions
+            var soundBytes = File.ReadAllBytes(soundFile);
+            File.WriteAllBytes(SoundPath, soundBytes);
         }
 
         public override void Reflow()
