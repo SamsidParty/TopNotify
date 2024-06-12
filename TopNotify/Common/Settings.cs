@@ -15,13 +15,14 @@ namespace TopNotify.Common
         public bool RunOnStartup = true;
         public bool EnableClickThrough = false;
 
-        //Debug
+        // Debug
         public bool EnableDebugNotifications = false;
         public bool EnableDebugForceFallbackMode = false;
 
         // From 0 To 5 (0 Is Fully Opaque, 5 Is Mostly Transparent)
         public float Opacity = 0;
 
+        // Position Where Origin Is The Top Left Of The Screen
         public int CustomPositionX = 0;
         public int CustomPositionY = 0;
 
@@ -66,11 +67,15 @@ namespace TopNotify.Common
             if (!File.Exists(file))
             {
                 //Create Default File
-                File.WriteAllBytes(file, defaultValue);
+                File.WriteAllBytes(file, defaultValue != null ? defaultValue : new byte[0]); // Write default value if it's not null
                 Validate(Get());
 
-                //Show First Launch Notification
-                NotificationTester.Toast("TopNotify Has Been Installed", "You Can Find The Settings For TopNotify In The System Tray");
+                if (fileName == "Settings.json")
+                {
+                    //Show First Launch Notification
+                    NotificationTester.Toast("TopNotify Has Been Installed", "You Can Find The Settings For TopNotify In The System Tray");
+                }
+
             }
             return file;
         }
