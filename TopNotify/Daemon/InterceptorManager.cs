@@ -32,6 +32,7 @@ namespace TopNotify.Daemon
 
             Interceptors.Add(new NativeInterceptor());
             Interceptors.Add(new SoundInterceptor());
+            Interceptors.Add(new TeamsInterceptor());
 
             foreach (Interceptor i in Interceptors)
             {
