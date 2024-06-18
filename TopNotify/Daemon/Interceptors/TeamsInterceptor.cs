@@ -28,8 +28,8 @@ namespace TopNotify.Daemon
                 catch { return false; }
             });
 
-            //Return The Process Of Teams If It's Running
-            //Otherwise Returns Null
+            //Return The Teams Process If It's Running
+            //Otherwise Return Null
             return possibleTeamsProcesses.Any() ? possibleTeamsProcesses.FirstOrDefault()! : null!;
         }
 
@@ -39,6 +39,7 @@ namespace TopNotify.Daemon
 
             if (teamsProcess != null && !InjectedProcesses.Contains(teamsProcess.Id))
             {
+                //Inject Hook DLL Into Teams
                 InjectedProcesses.Add(teamsProcess.Id);
                 var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
                 Logger.LogInfo(Marshal.PtrToStringUni(result));
