@@ -15,23 +15,37 @@ namespace TopNotify.Daemon
         [DllImport("IVPluginTopNotify.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr InjectIntoProcess(int processId, string dllPath);
 
+        private static List<int> InjectedProcesses = new List<int>();
+
         public Process FindTeamsProcess()
         {
-            return Process.GetProcessesByName("ms-teams").Where((Process p) =>
+            var possibleTeamsProcesses = Process.GetProcessesByName("ms-teams").Where((Process p) =>
             {
                 try
                 {
                     return !p.HasExited;
                 }
                 catch { return false; }
-            }).FirstOrDefault();
+            });
+
+            //Return The Process Of Teams If It's Running
+            //Otherwise Returns Null
+            return possibleTeamsProcesses.Any() ? possibleTeamsProcesses.FirstOrDefault()! : null!;
         }
 
-        public override void Start()
+        public override void Reflow()
         {
-            var result = InjectIntoProcess(FindTeamsProcess().Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
-            Logger.LogInfo(Marshal.PtrToStringUni(result));
-            base.Start();
+            var teamsProcess = FindTeamsProcess();
+
+            if (teamsProcess != null && !InjectedProcesses.Contains(teamsProcess.Id))
+            {
+                InjectedProcesses.Add(teamsProcess.Id);
+                var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
+                Logger.LogInfo(Marshal.PtrToStringUni(result));
+            }
+
+
+            base.Reflow();
         }
     }
 }
