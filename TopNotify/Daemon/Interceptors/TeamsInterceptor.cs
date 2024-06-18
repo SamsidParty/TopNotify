@@ -29,7 +29,7 @@ namespace TopNotify.Daemon
 
         public override void Start()
         {
-            var result = InjectIntoProcess(FindTeamsProcess().Id, "C:\\Users\\SamarthCat\\Documents\\Programming Stuff\\TopNotify\\TopNotify\\TopNotifyHook.dll");
+            var result = InjectIntoProcess(FindTeamsProcess().Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
             Logger.LogInfo(Marshal.PtrToStringUni(result));
             base.Start();
         }
