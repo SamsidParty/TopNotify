@@ -13,10 +13,14 @@ namespace TopNotify.Daemon
 {
     public class Daemon
     {
+        public static Daemon Instance;
+
         public InterceptorManager Manager;
         public IPCServer Server;
 
         public Daemon() {
+            Instance = this;
+
 
             if (Settings.Get().EnableDebugNotifications)
             {
