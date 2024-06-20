@@ -43,10 +43,23 @@ namespace TopNotify.Daemon
 
     public class IPCHandler : WebSocketBehavior 
     {
+        protected override void OnOpen()
+        {
+            Logger.LogInfo("Connected!");
+
+            base.OnOpen();
+        }
+
         protected override void OnMessage(MessageEventArgs e)
         {
-            Logger.LogInfo("Got Message: " + e.Data);
-            base.OnMessage(e);
+            try
+            {
+                Logger.LogInfo("Got Message: " + e.Data);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.ToString());
+            }
         }
     }
 

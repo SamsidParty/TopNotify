@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <stdlib.h>  
 #include "Teams.h"
+#include <ipc_client.h>
 
 extern "C" void __declspec(dllexport) __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO * inRemoteInfo);
 
@@ -19,4 +20,6 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
 	_putenv("TOPNOTIFY_IS_HOOKED=1");
 
 	Teams::SetupHooks();
+
+	RunIPCClient();
 }

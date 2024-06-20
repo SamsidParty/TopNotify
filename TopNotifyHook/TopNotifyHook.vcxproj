@@ -112,12 +112,13 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotifyHook.Rust\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>"C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\lib\x64\v141\Debug\EasyHook64.lib";%(AdditionalDependencies);winmm.lib</AdditionalDependencies>
+      <AdditionalDependencies>"C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\lib\x64\v141\Debug\EasyHook64.lib";%(AdditionalDependencies);winmm.lib;"C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotifyHook.Rust\topnotifyhook.lib";ws2_32.lib;kernel32.lib;libvcruntime.lib;msvcrt.lib;ucrt.lib;Bcrypt.lib;ntdll.lib;userenv.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,6 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotifyHook.Rust\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,19 +139,17 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>"C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\lib\x64\v141\Release\EasyHook64.lib";%(AdditionalDependencies);winmm.lib</AdditionalDependencies>
+      <AdditionalDependencies>"C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\lib\x64\v141\Release\EasyHook64.lib";%(AdditionalDependencies);winmm.lib;"C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotifyHook.Rust\topnotifyhook.lib";ws2_32.lib;kernel32.lib;libvcruntime.lib;msvcrt.lib;ucrt.lib;Bcrypt.lib;ntdll.lib;userenv.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Teams.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Settings.h" />
     <ClInclude Include="Teams.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
