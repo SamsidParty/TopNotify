@@ -1,0 +1,10 @@
+[package]
+name = "topnotifyhook"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type=["staticlib"]
+
+[dependencies]
+tungstenite = "0.23.0"

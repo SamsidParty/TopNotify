@@ -2,6 +2,7 @@ Finish Build.bat
 BUILD/
 MSIX/
 PACK/
+target/
 
 # User-specific files
 *.rsuser
