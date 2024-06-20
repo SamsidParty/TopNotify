@@ -1,4 +1,6 @@
 
+use std::thread;
+
 use tungstenite::{connect, Message};
 
 #[no_mangle]
@@ -8,7 +10,16 @@ pub extern "C" fn GetIPCPort() -> i32 {
 
 #[no_mangle]
 pub extern "C" fn RunIPCClient() {
-    let (mut socket, response) = connect("ws://127.0.0.1:27631/ipc").expect("Connection To IPC Server Failed");
+
+    thread::spawn(|| {
+        RunIPCClientThreaded();
+    });
+
+}
+
+fn RunIPCClientThreaded() {
+
+    let (mut socket, response) = connect(format!("{}{}{}", "ws://127.0.0.1:", GetIPCPort().to_string(), "/ipc")).expect("Connection To IPC Server Failed");
 
     socket.send(Message::Text("Test IPC".into())).unwrap();
 
