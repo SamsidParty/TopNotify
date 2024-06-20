@@ -31,6 +31,11 @@ namespace TopNotify.Common
 
         public static Settings Get()
         {
+            return JsonConvert.DeserializeObject<Settings>(GetRaw());
+        }
+
+        public static string GetRaw()
+        {
             var path = GetFilePath();
 
             var content = "";
@@ -41,7 +46,7 @@ namespace TopNotify.Common
             }
 
 
-            return JsonConvert.DeserializeObject<Settings>(content);
+            return content;
         }
 
         /// <summary>

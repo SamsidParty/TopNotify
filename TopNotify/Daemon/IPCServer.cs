@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Logger = WebFramework.Backend.Logger;
+using TopNotify.Common;
 
 namespace TopNotify.Daemon
 {
@@ -43,18 +44,23 @@ namespace TopNotify.Daemon
 
     public class IPCHandler : WebSocketBehavior 
     {
-        protected override void OnOpen()
-        {
-            Logger.LogInfo("Connected!");
-
-            base.OnOpen();
-        }
 
         protected override void OnMessage(MessageEventArgs e)
         {
             try
             {
-                Logger.LogInfo("Got Message: " + e.Data);
+                var packet = e.RawData;
+                var type = (IPCPacketType)e.RawData[0];
+                packet = packet.Skip(1).ToArray(); // Removes The First (IPCPacketType) Byte
+
+                Logger.LogInfo("Recieved Packet Of Type: " + type.ToString());
+
+                if (type == IPCPacketType.RequestConfig)
+                {
+                    var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
+                    requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetRaw())).ToArray();
+                    Send(requestData);
+                }
             }
             catch (Exception ex)
             {
