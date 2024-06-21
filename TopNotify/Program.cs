@@ -29,6 +29,38 @@ namespace TopNotify.Common
             //Settings Mode Shows A GUI That Can Be Used To Configure The App
             //These Mode Switches Ensure All Functions Of The App Use The Same Executable
 
+            //Find Other Instances Of TopNotify
+            var validTopNotifyInstances = Process.GetProcessesByName("TopNotify").Where((p) => !p.HasExited && p.Id != Process.GetCurrentProcess().Id);
+
+            var isGUIRunning = validTopNotifyInstances.Where((p) => {
+                string commandLine;
+                ProcessCommandLine.Retrieve(p, out commandLine, ProcessCommandLine.Parameter.CommandLine);
+                return commandLine.ToLower().Contains("--settings");
+            }).Any();
+
+            var isDaemonRunning = validTopNotifyInstances.Where((p) => {
+                string commandLine;
+                ProcessCommandLine.Retrieve(p, out commandLine, ProcessCommandLine.Parameter.CommandLine);
+                return !commandLine.ToLower().Contains("--settings");
+            }).Any();
+
+            if (!args.Contains("--settings") && isDaemonRunning && !isGUIRunning)
+            {
+                //Open GUI Instead Of Daemon
+                TrayIcon.LaunchSettingsMode(null, null);
+                Environment.Exit(1);
+            }
+            else if (args.Contains("--settings") && isGUIRunning)
+            {
+                //Exit To Prevent Multiple GUIs
+                Environment.Exit(2);
+            }
+            else if (!args.Contains("--settings") && isDaemonRunning && isGUIRunning)
+            {
+                //Exit To Prevent Multiple Daemons
+                Environment.Exit(3);
+            }
+
             AppManager.Publisher = "SamsidParty";
             AppManager.AppID = "TopNotify";
 
