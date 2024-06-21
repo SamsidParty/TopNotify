@@ -144,12 +144,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="IPC.cpp" />
     <ClCompile Include="Teams.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IPC.h" />
     <ClInclude Include="Teams.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -157,6 +159,7 @@
     <Import Project="..\TopNotify\packages\EasyHookNativePackage.redist.2.7.7097\build\native\EasyHookNativePackage.redist.targets" Condition="Exists('..\TopNotify\packages\EasyHookNativePackage.redist.2.7.7097\build\native\EasyHookNativePackage.redist.targets')" />
     <Import Project="..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets" Condition="Exists('..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets')" />
     <Import Project="..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets" Condition="Exists('..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" />
+    <Import Project="..\TopNotify\packages\boost.1.85.0\build\boost.targets" Condition="Exists('..\TopNotify\packages\boost.1.85.0\build\boost.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -165,5 +168,6 @@
     <Error Condition="!Exists('..\TopNotify\packages\EasyHookNativePackage.redist.2.7.7097\build\native\EasyHookNativePackage.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\EasyHookNativePackage.redist.2.7.7097\build\native\EasyHookNativePackage.redist.targets'))" />
     <Error Condition="!Exists('..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets'))" />
     <Error Condition="!Exists('..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets'))" />
+    <Error Condition="!Exists('..\TopNotify\packages\boost.1.85.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\boost.1.85.0\build\boost.targets'))" />
   </Target>
 </Project>
