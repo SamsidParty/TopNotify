@@ -23,6 +23,7 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 	//So Check If It's 372PX To Determine Whether This Window Is A Notification Window
 	if (cx == 372) {
 		//PlaySoundW(L"C:\\Users\\SamarthCat\\Documents\\Programming Stuff\\TopNotify\\TopNotify.WWW\\topnotify\\public\\Audio\\fortnite\\levelup_c5s1.wav", NULL, SND_FILENAME | SND_ASYNC);
+
 		return SetWindowPos(hWnd, hWndInsertAfter, 15, 15, cx, cy, uFlags);
 	}
 	else {
