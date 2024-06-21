@@ -57,6 +57,7 @@ namespace TopNotify.Daemon
 
                 if (type == IPCPacketType.RequestConfig)
                 {
+                    Logger.LogInfo("Sending FulfillConfigRequest Packet To Client");
                     var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
                     requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetRaw())).ToArray();
                     Send(requestData);
