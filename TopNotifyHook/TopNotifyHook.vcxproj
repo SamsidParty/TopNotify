@@ -160,6 +160,8 @@
     <Import Project="..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets" Condition="Exists('..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets')" />
     <Import Project="..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets" Condition="Exists('..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" />
     <Import Project="..\TopNotify\packages\boost.1.85.0\build\boost.targets" Condition="Exists('..\TopNotify\packages\boost.1.85.0\build\boost.targets')" />
+    <Import Project="..\TopNotify\packages\boost_json-vc143.1.85.0\build\boost_json-vc143.targets" Condition="Exists('..\TopNotify\packages\boost_json-vc143.1.85.0\build\boost_json-vc143.targets')" />
+    <Import Project="..\TopNotify\packages\boost_container-vc143.1.85.0\build\boost_container-vc143.targets" Condition="Exists('..\TopNotify\packages\boost_container-vc143.1.85.0\build\boost_container-vc143.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -169,5 +171,7 @@
     <Error Condition="!Exists('..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\EasyHookNativePackage.targets'))" />
     <Error Condition="!Exists('..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets'))" />
     <Error Condition="!Exists('..\TopNotify\packages\boost.1.85.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\boost.1.85.0\build\boost.targets'))" />
+    <Error Condition="!Exists('..\TopNotify\packages\boost_json-vc143.1.85.0\build\boost_json-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\boost_json-vc143.1.85.0\build\boost_json-vc143.targets'))" />
+    <Error Condition="!Exists('..\TopNotify\packages\boost_container-vc143.1.85.0\build\boost_container-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\TopNotify\packages\boost_container-vc143.1.85.0\build\boost_container-vc143.targets'))" />
   </Target>
 </Project>

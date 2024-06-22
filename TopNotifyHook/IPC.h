@@ -2,12 +2,14 @@
 
 #define WIN32_LEAN_AND_MEAN
 
+#include <boost/asio.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 #include <string>
 
 
