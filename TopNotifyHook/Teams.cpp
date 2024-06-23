@@ -1,6 +1,7 @@
 #include "Teams.h"
 #include <easyhook.h>
 #include <mmsystem.h>
+#include "Settings.h"
 
 void Teams::SetupHooks() {
 	HOOK_TRACE_INFO posHook = { NULL };
@@ -24,7 +25,15 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 	if (cx == 372) {
 		//PlaySoundW(L"C:\\Users\\SamarthCat\\Documents\\Programming Stuff\\TopNotify\\TopNotify.WWW\\topnotify\\public\\Audio\\fortnite\\levelup_c5s1.wav", NULL, SND_FILENAME | SND_ASYNC);
 
-		return SetWindowPos(hWnd, hWndInsertAfter, 15, 15, cx, cy, uFlags);
+		int overrideX = x;
+		int overrideY = y;
+
+		if (GlobalSettings::LoadedSettingsFile != nullptr) {
+			overrideX = GlobalSettings::LoadedSettingsFile->CustomPositionX;
+			overrideY = GlobalSettings::LoadedSettingsFile->CustomPositionY;
+		}
+
+		return SetWindowPos(hWnd, hWndInsertAfter, overrideX, overrideY, cx, cy, uFlags);
 	}
 	else {
 		return SetWindowPos(hWnd, hWndInsertAfter, x, y, cx, cy, uFlags);

@@ -37,7 +37,16 @@ void IPC::RunIPC() {
             try {
                 std::string json = beast::buffers_to_string(buffer.data() + 1);
                 value settingsFile = parse(json);
-                MessageBoxA(NULL, settingsFile.at("SoundPath").as_string().c_str(), "Got Data", 0);
+
+                Settings* newSettings = new Settings();
+                //Can't Get Direct Struct Deserialization Working
+                //Manually Fill In Fields
+                newSettings->Location = static_cast<NotifyLocation>(settingsFile.at("Location").as_int64());
+                newSettings->SoundPath = settingsFile.at("SoundPath").as_string().c_str();
+                newSettings->CustomPositionX = settingsFile.at("CustomPositionX").as_int64();
+                newSettings->CustomPositionY = settingsFile.at("CustomPositionY").as_int64();
+
+                GlobalSettings::SetSettings(newSettings);
             }
             catch (...) { }
 
