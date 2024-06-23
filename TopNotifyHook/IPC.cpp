@@ -55,12 +55,12 @@ void IPC::RunIPC() {
 
         ws.close(websocket::close_code::normal);
         
-        MessageBox(NULL, L"Disconnected From TopNotify Daemon", L"TopNotify Hook", 0);
+        std::this_thread::sleep_for(std::chrono::seconds(2));
         IPC::RunIPC();
     }
     catch (...)
     {
-        MessageBox(NULL, L"Failed To Connect To TopNotify Daemon", L"TopNotify Hook", 0);
+        std::this_thread::sleep_for(std::chrono::seconds(2));
         IPC::RunIPC();
     }
 }
