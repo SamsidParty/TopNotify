@@ -9,6 +9,7 @@ namespace TopNotify.Common
     public enum IPCPacketType : byte
     {
         RequestConfig, // Client To Daemon, Asks For Config
-        FulfillConfigRequest // Daemon To Client, Returns Config
+        FulfillConfigRequest, // Daemon To Client, Returns Config
+        ReportHandle // Client To Daemon, Tells The Interceptor The Notification Window Handle
     }
 }

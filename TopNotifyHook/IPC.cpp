@@ -29,7 +29,7 @@ void IPC::RunIPC() {
         beast::flat_buffer buffer;
 
         //Send Request For Config File
-        const char packet = 0;
+        const char packet = IPCPacketType::RequestConfig;
         ws.write(boost::asio::buffer(&packet, 1));
 
         while (ws.read(buffer)) {
