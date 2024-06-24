@@ -14,6 +14,13 @@
 #include <string>
 
 
+enum IPCPacketType
+{
+    RequestConfig, // Client To Daemon, Asks For Config
+    FulfillConfigRequest, // Daemon To Client, Returns Config
+    ReportHandle // Client To Daemon, Tells The Interceptor The Notification Window Handle
+};
+
 class IPC {
 	public:
 		static void RunIPC();
