@@ -29,8 +29,14 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 		int overrideY = y;
 
 		if (GlobalSettings::LoadedSettingsFile != nullptr) {
-			overrideX = GlobalSettings::LoadedSettingsFile->CustomPositionX;
-			overrideY = GlobalSettings::LoadedSettingsFile->CustomPositionY;
+			if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::TopLeft) {
+				overrideX = 15;
+				overrideY = 15;
+			}
+			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::Custom) {
+				overrideX = GlobalSettings::LoadedSettingsFile->CustomPositionX + 15; // Alignment Offset Of 15
+				overrideY = GlobalSettings::LoadedSettingsFile->CustomPositionY;
+			}
 		}
 
 		return SetWindowPos(hWnd, hWndInsertAfter, overrideX, overrideY, cx, cy, uFlags);
