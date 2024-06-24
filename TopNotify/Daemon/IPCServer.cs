@@ -40,6 +40,19 @@ namespace TopNotify.Daemon
                 SocketServer.Stop();
             }
         }
+
+        //Sends The Settings File To All Clients
+        //Called When The Settings File Changes
+        public void UpdateSettingsFile()
+        {
+            if (SocketServer.IsListening)
+            {
+                Logger.LogInfo("Sending FulfillConfigRequest Packet To Client");
+                var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
+                requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetRaw())).ToArray();
+                SocketServer.WebSocketServices["/ipc"].Sessions.Broadcast(requestData);
+            }
+        }
     }
 
     public class IPCHandler : WebSocketBehavior 
