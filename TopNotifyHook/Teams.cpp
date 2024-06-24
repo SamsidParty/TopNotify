@@ -23,8 +23,6 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 	//372PX Seems To Be The Standard Width Of Teams Notifications
 	//So Check If It's 372PX To Determine Whether This Window Is A Notification Window
 	if (cx == 372) {
-		//PlaySoundW(L"C:\\Users\\SamarthCat\\Documents\\Programming Stuff\\TopNotify\\TopNotify.WWW\\topnotify\\public\\Audio\\fortnite\\levelup_c5s1.wav", NULL, SND_FILENAME | SND_ASYNC);
-
 		int overrideX = x;
 		int overrideY = y;
 
@@ -32,6 +30,15 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 			if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::TopLeft) {
 				overrideX = 15;
 				overrideY = 15;
+			}
+			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::TopRight) {
+				overrideY = 15;
+			}
+			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::BottomLeft) {
+				overrideX = 15;
+			}
+			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::BottomRight) {
+				//Do Nothing
 			}
 			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::Custom) {
 				overrideX = GlobalSettings::LoadedSettingsFile->CustomPositionX + 15; // Alignment Offset Of 15
