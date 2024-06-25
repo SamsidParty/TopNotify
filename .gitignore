@@ -1,6 +1,8 @@
 Finish Build.bat
+Finish Build Beta.bat
 BUILD/
 MSIX/
+MSIX Beta/
 PACK/
 target/
 

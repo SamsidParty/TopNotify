@@ -32,7 +32,7 @@ namespace TopNotify.Daemon
             watcher.EnableRaisingEvents = true;
 
             Interceptors.Add(new NativeInterceptor());
-            Interceptors.Add(new SoundInterceptor());
+            //Interceptors.Add(new SoundInterceptor());
             Interceptors.Add(new TeamsInterceptor());
 
             foreach (Interceptor i in Interceptors)
