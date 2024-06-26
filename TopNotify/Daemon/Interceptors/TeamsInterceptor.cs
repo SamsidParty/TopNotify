@@ -42,9 +42,8 @@ namespace TopNotify.Daemon
                 //Inject Hook DLL Into Teams
                 InjectedProcesses.Add(teamsProcess.Id);
                 var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
-                Logger.LogInfo(Marshal.PtrToStringUni(result));
+                Logger.LogInfo("Teams Injector Returned: " + Marshal.PtrToStringUni(result));
             }
-
 
             base.Reflow();
         }

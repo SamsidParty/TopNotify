@@ -97,6 +97,8 @@ namespace TopNotify.GUI
 
         public static void Quit(object Sender, EventArgs e)
         {
+            Logger.CloseLog();
+
             //Clean Up
             Daemon.Daemon.Instance.Server.Stop();
 
