@@ -22,14 +22,6 @@ namespace TopNotify.GUI
         {
             Document.Body.AddEventListener("spawnTestNotification", SpawnTestNotification);
             Document.Body.AddEventListener("uploadConfig", UploadConfig);
-            Document.Body.AddEventListener("reactReady", ReactReady);
-        }
-
-        //Runs After The First React Render (Called Twice Sometimes)
-        public async void ReactReady(JSEvent e)
-        {
-            Document.RunFunction("window.SetIsUWP", Util.FindExe().Contains("WindowsApps").ToString());
-            Document.RunFunction("window.SetConfig", File.ReadAllText(Settings.GetFilePath()));
         }
 
         //Create A Test Notification
@@ -75,6 +67,15 @@ namespace TopNotify.GUI
 
             native.Size = new System.Drawing.Size(520, 780);
             native.Location = new Point(40, 60);
+        }
+
+        //Called By JavaScript
+        //Tells C# To Send The Config To JS
+        [JSFunction("RequestConfig")]
+        public void RequestConfig()
+        {
+            Document.RunFunction("window.SetIsUWP", Util.FindExe().Contains("WindowsApps").ToString());
+            Document.RunFunction("window.SetConfig", File.ReadAllText(Settings.GetFilePath()));
         }
 
         public static async void UploadConfig(JSEvent e)

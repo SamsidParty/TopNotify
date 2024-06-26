@@ -4,6 +4,7 @@ import App from './App.jsx'
 import CustomPosition from './CustomPosition.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
+import { useFirstRender, waitUntil } from './Helper.jsx'
 
 window.serverURL = "http://" + window.location.host + "/";
 
@@ -37,20 +38,33 @@ if (window.location.hostname != "localhost") {
 }
 
 
-var MainMethod = App;
 
-if (window.location.href.includes("?drag")) {
-    MainMethod = CustomPosition;
+ReactDOM.createRoot(document.getElementById('root')).render(RootComponent());
+
+function RootComponent(params) {
+    return (
+        <ChakraProvider>
+            <Dispatcher/>
+        </ChakraProvider>
+    )
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <ChakraProvider>
-        <MainMethod/>
-    </ChakraProvider>
-,
-)
+function Dispatcher() {
+    
+    var MainMethod = App;
 
-//TODO: Come Up With A Better Solution Than This
-setTimeout(() => {
-    document.body.dispatchEvent(new Event("reactReady"));
-}, 250);
+    if (window.location.href.includes("?drag")) {
+        MainMethod = CustomPosition;
+    }
+
+    if (useFirstRender()) {
+        setTimeout(async () => {
+            await waitUntil(() => !!window.RequestConfig); // Wait Until The RequestConfig Function Is Available To Use
+            RequestConfig(); // Tells C# React Is Ready, And To Send The Config File
+        }, 0);
+    }
+
+    return (
+        <MainMethod></MainMethod>
+    )
+}
