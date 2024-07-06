@@ -33,4 +33,4 @@ You can find technical details in [Technical.md](https://github.com/SamsidParty/
 
 # Download
 
-Download The Latest EXE Release From The [Releases](https://github.com/SamsidParty/TopNotify/releases) Page
+Download The Latest MSIX/EXE Release From The [Releases](https://github.com/SamsidParty/TopNotify/releases) Page
