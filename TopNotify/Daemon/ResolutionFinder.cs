@@ -52,6 +52,7 @@ namespace TopNotify.Daemon
         }
         #endregion
 
+
         public static Rectangle GetResolution()
         {
             DEVMODE devMode = default;

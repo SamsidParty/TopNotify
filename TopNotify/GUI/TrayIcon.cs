@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
+using TopNotify.Daemon;
 using WebFramework.Backend;
 
 namespace TopNotify.GUI
@@ -17,8 +18,7 @@ namespace TopNotify.GUI
 
 
         public static dynamic Application = null;
-        //Used By Interceptors To Find Screen Resolution
-        public static dynamic Screen = null;
+
 
 
         /// <summary>
@@ -42,13 +42,6 @@ namespace TopNotify.GUI
                     Application = type.GetMethods()
                         .Where((method) => method.Name == "Run" && method.IsStatic && method.GetParameters().Length == 0)
                         .First();
-                }
-                else if (type.Name == "Screen")
-                {
-                    Screen = type.GetProperties()
-                        .Where((prop) => prop.Name == "PrimaryScreen")
-                        .First()
-                        .GetValue(null, null);
                 }
                 else if (type.Name == "NotifyIcon")
                 {
