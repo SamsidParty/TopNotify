@@ -53,20 +53,31 @@ namespace TopNotify.Daemon
         #endregion
 
 
-        public static Rectangle GetResolution()
+        public static Rectangle GetScaledResolution()
+        {
+            var factor = 1f + (((1f / GetInverseScale()) - 1f) / 2);
+            var realRes = GetRealResolution();
+
+            return new Rectangle(0, 0, (int)(realRes.Width * factor), (int)(realRes.Height * factor));
+        }
+
+        public static Rectangle GetRealResolution()
         {
             DEVMODE devMode = default;
             devMode.dmSize = (short)Marshal.SizeOf(devMode);
             EnumDisplaySettings(null, -1, ref devMode);
 
-            var factor = 1f + (((1f / GetScale()) - 1f) / 2);
+            return new Rectangle(0, 0, (int)(devMode.dmPelsWidth), (int)(devMode.dmPelsHeight));
+        }
 
-            return new Rectangle(0, 0, (int)(devMode.dmPelsWidth * factor), (int)(devMode.dmPelsHeight * factor));
+        public static float GetInverseScale()
+        {
+            return 100f / (float)DPIUtil.ScaleFactor(Point.Empty);
         }
 
         public static float GetScale()
         {
-            return 100f / (float)DPIUtil.ScaleFactor(Point.Empty);
+            return 1f / GetInverseScale();
         }
     }
 }

@@ -17,9 +17,10 @@ struct Settings
 	float CustomPositionPercentY;
 	std::string SoundPath;
 
-	// Data Passed By C#, Not Part Of The ConfigFile
+	// Data Passed By C#, Not Part Of The Config File
 	int __ScreenWidth;
 	int __ScreenHeight;
+	float __ScreenScale;
 };
 
 class GlobalSettings {

@@ -20,9 +20,9 @@ void Teams::SetupHooks() {
 
 BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int cx, int cy, UINT uFlags) {
 
-	//372PX Seems To Be The Standard Width Of Teams Notifications
-	//So Check If It's 372PX To Determine Whether This Window Is A Notification Window
-	if (cx == 372) {
+	//372PX Seems To Be The Standard Width Of Teams Notifications, Scaled
+	//So Check If It's 372PX (Or Scaled Equivalent) To Determine Whether This Window Is A Notification Window
+	if (cx == 372 || cx == (int)(372 * GlobalSettings::LoadedSettingsFile->__ScreenScale) || cx == 372 * (int)(372 * (1 / GlobalSettings::LoadedSettingsFile->__ScreenScale))) {
 		int overrideX = x;
 		int overrideY = y;
 
@@ -42,7 +42,7 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 			}
 			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::Custom) {
 				overrideX = (GlobalSettings::LoadedSettingsFile->CustomPositionPercentX / 100 * GlobalSettings::LoadedSettingsFile->__ScreenWidth) + 15; // Alignment Offset Of 15
-				overrideY = (GlobalSettings::LoadedSettingsFile->CustomPositionPercentY / 100 * GlobalSettings::LoadedSettingsFile->__ScreenHeight);
+				overrideY = (GlobalSettings::LoadedSettingsFile->CustomPositionPercentY / 100 * GlobalSettings::LoadedSettingsFile->__ScreenHeight) + 15;
 			}
 		}
 
