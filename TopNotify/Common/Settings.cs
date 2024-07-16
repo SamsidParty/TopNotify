@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Windows.Foundation.Metadata;
 
 namespace TopNotify.Common
 {
@@ -23,11 +24,17 @@ namespace TopNotify.Common
         public float Opacity = 0;
 
         // Position Where Origin Is The Top Left Of The Screen
-        public int CustomPositionX = 0;
-        public int CustomPositionY = 0;
+        // 0% On Both Is The Top Left
+        // 100% On Both Is Bottom Right
+        public float CustomPositionPercentX = 0;
+        public float CustomPositionPercentY = 0;
 
         // Relative Path To The WAV File Stored In WWW/Audio, Without .wav Extension
         public string SoundPath = "windows/win11";
+
+        // Deprecated Settings
+        [Deprecated("Use CustomPositionPercentX Instead", DeprecationType.Deprecate, 241)] public int CustomPositionX = 0; // Deprecated In Favor Of Percentage Units
+        [Deprecated("Use CustomPositionPercentY Instead", DeprecationType.Deprecate, 241)] public int CustomPositionY = 0; // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         public static Settings Get()
         {
