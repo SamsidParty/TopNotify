@@ -42,7 +42,7 @@ namespace TopNotify.GUI
             var currentConfig = Settings.Get();
 
             native.Size = new System.Drawing.Size(396, 152 - 32); // Titlebar Height Is 32px
-            native.Location = new Point(currentConfig.CustomPositionX, currentConfig.CustomPositionY + 32); // Set Position To What's In The Config
+            native.Location = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetResolution().Height) + 32); // Set Position To What's In The Config
         }
 
         //Called By JavaScript
@@ -61,8 +61,9 @@ namespace TopNotify.GUI
 
             //Write It To The Config
             var currentConfig = Settings.Get();
-            currentConfig.CustomPositionX = DragRect.X;
-            currentConfig.CustomPositionY = DragRect.Y - 32; // Titlebar Height Is 32px
+            currentConfig.CustomPositionPercentX = (float)DragRect.X / (float)ResolutionFinder.GetResolution().Width * 100f;
+            currentConfig.CustomPositionPercentY = ((float)DragRect.Y - 32) /* Titlebar Height Is 32px */ / (float)ResolutionFinder.GetResolution().Height * 100f;
+            Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
             UploadConfig(JsonConvert.SerializeObject(currentConfig));
 
             native.Size = new System.Drawing.Size(520, 780);
