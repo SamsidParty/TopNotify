@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using TopNotify.Daemon;
 using Windows.Foundation.Metadata;
 
 namespace TopNotify.Common
@@ -32,6 +33,10 @@ namespace TopNotify.Common
         // Relative Path To The WAV File Stored In WWW/Audio, Without .wav Extension
         public string SoundPath = "windows/win11";
 
+        // Dynamic Fields That Are Cached, Useful For Interop
+        public int __ScreenWidth = 0;
+        public int __ScreenHeight = 0;
+
         // Deprecated Settings
         [Deprecated("Use CustomPositionPercentX Instead", DeprecationType.Deprecate, 241)] public int CustomPositionX = 0; // Deprecated In Favor Of Percentage Units
         [Deprecated("Use CustomPositionPercentY Instead", DeprecationType.Deprecate, 241)] public int CustomPositionY = 0; // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -55,6 +60,16 @@ namespace TopNotify.Common
 
 
             return content;
+        }
+
+        /// <summary>
+        /// Returns A JSON String Of The Settings, Modified With Custom Fields For IPC
+        /// </summary>
+        public static string GetForIPC()
+        {
+            var settings = Settings.Get();
+            settings.UpdateDynamicFields();
+            return JsonConvert.SerializeObject(settings);
         }
 
         /// <summary>
@@ -114,6 +129,15 @@ namespace TopNotify.Common
             {
                 DeleteStartupShortcut();
             }
+        }
+
+        /// <summary>
+        /// Updates The Temporary Fields Used By Other Parts Of TopNotify (eg. __ScreenWidth)
+        /// </summary>
+        public void UpdateDynamicFields()
+        {
+            __ScreenWidth = ResolutionFinder.GetResolution().Width;
+            __ScreenHeight = ResolutionFinder.GetResolution().Height;
         }
 
         public static void CreateStartupShortcut()

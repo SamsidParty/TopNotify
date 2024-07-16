@@ -49,7 +49,7 @@ namespace TopNotify.Daemon
             {
                 Logger.LogInfo("Sending FulfillConfigRequest Packet To Client");
                 var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
-                requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetRaw())).ToArray();
+                requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetForIPC())).ToArray();
                 SocketServer.WebSocketServices["/ipc"].Sessions.Broadcast(requestData);
             }
         }
