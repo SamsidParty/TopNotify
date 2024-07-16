@@ -66,11 +66,14 @@ function App() {
             <h2>Settings</h2>
 
             <div className="locationCard">
-                <div className="notifyLocation tl"><Button onClick={() => ChangeLocation(0)}>{Config.Location == 0 ? "\uea5e" : "\ued27"}</Button></div>
-                <div className="notifyLocation tr"><Button onClick={() => ChangeLocation(1)}>{Config.Location == 1 ? "\uea5e" : "\ued27"}</Button></div>
-                <div className="notifyLocation bl"><Button onClick={() => ChangeLocation(2)}>{Config.Location == 2 ? "\uea5e" : "\ued27"}</Button></div>
-                <div className="notifyLocation br"><Button onClick={() => ChangeLocation(3)}>{Config.Location == 3 ? "\uea5e" : "\ued27"}</Button></div>
-                <div className="notifyLocation custom"><Button onClick={() => ChangeLocation(4)}>{Config.Location == 4 ? "\uea5e" : "\ued27"}&nbsp;<p>Custom</p></Button></div>
+                <div className="notifyLocations">
+                    <div className="notifyLocation tl"><Button onClick={() => ChangeLocation(0)}>{Config.Location == 0 ? "\uea5e" : "\ued27"}</Button></div>
+                    <div className="notifyLocation tr"><Button onClick={() => ChangeLocation(1)}>{Config.Location == 1 ? "\uea5e" : "\ued27"}</Button></div>
+                    <div className="notifyLocation bl"><Button onClick={() => ChangeLocation(2)}>{Config.Location == 2 ? "\uea5e" : "\ued27"}</Button></div>
+                    <div className="notifyLocation br"><Button onClick={() => ChangeLocation(3)}>{Config.Location == 3 ? "\uea5e" : "\ued27"}</Button></div>
+                    <div className="notifyLocation custom"><Button onClick={() => ChangeLocation(4)}>{Config.Location == 4 ? "\uea5e" : "\ued27"}&nbsp;<p>Custom</p></Button></div>
+                </div>
+                <div className="notifyTaskbar"><img src="/Image/Taskbar.png"></img></div>
             </div>
 
             <Divider />
