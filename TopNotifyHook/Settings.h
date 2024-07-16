@@ -13,9 +13,13 @@ enum NotifyLocation {
 struct Settings
 {
 	NotifyLocation Location;
-	int CustomPositionX;
-	int CustomPositionY;
+	float CustomPositionPercentX;
+	float CustomPositionPercentY;
 	std::string SoundPath;
+
+	// Data Passed By C#, Not Part Of The ConfigFile
+	int __ScreenWidth;
+	int __ScreenHeight;
 };
 
 class GlobalSettings {

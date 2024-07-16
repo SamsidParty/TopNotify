@@ -43,8 +43,10 @@ void IPC::RunIPC() {
                 //Manually Fill In Fields
                 newSettings->Location = static_cast<NotifyLocation>(settingsFile.at("Location").as_int64());
                 newSettings->SoundPath = settingsFile.at("SoundPath").as_string().c_str();
-                newSettings->CustomPositionX = settingsFile.at("CustomPositionX").as_int64();
-                newSettings->CustomPositionY = settingsFile.at("CustomPositionY").as_int64();
+                newSettings->CustomPositionPercentX = settingsFile.at("CustomPositionPercentX").as_double();
+                newSettings->CustomPositionPercentY = settingsFile.at("CustomPositionPercentY").as_double();
+                newSettings->__ScreenWidth = settingsFile.at("__ScreenWidth").as_int64();
+                newSettings->__ScreenHeight = settingsFile.at("__ScreenHeight").as_int64();
 
                 GlobalSettings::SetSettings(newSettings);
             }

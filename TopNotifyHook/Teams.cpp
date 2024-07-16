@@ -41,8 +41,8 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 				//Do Nothing
 			}
 			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::Custom) {
-				overrideX = GlobalSettings::LoadedSettingsFile->CustomPositionX + 15; // Alignment Offset Of 15
-				overrideY = GlobalSettings::LoadedSettingsFile->CustomPositionY;
+				overrideX = (GlobalSettings::LoadedSettingsFile->CustomPositionPercentX / 100 * GlobalSettings::LoadedSettingsFile->__ScreenWidth) + 15; // Alignment Offset Of 15
+				overrideY = (GlobalSettings::LoadedSettingsFile->CustomPositionPercentY / 100 * GlobalSettings::LoadedSettingsFile->__ScreenHeight);
 			}
 		}
 
