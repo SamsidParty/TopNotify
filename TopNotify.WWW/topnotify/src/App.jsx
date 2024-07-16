@@ -63,7 +63,7 @@ function App() {
 
             <DebugMenu></DebugMenu>
 
-            <h2>Settings</h2>
+            <h2>TopNotify</h2>
 
             <div className="locationCard">
                 <div className="notifyLocations">
@@ -147,6 +147,10 @@ function App() {
             </div>
 
             <br></br>
+
+            <div className="footer">
+                <img className="footerLogo" src="/Image/PartyWordmarkIconMono.png"></img>
+            </div>
         </div>
     )
 }
