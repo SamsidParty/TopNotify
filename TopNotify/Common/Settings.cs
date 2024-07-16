@@ -36,6 +36,7 @@ namespace TopNotify.Common
         // Dynamic Fields That Are Cached, Useful For Interop
         public int __ScreenWidth = 0;
         public int __ScreenHeight = 0;
+        public float __ScreenScale = 1;
 
         // Deprecated Settings
         [Deprecated("Use CustomPositionPercentX Instead", DeprecationType.Deprecate, 241)] public int CustomPositionX = 0; // Deprecated In Favor Of Percentage Units
@@ -136,8 +137,9 @@ namespace TopNotify.Common
         /// </summary>
         public void UpdateDynamicFields()
         {
-            __ScreenWidth = ResolutionFinder.GetResolution().Width;
-            __ScreenHeight = ResolutionFinder.GetResolution().Height;
+            __ScreenWidth = ResolutionFinder.GetRealResolution().Width;
+            __ScreenHeight = ResolutionFinder.GetRealResolution().Height;
+            __ScreenScale = ResolutionFinder.GetScale();
         }
 
         public static void CreateStartupShortcut()

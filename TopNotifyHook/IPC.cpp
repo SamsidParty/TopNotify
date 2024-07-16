@@ -47,6 +47,7 @@ void IPC::RunIPC() {
                 newSettings->CustomPositionPercentY = settingsFile.at("CustomPositionPercentY").as_double();
                 newSettings->__ScreenWidth = settingsFile.at("__ScreenWidth").as_int64();
                 newSettings->__ScreenHeight = settingsFile.at("__ScreenHeight").as_int64();
+                newSettings->__ScreenScale = settingsFile.at("__ScreenScale").as_double();
 
                 GlobalSettings::SetSettings(newSettings);
             }

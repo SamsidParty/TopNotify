@@ -59,8 +59,10 @@ namespace TopNotify.Daemon
         #endregion
 
         public IntPtr hwnd;
-        public int MainDisplayWidth;
-        public int MainDisplayHeight;
+        public int ScaledMainDisplayWidth;
+        public int ScaledMainDisplayHeight;
+        public int RealMainDisplayWidth;
+        public int RealMainDisplayHeight;
         public float ScaleFactor;
 
         public override void Start()
@@ -108,9 +110,11 @@ namespace TopNotify.Daemon
                     foundHwnd = IntPtr.Zero; // Always use fallback mode if this setting is enabled
                 }
 
-                MainDisplayWidth = ResolutionFinder.GetResolution().Width;
-                MainDisplayHeight = ResolutionFinder.GetResolution().Height;
-                ScaleFactor = ResolutionFinder.GetScale();
+                ScaledMainDisplayWidth = ResolutionFinder.GetScaledResolution().Width;
+                ScaledMainDisplayHeight = ResolutionFinder.GetScaledResolution().Height;
+                RealMainDisplayWidth = ResolutionFinder.GetRealResolution().Width;
+                RealMainDisplayHeight = ResolutionFinder.GetRealResolution().Height;
+                ScaleFactor = ResolutionFinder.GetInverseScale();
 
                 //The Notification Isn't In A Supported Language
                 if (foundHwnd == IntPtr.Zero)
@@ -123,7 +127,7 @@ namespace TopNotify.Daemon
                         StringBuilder sb = new StringBuilder();
                         GetWindowText(hwnd, sb, 260);
 
-                        if ((MainDisplayWidth - rect.X) == 396)
+                        if ((ScaledMainDisplayWidth - rect.X) == 396)
                         {
                             foundHwnd = win;
                         }
@@ -160,19 +164,19 @@ namespace TopNotify.Daemon
             }
             else if (Settings.Location == NotifyLocation.TopRight)
             {
-                SetWindowPos(hwnd, 0, MainDisplayWidth - NotifyRect.Width, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - NotifyRect.Width, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomLeft)
             {
-                SetWindowPos(hwnd, 0, 0, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, 0, ScaledMainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomRight) // Default In Windows, But Here For Completeness Sake
             {
-                SetWindowPos(hwnd, 0, MainDisplayWidth - NotifyRect.Width, MainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - NotifyRect.Width, ScaledMainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else // Custom Position
             {
-                SetWindowPos(hwnd, 0, (int)(Settings.CustomPositionPercentX / 100f * MainDisplayWidth), (int)(Settings.CustomPositionPercentY / 100f * MainDisplayHeight), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, (int)(Settings.CustomPositionPercentX / 100f * RealMainDisplayWidth), (int)(Settings.CustomPositionPercentY / 100f * RealMainDisplayHeight), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
 
         }
