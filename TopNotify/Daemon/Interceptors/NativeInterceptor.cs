@@ -172,14 +172,7 @@ namespace TopNotify.Daemon
             }
             else // Custom Position
             {
-                //Check If The Position Is Out Of Frame
-                if (Settings.CustomPositionX > MainDisplayWidth + 1 - NotifyRect.Width || Settings.CustomPositionY > MainDisplayHeight + 1 - NotifyRect.Height)
-                {
-                    Logger.LogWarning("Notification Out Of Bounds");
-                    return;
-                }
-
-                SetWindowPos(hwnd, 0, Settings.CustomPositionX, Settings.CustomPositionY, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, (int)(Settings.CustomPositionPercentX / 100f * MainDisplayWidth), (int)(Settings.CustomPositionPercentY / 100f * MainDisplayHeight), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
 
         }
