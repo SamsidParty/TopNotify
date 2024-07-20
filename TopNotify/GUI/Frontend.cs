@@ -41,8 +41,7 @@ namespace TopNotify.GUI
             var native = (WindowManager.MainWindow as PTWebWindow).Native;
             var currentConfig = Settings.Get();
 
-            native.Size = new System.Drawing.Size((int)(396f * ResolutionFinder.GetScale()), (int)(120f * ResolutionFinder.GetScale()));
-            native.Location = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32); // Set Position To What's In The Config
+            native.FullScreen = true;
         }
 
         //Called By JavaScript
@@ -66,6 +65,7 @@ namespace TopNotify.GUI
             Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
             UploadConfig(JsonConvert.SerializeObject(currentConfig));
 
+            native.FullScreen = false;
             native.Size = new System.Drawing.Size((int)(520f * ResolutionFinder.GetScale()), (int)(780f * ResolutionFinder.GetScale()));
             native.Location = new Point(40, 60);
         }
