@@ -17,7 +17,10 @@ namespace TopNotify.Daemon
 
         private static List<int> InjectedProcesses = new List<int>();
 
-        public Process FindTeamsProcess()
+        /// <summary>
+        /// Returns All The Running ms-teams.exe Processes
+        /// </summary>
+        public Process[] FindTeamsProcesses()
         {
             var possibleTeamsProcesses = Process.GetProcessesByName("ms-teams").Where((Process p) =>
             {
@@ -28,22 +31,25 @@ namespace TopNotify.Daemon
                 catch { return false; }
             });
 
-            //Return The Teams Process If It's Running
-            //Otherwise Return Null
-            return possibleTeamsProcesses.Any() ? possibleTeamsProcesses.FirstOrDefault()! : null!;
+            return possibleTeamsProcesses.ToArray()!;
         }
 
         public override void Reflow()
         {
-            var teamsProcess = FindTeamsProcess();
+            var teamsProcesses = FindTeamsProcesses();
 
-            if (teamsProcess != null && !InjectedProcesses.Contains(teamsProcess.Id))
+            foreach (var teamsProcess in teamsProcesses)
             {
-                //Inject Hook DLL Into Teams
-                InjectedProcesses.Add(teamsProcess.Id);
-                var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
-                Logger.LogInfo("Teams Injector Returned: " + Marshal.PtrToStringUni(result));
+                if (teamsProcess != null && !InjectedProcesses.Contains(teamsProcess.Id)) // Check If It's Valid And Not Already Injected
+                {
+                    //Inject Hook DLL Into Teams
+                    InjectedProcesses.Add(teamsProcess.Id);
+                    var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
+                    Logger.LogInfo("Teams Injector Returned: " + Marshal.PtrToStringUni(result));
+                }
             }
+
+
 
             base.Reflow();
         }
