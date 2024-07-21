@@ -100,8 +100,6 @@ namespace TopNotify.Common
             //Change Color Based On Theme (light, dark)
             TitlebarColor = new ThemeBasedColor(Color.FromArgb(255, 255, 255), Color.FromArgb(34, 34, 34));
 
-            Logger.LogWarning("scale +" + ResolutionFinder.GetScale().ToString());
-
             WindowManager.Options = new WindowOptions()
             {
                 TitlebarColor = TitlebarColor,

@@ -44,6 +44,29 @@ function UploadConfig() {
     window.setRerender(rerender + 1);
 }
 
+function CalculatePreviewContainerStyle() {
+    var previewWidth = 464;
+    var aspect = 0.5625; // 16:9
+
+    if (!!window.Config.__ScreenWidth) {
+        aspect = window.Config.__ScreenHeight / window.Config.__ScreenWidth;
+    }
+
+    return { width: previewWidth, height: (previewWidth * aspect) };
+}
+
+function CalculateTaskbarPreviewStyle() {
+    //Windows Taskbar Is 48px
+    //In The Small Preview, It Should Be 11.6px, Scaled
+    return { 
+        height: !!window.Config.__ScreenScale ? (11.6 * window.Config.__ScreenScale) : 11.6
+    };
+}
+
+function CalculateNotificationPreviewStyle() {
+    return {};
+}
+
 function App() {
 
     var [rerender, setRerender] = useState(0);
@@ -65,15 +88,9 @@ function App() {
 
             <h2>TopNotify</h2>
 
-            <div className="locationCard">
-                <div className="notifyLocations">
-                    <div className="notifyLocation tl"><Button onClick={() => ChangeLocation(0)}>{Config.Location == 0 ? "\uea5e" : "\ued27"}</Button></div>
-                    <div className="notifyLocation tr"><Button onClick={() => ChangeLocation(1)}>{Config.Location == 1 ? "\uea5e" : "\ued27"}</Button></div>
-                    <div className="notifyLocation bl"><Button onClick={() => ChangeLocation(2)}>{Config.Location == 2 ? "\uea5e" : "\ued27"}</Button></div>
-                    <div className="notifyLocation br"><Button onClick={() => ChangeLocation(3)}>{Config.Location == 3 ? "\uea5e" : "\ued27"}</Button></div>
-                    <div className="notifyLocation custom"><Button onClick={() => ChangeLocation(4)}>{Config.Location == 4 ? "\uea5e" : "\ued27"}&nbsp;<p>Custom</p></Button></div>
-                </div>
-                <div className="notifyTaskbar"><img src="/Image/Taskbar.png"></img></div>
+            <div className="previewContainer" style={CalculatePreviewContainerStyle()}>
+                <div className="notificationPreview" style={CalculateNotificationPreviewStyle()}></div>
+                <div className="taskbarPreview" style={CalculateTaskbarPreviewStyle()}><img src="/Image/Taskbar.png"></img></div>
             </div>
 
             <Divider />

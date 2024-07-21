@@ -67,9 +67,8 @@ body {
 }
 
 
-.locationCard {
+.previewContainer {
     width: 100%;
-    height: 280px;
     background-image: url("/Image/BackgroundDecoration.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -81,10 +80,9 @@ body {
 }
 
 
-.locationCard .notifyTaskbar {
+.previewContainer .taskbarPreview {
     position: absolute;
     bottom: 0;
-    height: 20px;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -92,66 +90,11 @@ body {
     justify-content: center;
 }
 
-.locationCard .notifyTaskbar img {
+.previewContainer .taskbarPreview img {
     height: 80%;
 }
 
 
-.locationCard .notifyLocations {
-    position: relative;
-    width: 100%;
-    height: calc(100% - 20px);
-}
-
-.locationCard .notifyLocation {
-    position: absolute;
-    background-color: var(--col-overlay);
-    width: 120px;
-    height: 50px;
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.locationCard .notifyLocation button {
-    width: 100%;
-    height: 100%;
-    background-color: transparent !important;
-    color: var(--col-text) !important;
-    font-size: 30px !important;
-    font-weight: 500 !important;
-}
-
-.locationCard .notifyLocation.tl {
-    left: 15px;
-    top: 15px;
-}
-
-.locationCard .notifyLocation.tr {
-    right: 15px;
-    top: 15px;
-}
-
-.locationCard .notifyLocation.bl {
-    left: 15px;
-    bottom: 15px;
-}
-
-.locationCard .notifyLocation.br {
-    right: 15px;
-    bottom: 15px;
-}
-
-.locationCard .notifyLocation.custom {
-    top: calc(50% - 25px);
-    left: calc(50% - 80px);
-    width: 160px;
-}
-
-.locationCard .notifyLocation.custom p {
-    font-size: 18px;
-}
 
 
 .footer {
