@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import CustomPosition from './CustomPosition.jsx'
+import DragMode from './DragMode.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
 import { useFirstRender, waitUntil } from './Helper.jsx'
@@ -54,7 +54,7 @@ function Dispatcher() {
     var MainMethod = App;
 
     if (window.location.href.includes("?drag")) {
-        MainMethod = CustomPosition;
+        MainMethod = DragMode;
     }
 
     if (useFirstRender()) {
