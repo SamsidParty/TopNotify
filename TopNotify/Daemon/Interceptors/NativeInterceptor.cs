@@ -9,6 +9,7 @@ using System.Windows;
 using System.Threading.Tasks;
 using WebFramework.Backend;
 using TopNotify.Common;
+using SamsidParty_TopNotify.Daemon;
 
 namespace TopNotify.Daemon
 {
@@ -59,6 +60,7 @@ namespace TopNotify.Daemon
         #endregion
 
         public IntPtr hwnd;
+        public ExtendedStyleManager ExStyleManager;
         public int ScaledMainDisplayWidth;
         public int ScaledMainDisplayHeight;
         public int RealMainDisplayWidth;
@@ -68,6 +70,7 @@ namespace TopNotify.Daemon
         public override void Start()
         {
             base.Start();
+            ExStyleManager = new ExtendedStyleManager(new IntPtr(0x00200008)); // Magic Number, Default Notification Style
             Reflow();
         }
 
@@ -140,8 +143,7 @@ namespace TopNotify.Daemon
                 }
 
                 Update();
-                WindowOpacity.ApplyToWindow(hwnd);
-                WindowClickThrough.ApplyToWindow(hwnd);
+                ExStyleManager.Update(hwnd);
 
             }
             catch { }
