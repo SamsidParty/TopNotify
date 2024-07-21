@@ -18,7 +18,7 @@
 .app.loaded {
     transition: opacity 0.3s, transform 0.3s;
     opacity: 1;
-    height: 96vh;
+    height: calc(100vh - 27px);
     transform: scale(1);
 }
 
@@ -194,17 +194,6 @@ h2 {
 
 label {
     font-size: 14px;
-}
-
-.dragMode h2 {
-    font-size: 4vw;
-    line-height: 4vw;
-}
-
-.dragMode p {
-    margin-top: 1.5vw;
-    font-size: 3vw;
-    line-height: 4vw;
 }
 
 .iconButton {

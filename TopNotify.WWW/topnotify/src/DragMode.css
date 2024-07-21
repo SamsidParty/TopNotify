@@ -1,0 +1,13 @@
+.dragMode {
+    position: relative;
+}
+
+.dragMode h2 {
+    font-size: 2rem;
+}
+
+.exitDragModeButton {
+    position: absolute !important;
+    bottom: 0px;
+    right: 0px;
+}
