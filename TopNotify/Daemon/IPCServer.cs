@@ -9,6 +9,7 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 using Logger = WebFramework.Backend.Logger;
 using TopNotify.Common;
+using SamsidParty_TopNotify.Daemon;
 
 namespace TopNotify.Daemon
 {
@@ -88,7 +89,8 @@ namespace TopNotify.Daemon
                 }
                 else if (type == IPCPacketType.FulfillHandleRequest)
                 {
-                    Logger.LogWarning(Encoding.UTF8.GetString(packet));
+                    var handle = new IntPtr(int.Parse(Encoding.UTF8.GetString(packet)));
+                    ExtendedStyleManager.AnonymousUpdate(handle, 00280024);
                 }
             }
             catch (Exception ex)
