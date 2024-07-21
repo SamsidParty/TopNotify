@@ -29,27 +29,41 @@ void IPC::RunIPC() {
         beast::flat_buffer buffer;
 
         //Send Request For Config File
-        const char packet = IPCPacketType::RequestConfig;
-        ws.write(boost::asio::buffer(&packet, 1));
+        const char requestConfigPacket = IPCPacketType::RequestConfig;
+        ws.write(boost::asio::buffer(&requestConfigPacket, 1));
 
         while (ws.read(buffer)) {
 
             try {
-                std::string json = beast::buffers_to_string(buffer.data() + 1);
-                value settingsFile = parse(json);
+                std::string data = beast::buffers_to_string(buffer.data());
+                if (data[0] == IPCPacketType::FulfillConfigRequest) {
+                    std::string json = beast::buffers_to_string(buffer.data() + 1);
+                    value settingsFile = parse(json);
 
-                Settings* newSettings = new Settings();
-                //Can't Get Direct Struct Deserialization Working
-                //Manually Fill In Fields
-                newSettings->Location = static_cast<NotifyLocation>(settingsFile.at("Location").as_int64());
-                newSettings->SoundPath = settingsFile.at("SoundPath").as_string().c_str();
-                newSettings->CustomPositionPercentX = settingsFile.at("CustomPositionPercentX").as_double();
-                newSettings->CustomPositionPercentY = settingsFile.at("CustomPositionPercentY").as_double();
-                newSettings->__ScreenWidth = settingsFile.at("__ScreenWidth").as_int64();
-                newSettings->__ScreenHeight = settingsFile.at("__ScreenHeight").as_int64();
-                newSettings->__ScreenScale = settingsFile.at("__ScreenScale").as_double();
+                    Settings* newSettings = new Settings();
+                    //Can't Get Direct Struct Deserialization Working
+                    //Manually Fill In Fields
+                    newSettings->Location = static_cast<NotifyLocation>(settingsFile.at("Location").as_int64());
+                    newSettings->SoundPath = settingsFile.at("SoundPath").as_string().c_str();
+                    newSettings->CustomPositionPercentX = settingsFile.at("CustomPositionPercentX").as_double();
+                    newSettings->CustomPositionPercentY = settingsFile.at("CustomPositionPercentY").as_double();
+                    newSettings->__ScreenWidth = settingsFile.at("__ScreenWidth").as_int64();
+                    newSettings->__ScreenHeight = settingsFile.at("__ScreenHeight").as_int64();
+                    newSettings->__ScreenScale = settingsFile.at("__ScreenScale").as_double();
 
-                GlobalSettings::SetSettings(newSettings);
+                    GlobalSettings::SetSettings(newSettings);
+                }
+                else if (data[0] == IPCPacketType::RequestHandle) {
+                    int handle = GlobalSettings::HandleToReport;
+
+                    if (handle > 0) {
+                        char fullfillHandlePacket[128];
+                        fullfillHandlePacket[0] = IPCPacketType::FulfillHandleRequest;
+                        sprintf(fullfillHandlePacket + 1, "%d", handle);
+                        ws.write(boost::asio::buffer(&fullfillHandlePacket, strlen(fullfillHandlePacket)));
+                    }
+                }
+
             }
             catch (...) { }
 

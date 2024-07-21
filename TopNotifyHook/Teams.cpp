@@ -23,6 +23,9 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 	//372PX Seems To Be The Standard Width Of Teams Notifications, Scaled
 	//So Check If It's 372PX (Or Scaled Equivalent) To Determine Whether This Window Is A Notification Window
 	if (cx == 372 || cx == (int)(372 * GlobalSettings::LoadedSettingsFile->__ScreenScale) || cx == 372 * (int)(372 * (1 / GlobalSettings::LoadedSettingsFile->__ScreenScale))) {
+
+		GlobalSettings::SetHandleToReport((int)hWnd);
+
 		int overrideX = x;
 		int overrideY = y;
 

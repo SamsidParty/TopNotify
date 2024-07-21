@@ -53,6 +53,17 @@ namespace TopNotify.Daemon
                 SocketServer.WebSocketServices["/ipc"].Sessions.Broadcast(requestData);
             }
         }
+
+        //Requests Window Handles From All Clients
+        public void UpdateHandles()
+        {
+            if (SocketServer.IsListening)
+            {
+                Logger.LogInfo("Sending RequestHandle To All Clients");
+                var requestData = new byte[] { (byte)IPCPacketType.RequestHandle };
+                SocketServer.WebSocketServices["/ipc"].Sessions.Broadcast(requestData);
+            }
+        }
     }
 
     public class IPCHandler : WebSocketBehavior 
@@ -74,6 +85,10 @@ namespace TopNotify.Daemon
                     var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
                     requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetForIPC())).ToArray();
                     Send(requestData);
+                }
+                else if (type == IPCPacketType.FulfillHandleRequest)
+                {
+                    Logger.LogWarning(Encoding.UTF8.GetString(packet));
                 }
             }
             catch (Exception ex)
