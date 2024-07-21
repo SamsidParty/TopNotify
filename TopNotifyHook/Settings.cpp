@@ -9,4 +9,9 @@ void GlobalSettings::SetSettings(Settings* newSettings) {
 	GlobalSettings::LoadedSettingsFile = newSettings;
 }
 
+void GlobalSettings::SetHandleToReport(int newHandle) {
+	GlobalSettings::HandleToReport = newHandle;
+}
+
 Settings* GlobalSettings::LoadedSettingsFile = nullptr;
+int GlobalSettings::HandleToReport = 0;

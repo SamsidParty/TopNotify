@@ -27,4 +27,6 @@ class GlobalSettings {
 	public:
 		static Settings* LoadedSettingsFile;
 		static void SetSettings(Settings* newSettings);
+		static int HandleToReport;
+		static void SetHandleToReport(int newHandle);
 };

@@ -43,6 +43,8 @@ namespace SamsidParty_TopNotify.Daemon
 
         public void Update(IntPtr hwnd)
         {
+            if (hwnd == IntPtr.Zero) { return; }
+
             LastHandle = hwnd;
 
             IntPtr styleToApply = BaseStyle;
