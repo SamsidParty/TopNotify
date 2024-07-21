@@ -20,7 +20,10 @@ namespace TopNotify.Daemon
         //Run Often Just To Rediscover Windows/Configs And Such
         public virtual void Reflow()
         {
-            Daemon.Instance.Server.UpdateHandles();
+            if (Daemon.Instance.Server != null)
+            {
+                Daemon.Instance.Server.UpdateHandles();
+            }
         }
 
         public virtual void Start()

@@ -47,23 +47,40 @@ namespace SamsidParty_TopNotify.Daemon
 
             LastHandle = hwnd;
 
-            IntPtr styleToApply = BaseStyle;
+            IntPtr styleToApply = AddExtendedStyles(BaseStyle);
             foreach (var style in Styles)
             {
                 styleToApply |= style;
-            }
-
-            styleToApply |= WS_EX_LAYERED;
-
-            if (InterceptorManager.Instance.CurrentSettings.EnableClickThrough)
-            {
-                styleToApply |= WS_EX_TRANSPARENT;
             }
 
             SetWindowLongPtr(hwnd, GWL_EXSTYLE, styleToApply);
 
             //Set Window Opacity
             SetLayeredWindowAttributes(hwnd, 0, (byte)(42.5 * (6 - InterceptorManager.Instance.CurrentSettings.Opacity)), LWA_ALPHA);
+        }
+
+        //Like Update, But Can Be Used Without An ExtendedStyleManager Object
+        //Doesn't Apply Extra Styles From The Instance
+        public static void AnonymousUpdate(IntPtr hwnd, IntPtr baseStyle)
+        {
+            if (hwnd == IntPtr.Zero) { return; }
+            IntPtr styleToApply = AddExtendedStyles(baseStyle);
+            SetWindowLongPtr(hwnd, GWL_EXSTYLE, styleToApply);
+            SetLayeredWindowAttributes(hwnd, 0, (byte)(42.5 * (6 - InterceptorManager.Instance.CurrentSettings.Opacity)), LWA_ALPHA);
+        }
+
+        //Adds Extended Styles To The Provided Style Number Based On The User Config
+        public static IntPtr AddExtendedStyles(IntPtr baseStyle)
+        {
+            IntPtr styleToApply = baseStyle;
+
+            if (InterceptorManager.Instance.CurrentSettings.EnableClickThrough)
+            {
+                styleToApply |= WS_EX_TRANSPARENT;
+            }
+            styleToApply |= WS_EX_LAYERED;
+
+            return styleToApply;
         }
     }
 }
