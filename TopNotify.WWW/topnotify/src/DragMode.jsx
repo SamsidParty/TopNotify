@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import './DragMode.css'
 
 addEventListener("keyup", (e) => {
