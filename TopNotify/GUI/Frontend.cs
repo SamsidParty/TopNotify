@@ -75,7 +75,7 @@ namespace TopNotify.GUI
         public void RequestConfig()
         {
             Document.RunFunction("window.SetIsUWP", Util.FindExe().Contains("WindowsApps").ToString());
-            Document.RunFunction("window.SetConfig", File.ReadAllText(Settings.GetFilePath()));
+            Document.RunFunction("window.SetConfig", Settings.GetForIPC());
         }
 
         public static async void UploadConfig(JSEvent e)
