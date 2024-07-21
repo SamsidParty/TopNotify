@@ -18,14 +18,10 @@ namespace TopNotify.GUI
     {
         static bool isSaving = false;
 
-        public override async Task DOMContentLoaded()
-        {
-            Document.Body.AddEventListener("spawnTestNotification", SpawnTestNotification);
-            Document.Body.AddEventListener("uploadConfig", UploadConfig);
-        }
-
-        //Create A Test Notification
-        public async void SpawnTestNotification(JSEvent e)
+        //Called By JavaScript
+        //Spawns A Test Notification
+        [JSFunction("SpawnTestNotification")]
+        public async void SpawnTestNotification()
         {
             NotificationTester.Toast("Test Notification", "This Is A Test Notification");
         }
@@ -63,7 +59,7 @@ namespace TopNotify.GUI
             currentConfig.CustomPositionPercentX = (float)DragRect.X / (float)ResolutionFinder.GetRealResolution().Width * 100f;
             currentConfig.CustomPositionPercentY = ((float)DragRect.Y - 32) /* Titlebar Height Is 32px */ / (float)ResolutionFinder.GetRealResolution().Height * 100f;
             Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
-            UploadConfig(JsonConvert.SerializeObject(currentConfig));
+            WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
 
             native.Size = new System.Drawing.Size((int)(520f * ResolutionFinder.GetScale()), (int)(780f * ResolutionFinder.GetScale()));
             native.Location = new Point(40, 60);
@@ -78,13 +74,11 @@ namespace TopNotify.GUI
             Document.RunFunction("window.SetConfig", Settings.GetForIPC());
         }
 
-        public static async void UploadConfig(JSEvent e)
-        {
-            UploadConfig(e.Data["newConfig"].ToString());
-        }
 
+        //Called By JavaScript
         //Write Settings File
-        public static async void UploadConfig(string data)
+        [JSFunction("WriteConfigFile")]
+        public static async void WriteConfigFile(string data)
         {
 
             if (isSaving) { return; }
