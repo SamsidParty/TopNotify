@@ -30,6 +30,7 @@
     --col-bg: white;
     --col-overlay: rgba(255, 255, 255, 0.5);
     --col-text: #111111;
+    --col-text-inverted: #F1ECF3;
     --col-text-overlay: rgb(107 114 128);
     --col-primary: #8a48f5;
     --col-secondary: #acee3a;
@@ -46,6 +47,7 @@
         --col-bg: #222222;
         --col-overlay: rgba(0, 0, 0, 0.5);
         --col-text: #F1ECF3;
+        --col-text-inverted: #111111;
         --col-text-overlay: rgb(107 114 128);
         --col-primary: #9D67F4;
         --col-secondary: #BEF264;
@@ -84,7 +86,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--col-overlay);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,8 +96,17 @@ body {
     height: 80%;
 }
 
+.previewContainer .notificationWindowPreview {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-
+.previewContainer .notificationWindowPreview .notificationPreview {
+    background-color: var(--col-text-inverted);
+    border-radius: 5px;
+}
 
 .footer {
     position: absolute;
