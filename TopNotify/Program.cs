@@ -111,10 +111,14 @@ namespace TopNotify.Common
 
             WebScript.Register<Frontend>("frontend");
 
-            await AppManager.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW"), OnReady);
-
             //Clean Up
-            ToastNotificationManagerCompat.Uninstall();
+            CleanUp.RegisterCleanUpAction(() =>
+            {
+                ToastNotificationManagerCompat.Uninstall();
+                WallpaperFinder.CleanUp();
+            });
+
+            await AppManager.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW"), OnReady);
         }
 
         public static async Task OnReady(WebWindow w)
