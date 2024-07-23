@@ -54,7 +54,6 @@ namespace TopNotify.GUI
             //So Call CMD To Copy It Into A Location That We Can Access
 
             var copiedWallpaperPath = "C:\\Users\\Public\\Downloads\\topnotify_tempwallpaper.jpg";
-            var realWallpaperPath = "%APPDATA%\\Microsoft\\Windows\\Themes\\TranscodedWallpaper";
 
             if (File.Exists(copiedWallpaperPath))
             {
@@ -64,6 +63,16 @@ namespace TopNotify.GUI
             Util.SimpleCMD("copy /b/v/y \"%APPDATA%\\Microsoft\\Windows\\Themes\\TranscodedWallpaper\" \"C:\\Users\\Public\\Downloads\\topnotify_tempwallpaper.jpg\"");
 
             return File.Exists(copiedWallpaperPath) ? copiedWallpaperPath : null;
+        }
+
+        public static void CleanUp()
+        {
+            var copiedWallpaperPath = "C:\\Users\\Public\\Downloads\\topnotify_tempwallpaper.jpg";
+
+            if (File.Exists(copiedWallpaperPath))
+            {
+                File.Delete(copiedWallpaperPath);
+            }
         }
     }
 }
