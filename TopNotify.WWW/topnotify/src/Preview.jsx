@@ -81,7 +81,9 @@ export default function Preview() {
     return (
         <div className="previewContainer" style={CalculatePreviewContainerStyle()}>
             <div className="notificationWindowPreview" style={CalculateNotificationWindowPreviewStyle()}>
-                <div className="notificationPreview" style={CalculateNotificationPreviwStyle()}></div>
+                <div className="notificationPreview" style={CalculateNotificationPreviwStyle()}>
+                    <img src="/Image/NotificationPreview.png"></img>
+                </div>
             </div>
             <div className="taskbarPreview" style={CalculateTaskbarPreviewStyle()}><img src="/Image/Taskbar.png"></img></div>
         </div>
