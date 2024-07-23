@@ -120,6 +120,7 @@ namespace TopNotify.Common
         public static async Task OnReady(WebWindow w)
         {
             w.BackgroundColor = TitlebarColor;
+            RequestInterceptor.RegisterInterceptor(WallpaperFinder.InterceptWallpaperRequest);
         }
 
     }
