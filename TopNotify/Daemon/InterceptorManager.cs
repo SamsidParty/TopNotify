@@ -54,13 +54,21 @@ namespace TopNotify.Daemon
 
                     foreach (Interceptor i in Interceptors)
                     {
-                        i.Reflow();
+                        try
+                        {
+                            i.Restart();
+                        }
+                        catch { }
                     }
                 }
 
                 foreach (Interceptor i in Interceptors)
                 {
-                    i.Update();
+                    try
+                    {
+                        i.Update();
+                    }
+                    catch { }
                 }
 
                 Thread.Sleep(10);
