@@ -79,8 +79,12 @@ namespace TopNotify.Daemon
 
             foreach (Interceptor i in Interceptors)
             {
-                i.Restart();
-                i.Reflow();
+                try
+                {
+                    i.Restart();
+                    i.Reflow();
+                }
+                catch { }
             }
         }
     }
