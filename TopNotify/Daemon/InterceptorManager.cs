@@ -56,7 +56,7 @@ namespace TopNotify.Daemon
                     {
                         try
                         {
-                            i.Restart();
+                            i.Reflow();
                         }
                         catch { }
                     }
