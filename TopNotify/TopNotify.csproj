@@ -74,6 +74,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="System.Security.Permissions" Version="8.0.0" />
     <PackageReference Include="websocket-sharp-Net6.0" Version="1.0.3.1" />
+    <PackageReference Include="WindowsDisplayAPI" Version="1.3.0.13" />
   </ItemGroup>
 
   <ItemGroup>
