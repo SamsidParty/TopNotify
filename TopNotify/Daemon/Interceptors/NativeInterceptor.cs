@@ -16,10 +16,10 @@ namespace TopNotify.Daemon
     public class NativeInterceptor : Interceptor
     {
         #region WinAPI Methods
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr hWndChildAfter, string className, string windowTitle);
 
         [DllImport("user32.dll")]
@@ -127,8 +127,6 @@ namespace TopNotify.Daemon
                     {
                         Rectangle rect = new Rectangle();
                         GetWindowRect(win, ref rect);
-                        StringBuilder sb = new StringBuilder();
-                        GetWindowText(hwnd, sb, 260);
 
                         if ((ScaledMainDisplayWidth - rect.X) == 396)
                         {

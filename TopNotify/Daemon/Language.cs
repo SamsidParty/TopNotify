@@ -22,13 +22,14 @@ namespace TopNotify.Daemon
             //Currently Only A Handful Of Lanugages
             //Open An Issue To Request A Language
             //ISO 639-1 Format
-            //Statement Is From Downstream Project https://github.com/RoyRiv3r/notifications-anywhere
             switch (lang)
             {
                 case "en":
                     return "New notification";
                 case "fr":
                     return "Nouvelle notification";
+                case "he":
+                    return "הודעה חדשה";
                 case "es":
                     return "Nueva notificación";
                 case "ja":
