@@ -1,4 +1,6 @@
 
+import { Button } from "@chakra-ui/react";
+
 var previewScale = 0.241666667; // Relative to actual scale
 
 function CalculatePreviewContainerStyle() {
@@ -85,7 +87,24 @@ export default function Preview() {
                     <img src="/Image/NotificationPreview.png"></img>
                 </div>
             </div>
+            <div className="locationSelect">
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(0)} >{"\ued0f"}</Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(1)} >{"\ued10"}</Button>
+                <Button className="locationSelectButton customLocationSelectButton" onClick={() => EnterDragMode()}>{"\uecef"}</Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(2)} >{"\ued0d"}</Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(3)} >{"\ued0e"}</Button>
+            </div>
             <div className="taskbarPreview" style={CalculateTaskbarPreviewStyle()}><img src="/Image/Taskbar.png"></img></div>
         </div>
     )
+}
+
+
+// 0 = TopLeft,
+// 1 = TopRight,
+// 2 = BottomLeft,
+// 3 = BottomRight,
+// 4 = Custom
+function SetPresetPosition(position) {
+    window.ChangeValue("Location", position);
 }
