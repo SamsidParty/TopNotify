@@ -30,14 +30,23 @@ namespace TopNotify.GUI
         //Resizes The Window To Be The Same Size As A Notification
         //The User Then Drags The Window To The Position Of The Notification
         [JSFunction("EnterDragMode")]
-        public static void EnterDragMode()
+        public static async Task EnterDragMode()
         {
             Logger.LogInfo("Entering Drag Mode");
 
-            var native = (WindowManager.MainWindow as PTWebWindow).Native;
             var currentConfig = Settings.Get();
+            var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
+            var windowSize = new Size((int)(396f * ResolutionFinder.GetScale()), (int)(120f * ResolutionFinder.GetScale()));
 
-            native.Size = new System.Drawing.Size(ResolutionFinder.GetRealResolution().Width / 2, ResolutionFinder.GetRealResolution().Height / 2);
+            var w = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
+            {
+                EnableAcrylic = true,
+                StartWidthHeight = new Rectangle(windowLocation, windowSize),
+                LockWidthHeight = true,
+                TitlebarColor = Program.TitlebarColor,
+                IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "IconSmall.png")
+            }));
+
         }
 
         //Called By JavaScript
