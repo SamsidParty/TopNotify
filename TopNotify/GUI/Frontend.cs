@@ -38,13 +38,13 @@ namespace TopNotify.GUI
             var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
             var windowSize = new Size((int)(396f * ResolutionFinder.GetScale()), (int)(120f * ResolutionFinder.GetScale()));
 
-            var w = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
+            var dragModeWindow = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
             {
                 EnableAcrylic = true,
                 StartWidthHeight = new Rectangle(windowLocation, windowSize),
                 LockWidthHeight = true,
                 TitlebarColor = Program.TitlebarColor,
-                IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "IconSmall.png")
+                IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "Blank.png")
             }));
 
         }
