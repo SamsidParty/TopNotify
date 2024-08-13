@@ -15,10 +15,8 @@ using WebFramework.PT;
 
 namespace TopNotify.GUI
 {
-    public class Frontend : WebScript
+    public partial class Frontend : WebScript
     {
-        public static PTWebWindow DragModeWindow;
-
         static bool isSaving = false;
 
         //Called By JavaScript
@@ -27,67 +25,6 @@ namespace TopNotify.GUI
         public async void SpawnTestNotification()
         {
             NotificationTester.Toast("Test Notification", "This Is A Test Notification");
-        }
-
-        //Called By JavaScript
-        //Resizes The Window To Be The Same Size As A Notification
-        //The User Then Drags The Window To The Position Of The Notification
-        [JSFunction("EnterDragMode")]
-        public static async Task EnterDragMode()
-        {
-            Logger.LogInfo("Entering Drag Mode");
-
-            var currentConfig = Settings.Get();
-
-            //Set Mode To Custom Position In Config
-            currentConfig.Location = NotifyLocation.Custom;
-            WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
-
-            var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
-            var windowSize = new Size((int)(364f * ResolutionFinder.GetScale()), (int)(109f * ResolutionFinder.GetScale()));
-
-            DragModeWindow = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
-            {
-                EnableAcrylic = true,
-                StartWidthHeight = new Rectangle(windowLocation, windowSize),
-                LockWidthHeight = true,
-                DisableTitlebar = true,
-                URLSuffix = "?drag",
-                IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "Blank.png")
-            }));
-        }
-
-        //Called By JavaScript
-        //Captures Window Position And Resizes The Window To Be The Default
-        [JSFunction("ExitDragMode")]
-        public static void ExitDragMode()
-        {
-            if (DragModeWindow != null)
-            {
-                Logger.LogInfo("Exiting Drag Mode");
-
-                var native = DragModeWindow.Native;
-                var hwnd = (IntPtr)native.WindowHandle;
-
-                //Find Position Of Window
-                Rectangle DragRect = new Rectangle();
-                NativeInterceptor.GetWindowRect(hwnd, ref DragRect);
-
-
-                //The Window Size Of Notifications Is 396 * 120 Scaled
-                //The Draw Size Of Notifications Is 364 * 109 Scaled
-                //Add 32 * 11 Padding
-
-                //Write It To The Config
-                var currentConfig = Settings.Get();
-                currentConfig.CustomPositionPercentX = ((float)DragRect.X - 16) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
-                currentConfig.CustomPositionPercentY = ((float)DragRect.Y - 29) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
-                Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
-                WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
-
-                DragModeWindow.Close();
-                DragModeWindow = null;
-            }
         }
 
         //Called By JavaScript
