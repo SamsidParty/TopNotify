@@ -26,7 +26,7 @@ export default function DragMode() {
     return (
         <div className={'dragMode app' + ((rerender > 0) ? " loaded" : "")}>
             <h2>Select Custom Position</h2>
-            <p>Drag This Window To The Position You Would Like Notifications To Appear, Then Press Escape. Don't Close This Window.</p>
+            <p>Move Your Mouse To The Desired Notification Position, Then Press Escape.</p>
         </div>
     )
 }
