@@ -13,13 +13,13 @@ namespace SamsidParty_TopNotify.Daemon
         #region WinAPI
 
         [DllImport("user32.dll")]
-        static extern int SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+        public static extern int SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
+        public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
         [DllImport("user32.dll")]
-        static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
+        public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
 
         #endregion
 

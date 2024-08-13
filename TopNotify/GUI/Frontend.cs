@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SamsidParty_TopNotify.Daemon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +17,8 @@ namespace TopNotify.GUI
 {
     public class Frontend : WebScript
     {
+        public static PTWebWindow DragModeWindow;
+
         static bool isSaving = false;
 
         //Called By JavaScript
@@ -35,18 +38,23 @@ namespace TopNotify.GUI
             Logger.LogInfo("Entering Drag Mode");
 
             var currentConfig = Settings.Get();
-            var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
-            var windowSize = new Size((int)(396f * ResolutionFinder.GetScale()), (int)(120f * ResolutionFinder.GetScale()));
 
-            var dragModeWindow = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
+            //Set Mode To Custom Position In Config
+            currentConfig.Location = NotifyLocation.Custom;
+            WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
+
+            var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
+            var windowSize = new Size((int)(364f * ResolutionFinder.GetScale()), (int)(109f * ResolutionFinder.GetScale()));
+
+            DragModeWindow = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
             {
                 EnableAcrylic = true,
                 StartWidthHeight = new Rectangle(windowLocation, windowSize),
                 LockWidthHeight = true,
-                TitlebarColor = Program.TitlebarColor,
+                DisableTitlebar = true,
+                URLSuffix = "?drag",
                 IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "Blank.png")
             }));
-
         }
 
         //Called By JavaScript
@@ -54,24 +62,32 @@ namespace TopNotify.GUI
         [JSFunction("ExitDragMode")]
         public static void ExitDragMode()
         {
-            Logger.LogInfo("Exiting Drag Mode");
+            if (DragModeWindow != null)
+            {
+                Logger.LogInfo("Exiting Drag Mode");
 
-            var native = (WindowManager.MainWindow as PTWebWindow).Native;
-            var hwnd = (IntPtr)native.WindowHandle;
+                var native = DragModeWindow.Native;
+                var hwnd = (IntPtr)native.WindowHandle;
 
-            //Find Position Of Window
-            Rectangle DragRect = new Rectangle();
-            NativeInterceptor.GetWindowRect(hwnd, ref DragRect);
+                //Find Position Of Window
+                Rectangle DragRect = new Rectangle();
+                NativeInterceptor.GetWindowRect(hwnd, ref DragRect);
 
-            //Write It To The Config
-            var currentConfig = Settings.Get();
-            currentConfig.CustomPositionPercentX = (float)DragRect.X / (float)ResolutionFinder.GetRealResolution().Width * 100f;
-            currentConfig.CustomPositionPercentY = ((float)DragRect.Y - 32) /* Titlebar Height Is 32px */ / (float)ResolutionFinder.GetRealResolution().Height * 100f;
-            Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
-            WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
 
-            native.Size = new System.Drawing.Size((int)(520f * ResolutionFinder.GetScale()), (int)(780f * ResolutionFinder.GetScale()));
-            native.Location = new Point(40, 60);
+                //The Window Size Of Notifications Is 396 * 120 Scaled
+                //The Draw Size Of Notifications Is 364 * 109 Scaled
+                //Add 32 * 11 Padding
+
+                //Write It To The Config
+                var currentConfig = Settings.Get();
+                currentConfig.CustomPositionPercentX = ((float)DragRect.X - 16) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
+                currentConfig.CustomPositionPercentY = ((float)DragRect.Y - 29) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
+                Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
+                WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
+
+                DragModeWindow.Close();
+                DragModeWindow = null;
+            }
         }
 
         //Called By JavaScript

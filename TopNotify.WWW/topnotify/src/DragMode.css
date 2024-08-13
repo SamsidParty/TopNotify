@@ -1,13 +1,23 @@
+.dragModeBody {
+    margin: 0;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
 .dragMode {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
 .dragMode h2 {
-    font-size: 2rem;
+    font-size: 4vw;
+    line-height: 4vw;
 }
 
-.exitDragModeButton {
-    position: absolute !important;
-    bottom: 0px;
-    right: 0px;
+.dragMode p {
+    margin-top: 1.5vw;
+    font-size: 3vw;
+    line-height: 4vw;
 }
