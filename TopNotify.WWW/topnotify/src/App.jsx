@@ -54,13 +54,6 @@ function App() {
     var [rerender, setRerender] = useState(0);
     window.rerender = rerender;
     window.setRerender = setRerender;
-
-
-    //Load Drag Page
-    if (rerender == -1) {
-        window.EnterDragMode();
-        window.location.href = "?drag";
-    }
     
     return (
         <div className={'app' + ((rerender > 0) ? " loaded" : "")}>
