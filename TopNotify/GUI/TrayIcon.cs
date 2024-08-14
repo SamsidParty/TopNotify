@@ -63,7 +63,7 @@ namespace TopNotify.GUI
             //Use WinForms Methods To Create A Tray Icon
             notify.Visible = true;
             notify.Icon = Util.FindAppIcon();
-            notify.Text = "SamsidParty Top Notify";
+            notify.Text = "SamsidParty TopNotify";
             notify.DoubleClick += new EventHandler(LaunchSettingsMode);
             notify.ContextMenuStrip = menuStrip;
             notify.ContextMenuStrip.Items.Add("Quit TopNotify");
