@@ -32,7 +32,8 @@
     --col-text: #111111;
     --col-text-inverted: #F1ECF3;
     --col-text-overlay: rgb(107 114 128);
-    --col-primary: #8a48f5;
+    --col-primary: #5536e0;
+    --col-primary-hover: #492fbb;
     --col-secondary: #acee3a;
     --col-tertiary: #f3e7ff;
     --col-contrast: #3B3043;
@@ -49,7 +50,8 @@
         --col-text: #F1ECF3;
         --col-text-inverted: #111111;
         --col-text-overlay: rgb(107 114 128);
-        --col-primary: #9D67F4;
+        --col-primary: #767df9;
+        --col-primary-hover: #6268d3;
         --col-secondary: #BEF264;
         --col-tertiary: #3D303B;
         --col-contrast: #3B3043;
