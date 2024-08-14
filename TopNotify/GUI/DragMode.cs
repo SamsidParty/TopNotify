@@ -29,6 +29,9 @@ namespace TopNotify.GUI
         [DllImport("user32.dll")]
         public static extern int ShowCursor(bool bShow);
 
+        [DllImport("user32.dll")]
+        public static extern bool SetCursorPos(int x, int y);
+
         #endregion
 
         //Called By JavaScript
@@ -47,9 +50,12 @@ namespace TopNotify.GUI
             var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
             var windowSize = new Size((int)(364f * ResolutionFinder.GetScale()), (int)(109f * ResolutionFinder.GetScale()));
 
+            //Create A Seperate Thread To Lock The Draggable Window To The Cursor Position
             var t = new Thread(DragModeThread);
 
+            //Move The Cursor To The Saved Location
             ShowCursor(false);
+            SetCursorPos(windowLocation.X + 30 + (int)(16f * ResolutionFinder.GetScale()), windowLocation.Y + (int)(29f * ResolutionFinder.GetScale()));
 
             DragModeWindow = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
             {
@@ -90,8 +96,8 @@ namespace TopNotify.GUI
 
                 //Write It To The Config
                 var currentConfig = Settings.Get();
-                currentConfig.CustomPositionPercentX = ((float)DragRect.X - 16) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
-                currentConfig.CustomPositionPercentY = ((float)DragRect.Y - 29) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
+                currentConfig.CustomPositionPercentX = ((float)DragRect.X - (16f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
+                currentConfig.CustomPositionPercentY = ((float)DragRect.Y - (29f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
                 Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
                 WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
 
@@ -100,6 +106,7 @@ namespace TopNotify.GUI
             }
         }
 
+        //Constantly Updates The Location Of The Draggable Window To The Location Of The Cursor
         public static void DragModeThread()
         {
             Point cursorPos;
@@ -111,6 +118,7 @@ namespace TopNotify.GUI
                 GetCursorPos(out cursorPos);
 
                 //Add Offset To Keep Cursor Inside The Window
+                //This Prevents The Cursor From Flashing In And Out Due To Being On The Edge Of The Window
                 cursorPos.X -= 30;
                 cursorPos.Y -= 30;
 
