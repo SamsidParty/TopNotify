@@ -49,7 +49,7 @@ namespace TopNotify.GUI
                     notify = Activator.CreateInstance(type);
                 }
                 else if (type.Name == "ContextMenuStrip")
-                {;
+                {
                     // menuStrip = new ContextMenuStrip();
                     menuStrip = Activator.CreateInstance(type);
                 }
