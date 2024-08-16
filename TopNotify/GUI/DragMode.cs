@@ -32,6 +32,12 @@ namespace TopNotify.GUI
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int x, int y);
 
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetForegroundWindow(IntPtr hWnd);
+
         #endregion
 
         //Called By JavaScript
@@ -42,6 +48,10 @@ namespace TopNotify.GUI
             Logger.LogInfo("Entering Drag Mode");
 
             var currentConfig = Settings.Get();
+
+            //Hide The Main Window
+            var mainHwnd = (WindowManager.MainWindow as PTWebWindow).Native.WindowHandle;
+            ShowWindow(mainHwnd, 0);
 
             //Set Mode To Custom Position In Config
             currentConfig.Location = NotifyLocation.Custom;
@@ -67,6 +77,7 @@ namespace TopNotify.GUI
                 IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "Blank.png")
             }));
 
+            SetForegroundWindow(DragModeWindow.Native.WindowHandle);
             t.Start();
         }
 
@@ -81,6 +92,11 @@ namespace TopNotify.GUI
                 Logger.LogInfo("Exiting Drag Mode");
 
                 ShowCursor(true);
+
+                //Show The Main Window
+                var mainHwnd = (WindowManager.MainWindow as PTWebWindow).Native.WindowHandle;
+                ShowWindow(mainHwnd, 5);
+                SetForegroundWindow(mainHwnd);
 
                 var native = DragModeWindow.Native;
                 var hwnd = (IntPtr)native.WindowHandle;
