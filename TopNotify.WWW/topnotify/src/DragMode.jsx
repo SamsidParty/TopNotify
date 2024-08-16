@@ -16,11 +16,6 @@ export default function DragMode() {
     window.rerender = rerender;
     window.setRerender = setRerender;
 
-    //Load Main Page
-    if (rerender == -2) {
-        window.location.href = "/";
-    }
-
     document.body.classList.add("dragModeBody");
 
     return (

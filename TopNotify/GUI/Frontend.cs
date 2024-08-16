@@ -17,6 +17,7 @@ namespace TopNotify.GUI
 {
     public partial class Frontend : WebScript
     {
+
         static bool isSaving = false;
 
         //Called By JavaScript
