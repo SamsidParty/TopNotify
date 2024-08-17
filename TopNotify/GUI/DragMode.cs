@@ -43,7 +43,7 @@ namespace TopNotify.GUI
         //Called By JavaScript
         //Creates A Draggable Window To Position Notifications
         [JSFunction("EnterDragMode")]
-        public static async Task EnterDragMode()
+        public async Task EnterDragMode()
         {
             Logger.LogInfo("Entering Drag Mode");
 
@@ -85,7 +85,7 @@ namespace TopNotify.GUI
         //Called By JavaScript
         //Captures The Draggable Window Position And Writes It To The Config
         [JSFunction("ExitDragMode")]
-        public static void ExitDragMode()
+        public void ExitDragMode()
         {
             if (DragModeWindow != null)
             {
@@ -119,6 +119,10 @@ namespace TopNotify.GUI
 
                 DragModeWindow.Close();
                 DragModeWindow = null;
+
+                //Set Config On Main Window
+                var mainWindowFrontend = (Frontend)(WindowManager.MainWindow.AttachedScripts.Where((ws) => ws.GetType() == typeof(Frontend)).FirstOrDefault());
+                mainWindowFrontend.RequestConfig();
             }
         }
 

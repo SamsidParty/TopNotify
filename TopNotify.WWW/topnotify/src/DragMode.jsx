@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Button } from '@chakra-ui/react'
 import './DragMode.css'
 
-addEventListener("keyup", (e) => {
-    if (e.key == "Escape" && window.location.href.includes("?drag")) {
+addEventListener("mouseup", (e) => {
+    if (e.button == 0) {
         //Exit Drag Mode
         window.ExitDragMode();
     }
@@ -21,7 +21,7 @@ export default function DragMode() {
     return (
         <div className={'dragMode app' + ((rerender > 0) ? " loaded" : "")}>
             <h2>Select Custom Position</h2>
-            <p>Move Your Mouse To The Desired Notification Position, Then Press Escape.</p>
+            <p>Move Your Mouse To The Desired Notification Position, Then Left Click To Confirm.</p>
         </div>
     )
 }
