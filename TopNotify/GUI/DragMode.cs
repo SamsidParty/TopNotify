@@ -23,7 +23,7 @@ namespace TopNotify.GUI
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out Point lpPoint);
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int wFlags);
 
         [DllImport("user32.dll")]
@@ -114,7 +114,6 @@ namespace TopNotify.GUI
                 var currentConfig = Settings.Get();
                 currentConfig.CustomPositionPercentX = ((float)DragRect.X - (16f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
                 currentConfig.CustomPositionPercentY = ((float)DragRect.Y - (29f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
-                Logger.LogError(currentConfig.CustomPositionPercentX.ToString());
                 WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
 
                 DragModeWindow.Close();
@@ -142,7 +141,7 @@ namespace TopNotify.GUI
                 cursorPos.X -= 30;
                 cursorPos.Y -= 30;
 
-                SetWindowPos(dragModeHandle, -1, cursorPos.X, cursorPos.Y, 0, 0, 0x0001);
+                SetWindowPos(dragModeHandle, 0, cursorPos.X, cursorPos.Y, 0, 0, 0x0001);
 
                 Thread.Sleep(0);
             }

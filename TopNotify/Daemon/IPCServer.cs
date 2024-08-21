@@ -48,7 +48,6 @@ namespace TopNotify.Daemon
         {
             if (SocketServer.IsListening)
             {
-                Logger.LogInfo("Sending FulfillConfigRequest Packet To Client");
                 var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
                 requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetForIPC())).ToArray();
                 SocketServer.WebSocketServices["/ipc"].Sessions.Broadcast(requestData);
@@ -60,7 +59,6 @@ namespace TopNotify.Daemon
         {
             if (SocketServer.IsListening)
             {
-                Logger.LogInfo("Sending RequestHandle To All Clients");
                 var requestData = new byte[] { (byte)IPCPacketType.RequestHandle };
                 SocketServer.WebSocketServices["/ipc"].Sessions.Broadcast(requestData);
             }
