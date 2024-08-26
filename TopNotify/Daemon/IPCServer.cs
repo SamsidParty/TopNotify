@@ -90,6 +90,10 @@ namespace TopNotify.Daemon
                     var handle = new IntPtr(int.Parse(Encoding.UTF8.GetString(packet)));
                     ExtendedStyleManager.AnonymousUpdate(handle, 00280024);
                 }
+                else if (type == IPCPacketType.UpdateConfig)
+                {
+                    InterceptorManager.Instance.OnSettingsChanged();
+                }
             }
             catch (Exception ex)
             {

@@ -23,14 +23,6 @@ namespace TopNotify.Daemon
             Instance = this;
             CurrentSettings = Settings.Get();
 
-            //Create A FileSystem Watcher To Detect Changes In The Settings File
-            FileSystemWatcher watcher = new FileSystemWatcher();
-            watcher.Path = Path.GetDirectoryName(Settings.GetFilePath());
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
-            watcher.Filter = "*.json";
-            watcher.Changed += new FileSystemEventHandler(OnSettingsChanged); // Update Interceptors When Settings Are Changed
-            watcher.EnableRaisingEvents = true;
-
             Interceptors.Add(new NativeInterceptor());
             //Interceptors.Add(new SoundInterceptor());
             Interceptors.Add(new TeamsInterceptor());
@@ -75,8 +67,9 @@ namespace TopNotify.Daemon
             }
         }
 
-        public void OnSettingsChanged(object sender, EventArgs e)
+        public void OnSettingsChanged()
         {
+
             //Send The New Settings File To All IPC Clients
             if (Daemon.Instance.Server != null)
             {

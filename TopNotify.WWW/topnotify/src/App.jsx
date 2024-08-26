@@ -6,6 +6,7 @@ import ClickThrough from './ClickThrough'
 import TestNotification from './TestNotification'
 import Preview from './Preview'
 import { DebugMenu } from './DebugMenu'
+import './IPCClient'
 
 
 window.Config = {
@@ -15,6 +16,7 @@ window.Config = {
     SoundPath: "windows/win11"
 }
 
+// Called By C#, Sets The window.Config Object To The Saved Config File
 window.SetConfig = (e) => {
     Config = JSON.parse(e);
     window.setRerender(rerender + 1);

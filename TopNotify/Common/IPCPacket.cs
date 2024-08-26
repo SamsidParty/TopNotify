@@ -11,6 +11,7 @@ namespace TopNotify.Common
         RequestConfig, // Client To Daemon, Asks For Config
         FulfillConfigRequest, // Daemon To Client, Returns Config
         RequestHandle, // Daemon To Client, Asks For The Handle Of The Notification Window
-        FulfillHandleRequest // Client To Daemon, Tells The Interceptor The Notification Window Handle
+        FulfillHandleRequest, // Client To Daemon, Tells The Interceptor The Notification Window Handle,
+        UpdateConfig // GUI To Daemon, Tells The Interceptor That The Config Has Changed
     }
 }
