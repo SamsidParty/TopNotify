@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
@@ -58,6 +59,9 @@ namespace TopNotify.GUI
             }
 
             await Task.Delay(100); // Prevent Crashing Daemon From Spamming Button
+
+            // Tell The Daemon The Config Has Changed Via JavaScript Websockets
+            WindowManager.MainWindow.Document.RunFunction("window.UpdateConfig");
 
             isSaving = false;
         }
