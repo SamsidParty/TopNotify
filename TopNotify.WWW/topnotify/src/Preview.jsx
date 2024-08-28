@@ -59,6 +59,10 @@ function CalculateNotificationWindowPreviewStyle() {
         else { // Custom
             posX = window.Config.CustomPositionPercentX / 100 * scaledMainDisplayWidth;
             posY = window.Config.CustomPositionPercentY / 100 * scaledMainDisplayHeight;
+
+            //Make Sure Position Isn't Out Of Bounds
+            posX = Math.max(0, Math.min(posX, scaledMainDisplayWidth - style.width));
+            posY = Math.max(0, Math.min(posY, scaledMainDisplayHeight - style.height));
         }
     }
 
