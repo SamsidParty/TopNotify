@@ -154,8 +154,10 @@ namespace TopNotify.Daemon
             Rectangle NotifyRect = new Rectangle();
             GetWindowRect(hwnd, ref NotifyRect);
 
-            NotifyRect.Width = (int)((NotifyRect.Width - NotifyRect.X * ScaleFactor));
-            NotifyRect.Height = (int)((NotifyRect.Height - NotifyRect.Y * ScaleFactor));
+            var scaledWidth = (int)((NotifyRect.Width - NotifyRect.X * ScaleFactor));
+            var scaledHeight = (int)((NotifyRect.Height - NotifyRect.Y * ScaleFactor));
+            var unscaledWidth = (int)((NotifyRect.Width - NotifyRect.X));
+            var unscaledHeight = (int)((NotifyRect.Height - NotifyRect.Y));
 
             if (Settings.Location == NotifyLocation.TopLeft)
             {
@@ -164,19 +166,26 @@ namespace TopNotify.Daemon
             }
             else if (Settings.Location == NotifyLocation.TopRight)
             {
-                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - NotifyRect.Width, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - scaledWidth, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomLeft)
             {
-                SetWindowPos(hwnd, 0, 0, ScaledMainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, 0, ScaledMainDisplayHeight - scaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomRight) // Default In Windows, But Here For Completeness Sake
             {
-                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - NotifyRect.Width, ScaledMainDisplayHeight - NotifyRect.Height - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - scaledWidth, ScaledMainDisplayHeight - scaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else // Custom Position
             {
-                SetWindowPos(hwnd, 0, (int)(Settings.CustomPositionPercentX / 100f * RealMainDisplayWidth), (int)(Settings.CustomPositionPercentY / 100f * RealMainDisplayHeight), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                var xPosition = (int)(Settings.CustomPositionPercentX / 100f * RealMainDisplayWidth);
+                var yPosition = (int)(Settings.CustomPositionPercentY / 100f * RealMainDisplayHeight);
+
+                //Make Sure Position Isn't Out Of Bounds
+                xPosition = Math.Clamp(xPosition, 0, RealMainDisplayWidth - unscaledWidth);
+                yPosition = Math.Clamp(yPosition, 0, RealMainDisplayHeight - unscaledHeight);
+
+                SetWindowPos(hwnd, 0, xPosition, yPosition, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
 
         }
