@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <assembly xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
 <assemblyIdentity
-    version="2.4.3.0"
+    version="1.0.0.0"
     name="SamsidParty TopNotify"
     type="win32"
 />
-<description>The Ultimate Notification Customization Tool</description>
+<description>Display Notifications At The Top Of The Screen</description>
 <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
     <security>
         <requestedPrivileges>
@@ -16,8 +16,7 @@
 
 <asmv3:application>
     <asmv3:windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
-          <dpiAware>true</dpiAware>
-	      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2,PerMonitor</dpiAwareness>
+      <dpiAware>true</dpiAware>
     </asmv3:windowsSettings>
 </asmv3:application>
 
