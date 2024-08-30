@@ -35,6 +35,7 @@ namespace SamsidParty_TopNotify.Daemon
         public List<IntPtr> Styles = new List<IntPtr>();
         public IntPtr BaseStyle = IntPtr.Zero;
         public IntPtr LastHandle = IntPtr.Zero;
+        public IntPtr LastStyle = IntPtr.Zero;
 
         public ExtendedStyleManager(IntPtr baseStyle)
         {
@@ -53,7 +54,11 @@ namespace SamsidParty_TopNotify.Daemon
                 styleToApply |= style;
             }
 
-            SetWindowLongPtr(hwnd, GWL_EXSTYLE, styleToApply);
+            if (styleToApply != LastStyle)
+            {
+                SetWindowLongPtr(hwnd, GWL_EXSTYLE, styleToApply);
+                LastStyle = styleToApply;
+            }
 
             //Set Window Opacity
             SetLayeredWindowAttributes(hwnd, 0, (byte)(42.5 * (6 - InterceptorManager.Instance.CurrentSettings.Opacity)), LWA_ALPHA);
