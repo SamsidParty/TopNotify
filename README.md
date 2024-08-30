@@ -1,24 +1,28 @@
 # TopNotify
-Move Windows Notifications Anywhere On The Screen.  
-Includes Top Left, Top Right, & Bottom Left As Presets, But You Can Place Them Anywhere.
+
+- Move Windows Notifications Anywhere On The Screen
+- Change Transparency Of Notifications
+- Click-Through Notifications
+
+Elevate your alerts with TopNotify, the ultimate notification customization tool.
+TopNotify is your ticket to a smarter, more efficient notification system. Say goodbye to missed alerts buried in the corner of your screen. With TopNotify, important messages can be anywhere you want.
+
+Perfect Positioning, Peak Performance:
+With TopNotify, you can move notifications anywhere on the screen, allowing for enhanced productivity and better aesthetics.
+
+Dissolving All Distractions:
+TopNotify allows you to change the transparency of notifications, keeping both the notification and the contents behind it clearly visible.
+
+Mystifying Misclicks:
+The Click-Through feature allows you to click behind the notifications, preventing you from accidentally opening them.
 
 [![Get It From Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/productId/9PFMDK0QHKQJ?ocid=pdpshare)
 
-![TopNotify Header](/Docs/HeaderDarkOptimized.webp)
+![TopNotify Header](/Docs/Screenshot3.png)
 
-![Dissolving Distractions](/Docs/Marketing2.webp)
+![TopNotify Screenshot](/Docs/Screenshot2.png)
 
 ![TopNotify Screenshot](/Docs/Screenshot1.png)
-
-
-
-# Features
-
-- Move Notifications Anywhere
-- Change Transparency Of Notifications
-- Spawn Test Notifications
-- Automatically Run On Startup
-- Dynamic Reflow System For Reduced CPU Usage (See [Technical.md](https://github.com/SamsidParty/TopNotify/blob/main/Docs/Technical.md))
 
 # Supported Windows Versions
 
