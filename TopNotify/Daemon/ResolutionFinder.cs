@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using WebFramework.Backend;
-using WindowsDisplayAPI;
 
 namespace TopNotify.Daemon
 {
@@ -21,6 +20,27 @@ namespace TopNotify.Daemon
         [DllImport("User32.dll")]
         internal static extern IntPtr MonitorFromPoint([In] Point pt, [In] uint dwFlags);
 
+        [DllImport("User32.dll")]
+        static extern bool GetMonitorInfo(IntPtr hMonitor, [In, Out] MonitorInfo lpmi);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
+        public class MonitorInfo
+        {
+            public int Size = Marshal.SizeOf(typeof(MonitorInfo));
+            public Rect Monitor = new Rect();
+            public Rect WorkArea = new Rect();
+            public uint Flags = 0;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Rect
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
         private enum DpiType
         {
             Effective = 0,
@@ -30,9 +50,9 @@ namespace TopNotify.Daemon
 
         #endregion
 
-        private static Display GetPrimaryDisplay()
+        private static IntPtr GetPrimaryDisplay()
         {
-            return Display.GetDisplays().Where((d) => d.IsGDIPrimary).FirstOrDefault();
+            return MonitorFromPoint(new Point(0, 0), 0x00000001);
         }
 
         public static Rectangle GetScaledResolution()
@@ -46,15 +66,15 @@ namespace TopNotify.Daemon
         public static Rectangle GetRealResolution()
         {
             var display = GetPrimaryDisplay();
-            return new Rectangle(0, 0, (int)(display.CurrentSetting.Resolution.Width), (int)(display.CurrentSetting.Resolution.Height));
+            MonitorInfo monitorInfo = new MonitorInfo();
+            GetMonitorInfo(display, monitorInfo);
+            return new Rectangle(0, 0, monitorInfo.Monitor.Right - monitorInfo.Monitor.Left, monitorInfo.Monitor.Bottom - monitorInfo.Monitor.Top);
         }
 
         public static float GetInverseScale()
         {
-            var display = GetPrimaryDisplay();
             uint dpiX;
-            var monitorFromPoint = MonitorFromPoint(display.CurrentSetting.Position, 2);
-            GetDpiForMonitor(monitorFromPoint, DpiType.Effective, out dpiX, out _);
+            GetDpiForMonitor(GetPrimaryDisplay(), DpiType.Effective, out dpiX, out _);
             return 100f / (dpiX * 100 / 96f);
         }
 
