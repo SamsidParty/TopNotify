@@ -10,12 +10,17 @@ using System.Threading.Tasks;
 using WebFramework.Backend;
 using TopNotify.Common;
 using SamsidParty_TopNotify.Daemon;
+using Windows.UI.Notifications.Management;
+using Windows.ApplicationModel.Background;
+using Windows.UI.Notifications;
 
 namespace TopNotify.Daemon
 {
+
     public class NativeInterceptor : Interceptor
     {
         #region WinAPI Methods
+
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
