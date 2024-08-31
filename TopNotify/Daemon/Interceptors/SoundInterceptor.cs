@@ -23,14 +23,14 @@ namespace TopNotify.Daemon
 
         /// <summary>
         /// Sets The Notification Sound In The Registry To The Fake Sound File
+        /// TopNotify Doesn't Have Registry Access Because Of MSIX, So Call CMD To Do It For Us
         /// </summary>
         private void InstallSoundInRegistry()
         {
             try
             {
-                var key = Registry.CurrentUser.OpenSubKey("AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current", true);
-                key.SetValue("", GetFullSoundPath(FAKE_SOUND)); // Sets (Default) Value In Registry
-                key.Close();
+                var command = $"reg add HKCU\\AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current /t REG_SZ /ve /d \"{GetFullSoundPath(FAKE_SOUND)}\" /f";
+                Util.SimpleCMD(command);
             }
             catch (Exception ex) { Logger.LogError(ex.ToString()); }
         }
