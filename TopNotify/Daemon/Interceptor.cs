@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
+using Windows.UI.Notifications;
 
 namespace TopNotify.Daemon
 {
@@ -13,6 +14,12 @@ namespace TopNotify.Daemon
           
 
         public virtual void Restart()
+        {
+
+        }
+
+        //Called When A Notification Pops Up
+        public virtual void OnNotification(UserNotification notification)
         {
 
         }

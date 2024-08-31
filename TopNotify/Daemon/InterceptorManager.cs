@@ -16,11 +16,15 @@ namespace TopNotify.Daemon
     {
         public static InterceptorManager Instance;
         public List<Interceptor> Interceptors = new();
+
         public Settings CurrentSettings;
+
         public int TimeSinceReflow = 0;
+        public const int ReflowTimeout = 50;
+
+        public List<uint> HandledNotifications = new List<uint>();
         public UserNotificationListener Listener;
 
-        public const int ReflowTimeout = 50;
 
         public void Start()
         {
@@ -110,8 +114,40 @@ namespace TopNotify.Daemon
         }
 
         //Runs When A New Notification Is Added Or Removed
-        public void OnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
+        public async void OnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
         {
+            var userNotifications = await Listener.GetNotificationsAsync(NotificationKinds.Toast);
+            var toBeRemoved = new List<uint>(HandledNotifications);
+
+            foreach (var userNotification in userNotifications)
+            {
+                if (HandledNotifications.Contains(userNotification.Id))
+                {
+                    toBeRemoved.Remove(userNotification.Id);
+                }
+                else
+                {
+                    //Only Count As New Notification If It's Less Than A Second Old
+                    if (DateTime.UtcNow - userNotification.CreationTime.UtcDateTime < TimeSpan.FromSeconds(1))
+                    {
+                        foreach (Interceptor i in Interceptors)
+                        {
+                            try
+                            {
+                                i.OnNotification(userNotification);
+                            }
+                            catch { }
+                        }
+                        HandledNotifications.Add(userNotification.Id);
+                    }
+                }
+            }
+
+            foreach (uint id in toBeRemoved)
+            {
+                HandledNotifications.Remove(id);
+            }
+
             Update();
         }
 
