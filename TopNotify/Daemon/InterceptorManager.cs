@@ -28,7 +28,7 @@ namespace TopNotify.Daemon
             CurrentSettings = Settings.Get();
 
             Interceptors.Add(new NativeInterceptor());
-            //Interceptors.Add(new SoundInterceptor());
+            Interceptors.Add(new SoundInterceptor());
             Interceptors.Add(new TeamsInterceptor());
 
 

@@ -18,39 +18,44 @@ namespace TopNotify.Daemon
 {
     public class SoundInterceptor : Interceptor
     {
+        // This File Is Used To Replace The Default Notification Sounds, So That TopNotify Can Play A Different Sound
+        const string FAKE_SOUND = "internal/silent";
+
         /// <summary>
-        /// Sets The Notification Sound In The Registry To The TopNotify Wav File
+        /// Sets The Notification Sound In The Registry To The Fake Sound File
         /// </summary>
         private void InstallSoundInRegistry()
         {
             try
             {
                 var key = Registry.CurrentUser.OpenSubKey("AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current", true);
-                key.SetValue("", GetFullSoundPath(Settings.SoundPath)); // Sets (Default) Value In Registry
+                key.SetValue("", GetFullSoundPath(FAKE_SOUND)); // Sets (Default) Value In Registry
                 key.Close();
             }
             catch (Exception ex) { Logger.LogError(ex.ToString()); }
         }
 
         /// <summary>
-        /// Sets The Permissions For The Sound File And Makes Sure It Exists
+        /// Sets The Permissions For The Fake Sound File And Makes Sure It Exists
         /// </summary>
-        private void EnsureSoundValidity()
+        private void EnsureFakeSoundValidity()
         {
-            if (!Directory.Exists(Path.GetDirectoryName(GetFullSoundPath(Settings.SoundPath))))
+            if (!Directory.Exists(Path.GetDirectoryName(GetFullSoundPath(FAKE_SOUND))))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(GetFullSoundPath(Settings.SoundPath)));
+                Directory.CreateDirectory(Path.GetDirectoryName(GetFullSoundPath(FAKE_SOUND)));
             }
 
-            if (!File.Exists(GetFullSoundPath(Settings.SoundPath)))
+            if (!File.Exists(GetFullSoundPath(FAKE_SOUND)))
             {
                 //Copy The File If It Doesn't Exist
-                Logger.LogInfo("Copying Sound File Into" +  GetFullSoundPath(Settings.SoundPath));
-                File.Copy(GetSourceSoundPath(Settings.SoundPath), GetFullSoundPath(Settings.SoundPath));
+                //This Will Copy The File From The Application Directory (Read Only) To The AppData Directory
+                //Because We Can't Change Permissions In The Application Directory
+                Logger.LogInfo("Copying Sound File Into" +  GetFullSoundPath(FAKE_SOUND));
+                File.Copy(GetSourceSoundPath(FAKE_SOUND), GetFullSoundPath(FAKE_SOUND));
             }
 
             //Check Permissions, Add "ALL APPLICATION PACKAGES" If Needed
-            var fileInfo = new FileInfo(GetFullSoundPath(Settings.SoundPath));
+            var fileInfo = new FileInfo(GetFullSoundPath(FAKE_SOUND));
             var fileSecurity = fileInfo.GetAccessControl();
             var perms = fileSecurity.GetAccessRules(true, false, typeof(SecurityIdentifier));
             var hasAllAppPerms = false;
@@ -97,14 +102,12 @@ namespace TopNotify.Daemon
         public override void Reflow()
         {
             base.Reflow();
-            InstallSoundInRegistry();
-            EnsureSoundValidity();
         }
 
         public override void Start()
         {
             InstallSoundInRegistry();
-            EnsureSoundValidity();
+            EnsureFakeSoundValidity();
             base.Start();
         }
     }
