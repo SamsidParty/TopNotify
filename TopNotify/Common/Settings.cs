@@ -30,7 +30,7 @@ namespace TopNotify.Common
         public float CustomPositionPercentX = 0;
         public float CustomPositionPercentY = 0;
 
-        public List<AppReference> AppReferences = new List<AppReference>() { new AppReference() };
+        public List<AppReference> AppReferences = new List<AppReference>();
 
         // Dynamic Fields That Are Cached, Useful For Interop
         public int __ScreenWidth = 0;
@@ -44,7 +44,17 @@ namespace TopNotify.Common
 
         public static Settings Get()
         {
-            return JsonConvert.DeserializeObject<Settings>(GetRaw());
+            var value = JsonConvert.DeserializeObject<Settings>(GetRaw());
+
+            // Add Default AppReferences
+            // Serialization Doesn't Work Properly If This Is Set As The Default Value In The Initializer
+            // This Is The Workaround
+            if (value.AppReferences.Count == 0)
+            {
+                value.AppReferences.Add(new AppReference());
+            }
+
+            return value;
         }
 
         public static string GetRaw()
