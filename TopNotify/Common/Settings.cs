@@ -14,7 +14,6 @@ namespace TopNotify.Common
     public class Settings
     {
         public NotifyLocation Location = NotifyLocation.TopRight;
-        public bool RunOnStartup = true;
         public bool EnableClickThrough = false;
 
         // Debug
@@ -40,6 +39,7 @@ namespace TopNotify.Common
         // Deprecated Settings
         [Deprecated("Use CustomPositionPercentX Instead", DeprecationType.Deprecate, 241)] public int CustomPositionX = 0; // Deprecated In Favor Of Percentage Units
         [Deprecated("Use CustomPositionPercentY Instead", DeprecationType.Deprecate, 241)] public int CustomPositionY = 0; // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [Deprecated("Startup Is Now Managed By MSIX", DeprecationType.Deprecate, 244)] public bool RunOnStartup = false; // Startup Is Now Managed By MSIX
 
 
         public static Settings Get()
@@ -131,14 +131,8 @@ namespace TopNotify.Common
 
         public static void Validate(Settings settings)
         {
-            if (settings.RunOnStartup)
-            {
-                CreateStartupShortcut();
-            }
-            else
-            {
-                DeleteStartupShortcut();
-            }
+            // This Function Used To Create Startup Shortcuts Before MSIX
+            // Does Nothing Now, Startup Shortcuts Are Managed By MSIX
         }
 
         /// <summary>
@@ -151,27 +145,6 @@ namespace TopNotify.Common
             __ScreenScale = ResolutionFinder.GetScale();
         }
 
-        public static void CreateStartupShortcut()
-        {
-            if (Util.FindExe().Contains("WindowsApps")) { return; } // App Is In An MSIX Container
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
-            if (rk.GetValue("TopNotify") == null)
-            {
-                rk.SetValue("TopNotify", System.Environment.ProcessPath);
-            }
-        }
-
-        public static void DeleteStartupShortcut()
-        {
-            if (Util.FindExe().Contains("WindowsApps")) { return; } // App Is In An MSIX Container
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
-            if (rk.GetValue("TopNotify") != null)
-            {
-                rk.DeleteValue("TopNotify");
-            }
-        }
     }
 
     public enum NotifyLocation

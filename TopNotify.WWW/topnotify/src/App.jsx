@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Button, Switch, Divider } from '@chakra-ui/react'
 import NotificationTransparency from './Transparency'
-import RunOnStartup from './RunOnStartup'
 import ClickThrough from './ClickThrough'
 import TestNotification from './TestNotification'
 import Preview from './Preview'
@@ -11,7 +10,6 @@ import './IPCClient'
 
 window.Config = {
     Location: -1,
-    RunOnStartup: true,
     Opacity: 0,
     AppReferences: []
 }
@@ -72,7 +70,6 @@ function App() {
 
             <Divider />
 
-            <RunOnStartup></RunOnStartup>
             <ClickThrough></ClickThrough>
 
             <Divider />
