@@ -11,7 +11,6 @@ import {
 
 import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
 import { useState } from 'react'
-import "./NotificationSound";
 
 export function DebugMenu() {
 

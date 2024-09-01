@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button, Divider } from '@chakra-ui/react'
 
 import { useState } from 'react';
 
@@ -11,6 +11,13 @@ import {
     DrawerContent,
     DrawerCloseButton
 } from '@chakra-ui/react'
+
+window.NotificationSoundList = [
+    "windows/win11",
+    "windows/win10",
+    "windows/win7",
+    "fortnite/levelup_c5s1",
+]
 
 export default function ManageNotificationSounds() {
 
@@ -47,7 +54,17 @@ export default function ManageNotificationSounds() {
                     <DrawerHeader>Notification Sounds</DrawerHeader>
 
                     <DrawerBody>
-                        
+                        {
+                            window.Config.AppReferences.map((appReference) => {
+                                return (
+                                    <>
+                                        <Divider/>
+                                        <AppReferenceSoundItem appReference={appReference}></AppReferenceSoundItem>
+                                    </>
+                                )
+                            })
+                        }
+                        <Divider/>
                     </DrawerBody>
 
                     <DrawerFooter>
@@ -55,6 +72,15 @@ export default function ManageNotificationSounds() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
+        </div>
+    )
+}
+
+function AppReferenceSoundItem(props) {
+    return (
+        <div className="appReferenceSoundItem">
+            <img src={props.appReference.DisplayIcon || "https://raw.githubusercontent.com/SamsidParty/TopNotify/main/TopNotify/WWW/Image/DefaultAppReferenceIcon.svg"}></img>
+            <h4>{props.appReference.DisplayName}</h4>
         </div>
     )
 }
