@@ -44,13 +44,6 @@ export function DebugMenu() {
                             <label>Force Fallback Interceptor</label>
                             <Switch onChange={(e) => ChangeSwitch("EnableDebugForceFallbackMode", e)} isChecked={Config.EnableDebugForceFallbackMode} style={{ marginLeft: "auto" }} size='lg' />
                         </div>
-
-                        <label>[EXPERIMENTAL] Notification Sound</label>
-                        {
-                            window.NotificationSoundList.map((l_soundPath) => {
-                                return (<><Button onClick={() => { ChangeValue("SoundPath", l_soundPath); }}>{l_soundPath}</Button><br></br></>)
-                            })
-                        }
                     </DrawerBody>
 
                     <DrawerFooter>

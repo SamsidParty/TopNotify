@@ -13,7 +13,7 @@ window.Config = {
     Location: -1,
     RunOnStartup: true,
     Opacity: 0,
-    SoundPath: "windows/win11"
+    AppReferences: []
 }
 
 // Called By C#, Sets The window.Config Object To The Saved Config File
