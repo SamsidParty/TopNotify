@@ -3,6 +3,7 @@ import { Button, Switch, Divider } from '@chakra-ui/react'
 import NotificationTransparency from './Transparency'
 import ClickThrough from './ClickThrough'
 import TestNotification from './TestNotification'
+import ManageNotificationSounds from './NotificationSounds'
 import Preview from './Preview'
 import { DebugMenu } from './DebugMenu'
 import './IPCClient'
@@ -69,6 +70,10 @@ function App() {
             <Divider />
 
             <NotificationTransparency></NotificationTransparency>
+
+            <Divider />
+
+            <ManageNotificationSounds></ManageNotificationSounds>
 
             <br></br>
 

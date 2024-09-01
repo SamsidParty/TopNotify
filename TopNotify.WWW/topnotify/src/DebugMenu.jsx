@@ -15,7 +15,22 @@ import "./NotificationSound";
 
 export function DebugMenu() {
 
-    var [isOpen, setIsOpen] = useState(false);
+    var [isOpen, _setIsOpen] = useState(false);
+
+    var setIsOpen = (v) => {
+
+        if (v && rerender < 0) { return; }
+
+        if (v) {
+            setTimeout(() => setRerender(-1), 0);
+        }
+        else {
+            setTimeout(() => setRerender(2), 0);
+        }
+
+        _setIsOpen(v);
+    }
+
     window.openDebugMenu = () => setIsOpen(true);
 
     return (
