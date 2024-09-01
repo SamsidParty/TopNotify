@@ -30,8 +30,7 @@ namespace TopNotify.Common
         public float CustomPositionPercentX = 0;
         public float CustomPositionPercentY = 0;
 
-        // Relative Path To The WAV File Stored In WWW/Audio, Without .wav Extension
-        public string SoundPath = "windows/win11";
+        public List<AppReference> AppReferences = new List<AppReference>() { new AppReference() };
 
         // Dynamic Fields That Are Cached, Useful For Interop
         public int __ScreenWidth = 0;
