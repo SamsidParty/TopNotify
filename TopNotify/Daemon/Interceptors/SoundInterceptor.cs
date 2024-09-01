@@ -101,8 +101,9 @@ namespace TopNotify.Daemon
 
         public override void OnNotification(UserNotification notification)
         {
-            // Used To Detect Which App Called The Notification
-            var appName = notification.AppInfo.DisplayInfo.DisplayName;
+            var appRef = AppReference.FromNotification(notification);
+
+            NotificationTester.MessageBox(appRef.DisplayName, appRef.ID);
 
             base.OnNotification(notification);
         }
