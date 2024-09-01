@@ -36,11 +36,12 @@
     --col-primary-hover: #492fbb;
     --col-secondary: #acee3a;
     --col-tertiary: #f3e7ff;
-    --col-contrast: #3B3043;
+    --col-contrast: #ebebeb;
     --col-disabled: #251F29;
 
     --chakra-colors-blue-500: var(--col-primary) !important;
     --chakra-colors-blue-200: var(--col-primary) !important;
+    --drawer-bg: var(--col-contrast) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,7 +55,7 @@
         --col-primary-hover: #6268d3;
         --col-secondary: #BEF264;
         --col-tertiary: #3D303B;
-        --col-contrast: #3B3043;
+        --col-contrast: #343434;
         --col-disabled: #251F29;
     }
 }
