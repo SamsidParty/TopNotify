@@ -34,7 +34,6 @@ namespace TopNotify.GUI
         [JSFunction("RequestConfig")]
         public void RequestConfig()
         {
-            Document.RunFunction("window.SetIsUWP", Util.FindExe().Contains("WindowsApps").ToString());
             Document.RunFunction("window.SetConfig", Settings.GetForIPC());
         }
 

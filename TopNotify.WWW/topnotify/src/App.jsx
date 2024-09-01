@@ -20,12 +20,6 @@ window.SetConfig = (e) => {
     window.setRerender(rerender + 1);
 }
 
-window.isUWP = false;
-window.SetIsUWP = (e) => {
-    console.log("Setting UWP Mode To " + e);
-    window.isUWP = (e == "True" ? true : false);
-}
-
 window.UploadConfig = () => {
 
     if (Config.Location == -1) {
