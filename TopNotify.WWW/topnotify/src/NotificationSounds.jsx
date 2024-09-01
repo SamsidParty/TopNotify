@@ -1,6 +1,6 @@
 import { Button, Divider } from '@chakra-ui/react'
 
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 
 import {
     Drawer,
@@ -56,12 +56,12 @@ export default function ManageNotificationSounds() {
 
                     <DrawerBody>
                         {
-                            window.Config.AppReferences.map((appReference) => {
+                            window.Config.AppReferences.map((appReference, i) => {
                                 return (
-                                    <>
+                                    <Fragment key={i}>
                                         <Divider/>
                                         <AppReferenceSoundItem appReference={appReference}></AppReferenceSoundItem>
-                                    </>
+                                    </Fragment>
                                 )
                             })
                         }
@@ -88,13 +88,15 @@ function AppReferenceSoundItem(props) {
         <div className="appReferenceSoundItem">
             <img src={props.appReference.DisplayIcon || "/Image/DefaultAppReferenceIcon.svg"}></img>
             <h4>{props.appReference.DisplayName}</h4>
-            <Select value={props.appReference.SoundPath} onChange={(e) => setSoundPath(e.target.value)}>
-                {
-                    NotificationSoundList.map((sound) => {
-                        return (<option value={sound}>{sound}</option>)
-                    })
-                }
-            </Select>
+            <div className="selectSoundButton">
+                <Select value={props.appReference.SoundPath} onChange={(e) => setSoundPath(e.target.value)}>
+                    {
+                        NotificationSoundList.map((sound, i) => {
+                            return (<option key={i} value={sound}>{sound}</option>)
+                        })
+                    }
+                </Select>
+            </div>
         </div>
     )
 }

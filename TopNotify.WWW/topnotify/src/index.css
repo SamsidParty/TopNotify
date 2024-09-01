@@ -176,8 +176,13 @@ body {
 .appReferenceSoundItem {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
+.appReferenceSoundItem .selectSoundButton {
+    margin-left: auto;
+    width: 200px;
+}
 
 @media (prefers-color-scheme: dark) {
     .footerLogo {
