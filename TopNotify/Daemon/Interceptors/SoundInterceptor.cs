@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
 using WebFramework.Backend;
+using Windows.UI.Notifications;
 
 namespace TopNotify.Daemon
 {
@@ -25,7 +26,7 @@ namespace TopNotify.Daemon
         /// Sets The Notification Sound In The Registry To The Fake Sound File
         /// TopNotify Doesn't Have Registry Access Because Of MSIX, So Call CMD To Do It For Us
         /// </summary>
-        private void InstallSoundInRegistry()
+        void InstallSoundInRegistry()
         {
             try
             {
@@ -38,7 +39,7 @@ namespace TopNotify.Daemon
         /// <summary>
         /// Sets The Permissions For The Fake Sound File And Makes Sure It Exists
         /// </summary>
-        private void EnsureFakeSoundValidity()
+        void EnsureFakeSoundValidity()
         {
             if (!Directory.Exists(Path.GetDirectoryName(GetFullSoundPath(FAKE_SOUND))))
             {
@@ -98,6 +99,12 @@ namespace TopNotify.Daemon
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Audio", soundRelativePath.Replace("/", "\\") + ".wav");
         }
 
+        public override void OnNotification(UserNotification notification)
+        {
+            NotificationTester.MessageBox(notification.AppInfo.PackageFamilyName, notification.AppInfo.DisplayInfo.DisplayName);
+
+            base.OnNotification(notification);
+        }
 
         public override void Reflow()
         {
