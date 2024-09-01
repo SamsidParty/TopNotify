@@ -79,7 +79,7 @@ export default function ManageNotificationSounds() {
 function AppReferenceSoundItem(props) {
     return (
         <div className="appReferenceSoundItem">
-            <img src={props.appReference.DisplayIcon || "https://raw.githubusercontent.com/SamsidParty/TopNotify/main/TopNotify/WWW/Image/DefaultAppReferenceIcon.svg"}></img>
+            <img src={props.appReference.DisplayIcon || "/Image/DefaultAppReferenceIcon.svg"}></img>
             <h4>{props.appReference.DisplayName}</h4>
         </div>
     )

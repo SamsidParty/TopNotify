@@ -35,7 +35,7 @@ namespace TopNotify.Common
         /// <summary>
         /// URL Of The App's Icon, Can Be A Data URL
         /// </summary>
-        public string DisplayIcon = "https://raw.githubusercontent.com/SamsidParty/TopNotify/main/TopNotify/WWW/Image/DefaultAppReferenceIcon.svg";
+        public string DisplayIcon = "/Image/DefaultAppReferenceIcon.svg";
 
         /// <summary>
         /// Relative Path To The WAV File Stored In WWW/Audio, Without .wav Extension
