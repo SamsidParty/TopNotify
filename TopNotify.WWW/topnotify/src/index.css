@@ -173,6 +173,12 @@ body {
     filter: invert(100);
 }
 
+.appReferenceSoundItem {
+    display: flex;
+    gap: 10px;
+}
+
+
 @media (prefers-color-scheme: dark) {
     .footerLogo {
         filter: none;

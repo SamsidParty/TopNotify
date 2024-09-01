@@ -9,7 +9,8 @@ import {
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
-    DrawerCloseButton
+    DrawerCloseButton,
+    Select
 } from '@chakra-ui/react'
 
 window.NotificationSoundList = [
@@ -28,7 +29,7 @@ export default function ManageNotificationSounds() {
         if (v && rerender < 0) { return; }
 
         if (v) {
-            setTimeout(() => setRerender(-1), 0);
+            setTimeout(() => setRerender(-9999999), 0);
         }
         else {
             setTimeout(() => setRerender(2), 0);
@@ -77,10 +78,23 @@ export default function ManageNotificationSounds() {
 }
 
 function AppReferenceSoundItem(props) {
+
+    var setSoundPath = (soundPath) => {
+        props.appReference.SoundPath = soundPath;
+        UploadConfig();
+    }
+
     return (
         <div className="appReferenceSoundItem">
             <img src={props.appReference.DisplayIcon || "/Image/DefaultAppReferenceIcon.svg"}></img>
             <h4>{props.appReference.DisplayName}</h4>
+            <Select value={props.appReference.SoundPath} onChange={(e) => setSoundPath(e.target.value)}>
+                {
+                    NotificationSoundList.map((sound) => {
+                        return (<option value={sound}>{sound}</option>)
+                    })
+                }
+            </Select>
         </div>
     )
 }

@@ -21,7 +21,7 @@ export function DebugMenu() {
         if (v && rerender < 0) { return; }
 
         if (v) {
-            setTimeout(() => setRerender(-1), 0);
+            setTimeout(() => setRerender(-9999999), 0);
         }
         else {
             setTimeout(() => setRerender(2), 0);
