@@ -28,14 +28,14 @@ namespace TopNotify.Common
         /// <summary>
         /// The Value Depending On The ReferenceType
         /// </summary>
-        public string ID = null;
+        public string ID = "Other";
 
         public string DisplayName = "All Other Apps";
 
         /// <summary>
         /// Relative Path To The WAV File Stored In WWW/Audio, Without .wav Extension
         /// </summary>
-        public string SoundPath = "internal/win11";
+        public string SoundPath = "windows/win11";
 
         /// <summary>
         /// Identifies An AppReference Based On A Notification
@@ -54,7 +54,7 @@ namespace TopNotify.Common
             }
 
             // Return The Default AppReference
-            return references.Where((r) => r.ID == null).FirstOrDefault();
+            return references.Where((r) => r.ID == "Other").FirstOrDefault();
         }
     }
 }

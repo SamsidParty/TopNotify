@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
+using System.Media;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
@@ -21,6 +22,9 @@ namespace TopNotify.Daemon
     {
         // This File Is Used To Replace The Default Notification Sounds, So That TopNotify Can Play A Different Sound
         const string FAKE_SOUND = "internal/silent";
+
+        SoundPlayer Player;
+        bool isPlaying = false;
 
         /// <summary>
         /// Sets The Notification Sound In The Registry To The Fake Sound File
@@ -102,8 +106,22 @@ namespace TopNotify.Daemon
         public override void OnNotification(UserNotification notification)
         {
             var appRef = AppReference.FromNotification(notification);
+            var soundFilePath = GetSourceSoundPath(appRef.SoundPath);
 
-            NotificationTester.MessageBox(appRef.DisplayName, appRef.ID);
+            if (!isPlaying)
+            {
+                isPlaying = true;
+
+                // Play Sound Without Blocking The Main Thread
+                Task.Run(() =>
+                {
+                    Player = new SoundPlayer(soundFilePath);
+                    Player.Load();
+                    Player.PlaySync();
+                    Player.Dispose();
+                    isPlaying = false;
+                });
+            }
 
             base.OnNotification(notification);
         }
