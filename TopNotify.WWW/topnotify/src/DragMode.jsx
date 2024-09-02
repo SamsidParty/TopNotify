@@ -20,7 +20,7 @@ export default function DragMode() {
 
     return (
         <div className={'dragMode app' + ((rerender > 0) ? " loaded" : "")}>
-            <h2>Select Custom Position</h2>
+            <h4>Select Custom Position</h4>
             <p>Move Your Mouse To The Desired Notification Position, Then Left Click To Confirm.</p>
         </div>
     )
