@@ -14,6 +14,6 @@ namespace TopNotify.Common
         FulfillHandleRequest, // Client To Daemon, Tells The Interceptor The Notification Window Handle
         UpdateConfig, // GUI To Daemon, Tells The Interceptor That The Config Has Changed
         RequestErrorList, // GUI To Daemon, Asks For A List Of Errors To Display
-        FulfillErrorList, // Daemon To GUI, Returns A List Of DaemonErrors in JSON Format
+        FulfillErrorListRequest, // Daemon To GUI, Returns A List Of DaemonErrors in JSON Format
     }
 }

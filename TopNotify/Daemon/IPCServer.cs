@@ -10,6 +10,7 @@ using WebSocketSharp.Server;
 using Logger = WebFramework.Backend.Logger;
 using TopNotify.Common;
 using SamsidParty_TopNotify.Daemon;
+using Newtonsoft.Json;
 
 namespace TopNotify.Daemon
 {
@@ -83,6 +84,13 @@ namespace TopNotify.Daemon
                     Logger.LogInfo("Sending FulfillConfigRequest Packet To Client");
                     var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
                     requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetForIPC())).ToArray();
+                    Send(requestData);
+                }
+                else if (type == IPCPacketType.RequestErrorList)
+                {
+                    Logger.LogInfo("Sending FulfillErrorListRequest Packet To Client");
+                    var requestData = new byte[] { (byte)IPCPacketType.FulfillErrorListRequest };
+                    requestData = requestData.Concat(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(DaemonErrorHandler.Errors))).ToArray();
                     Send(requestData);
                 }
                 else if (type == IPCPacketType.FulfillHandleRequest)

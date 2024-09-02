@@ -59,6 +59,12 @@ function App() {
 
             <Preview></Preview>
 
+            {
+                window.errorList.map((error, i) => {
+                    return (<ErrorMessage key={i} error={error}></ErrorMessage>)
+                })
+            }
+
             <Divider />
 
             <TestNotification></TestNotification>
@@ -84,7 +90,11 @@ function App() {
     )
 }
 
-
+function ErrorMessage(props) {
+    return (
+        <div className="errorMessage"><h4>&#xea06;</h4>{props.error.Text}</div>
+    )
+}
 
 
 export default App
