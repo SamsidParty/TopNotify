@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Daemon;
+using TopNotify.GUI;
 using Windows.UI.Notifications;
 
 namespace TopNotify.Common
@@ -60,6 +63,62 @@ namespace TopNotify.Common
 
             // Return The Default AppReference
             return references.Where((r) => r.ID == "Other").FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Returns A List Of Preset AppReferences
+        /// </summary>
+        public static AppReference[] GetPresets()
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Meta", "PresetAppReferences.json");
+            return JsonConvert.DeserializeObject<AppReference[]>(File.ReadAllText(path));
+        }
+
+        /// <summary>
+        /// Checks If An AppReference Exists In The Config Matching The ID Of The Parameter, And Adds It If It Doesn't Exist
+        /// Can Only Be Run On The Daemon
+        /// </summary>
+        public static void EnsurePresetExists(string ID)
+        {
+            if (InterceptorManager.Instance == null) { return; }
+
+            var presets = GetPresets();
+            var appReference = presets.Where((p) => p.ID == ID).FirstOrDefault();
+
+            foreach (var appRef in InterceptorManager.Instance.CurrentSettings.AppReferences)
+            {
+                if (appRef.ID == appReference.ID)
+                {
+                    // The AppReference Exists Already
+                    return;
+                }
+            }
+
+            // The AppReference Doesn't Exist In The Config, Add It
+            InterceptorManager.Instance.CurrentSettings.AppReferences.Add(appReference);
+            Settings.Overwrite(JsonConvert.SerializeObject(InterceptorManager.Instance.CurrentSettings));
+        }
+
+
+        /// <summary>
+        /// Checks If An AppReference Exists In The Config Matching The ID Of The Parameter, And Removes It If It Does
+        /// Can Only Be Run On The Daemon
+        /// </summary>
+        public static void EnsurePresetDoesntExist(string ID)
+        {
+            if (InterceptorManager.Instance == null) { return; }
+
+            foreach (var appRef in InterceptorManager.Instance.CurrentSettings.AppReferences)
+            {
+                if (appRef.ID == ID)
+                {
+                    // The AppReference Exists, Remove It
+                    InterceptorManager.Instance.CurrentSettings.AppReferences.Remove(appRef);
+                    Settings.Overwrite(JsonConvert.SerializeObject(InterceptorManager.Instance.CurrentSettings));
+                    break;
+                }
+            }
+
         }
     }
 }

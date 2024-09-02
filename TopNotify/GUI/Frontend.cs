@@ -47,15 +47,7 @@ namespace TopNotify.GUI
             if (isSaving) { return; }
             isSaving = true;
 
-            try
-            {
-                File.WriteAllText(Settings.GetFilePath(), data);
-                Settings.Validate(Settings.Get());
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.ToString());
-            }
+            Settings.Overwrite(data);
 
             await Task.Delay(100); // Prevent Crashing Daemon From Spamming Button
 

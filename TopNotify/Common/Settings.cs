@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using TopNotify.Daemon;
+using WebFramework.Backend;
 using Windows.Foundation.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TopNotify.Common
 {
@@ -127,6 +129,23 @@ namespace TopNotify.Common
             }
 
             return appFolder;
+        }
+
+
+        /// <summary>
+        /// Writes The Settings File With New Data
+        /// </summary>
+        public static void Overwrite(string newData)
+        {
+            try
+            {
+                File.WriteAllText(Settings.GetFilePath(), newData);
+                Settings.Validate(Settings.Get());
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.ToString());
+            }
         }
 
         public static void Validate(Settings settings)
