@@ -1,0 +1,16 @@
+[
+    {
+        "ReferenceType": 0,
+        "ID": "WhatsApp",
+        "DisplayName": "WhatsApp Desktop",
+        "DisplayIcon": "/Image/ThirdParty/WhatsApp.svg",
+        "SoundPath": "windows/win11"
+    },
+    {
+        "ReferenceType": 0,
+        "ID": "Discord",
+        "DisplayName": "Discord Desktop",
+        "DisplayIcon": "/Image/ThirdParty/Discord.svg",
+        "SoundPath": "windows/win11"
+    }
+]
