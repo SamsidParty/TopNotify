@@ -42,10 +42,17 @@ namespace TopNotify.Daemon
             {
                 if (teamsProcess != null && !InjectedProcesses.Contains(teamsProcess.Id)) // Check If It's Valid And Not Already Injected
                 {
-                    //Inject Hook DLL Into Teams
                     InjectedProcesses.Add(teamsProcess.Id);
-                    var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
-                    Logger.LogInfo("Teams Injector Returned: " + Marshal.PtrToStringUni(result));
+
+                    //Inject Hook DLL Into Teams After 2 Seconds
+                    //Allows Time For Teams To Init
+
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(2000);
+                        var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
+                        Logger.LogInfo("Teams Injector Returned: " + Marshal.PtrToStringUni(result));
+                    });
                 }
             }
 

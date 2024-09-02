@@ -39,10 +39,7 @@ namespace TopNotify.Daemon
         /// </summary>
         public virtual void Reflow()
         {
-            if (Daemon.Instance.Server != null)
-            {
-                Daemon.Instance.Server.UpdateHandles();
-            }
+
         }
 
         public virtual void Start()

@@ -101,6 +101,11 @@ namespace TopNotify.Daemon
 
         public void Reflow()
         {
+            if (Daemon.Instance.Server != null)
+            {
+                Daemon.Instance.Server.UpdateHandles();
+            }
+
             foreach (Interceptor i in Interceptors)
             {
                 try

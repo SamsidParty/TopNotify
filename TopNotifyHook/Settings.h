@@ -15,7 +15,6 @@ struct Settings
 	NotifyLocation Location;
 	float CustomPositionPercentX;
 	float CustomPositionPercentY;
-	std::string SoundPath;
 
 	// Data Passed By C#, Not Part Of The Config File
 	int __ScreenWidth;
