@@ -17,6 +17,24 @@ namespace TopNotify.Daemon
 
         private static List<int> InjectedProcesses = new List<int>();
 
+        public override bool ShouldEnable()
+        {
+            var allApps = Directory.GetDirectories("C:\\Program Files\\WindowsApps");
+
+            foreach (var app in allApps) 
+            {
+                if (app.Contains("MSTeams"))
+                {
+                    Logger.LogInfo("MS Teams Interception Is Enabled");
+                    return true;
+                }
+            }
+
+            Logger.LogInfo("MS Teams Interception Is Not Enabled");
+
+            return false;
+        }
+
         /// <summary>
         /// Returns All The Running ms-teams.exe Processes
         /// </summary>
