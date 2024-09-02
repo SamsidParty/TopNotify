@@ -24,7 +24,7 @@ namespace TopNotify.Daemon
 
         public List<uint> HandledNotifications = new List<uint>();
         public UserNotificationListener Listener;
-
+        public bool CanListenToNotifications = false;
 
         public void Start()
         {
@@ -40,15 +40,15 @@ namespace TopNotify.Daemon
             Task.Run(async () =>
             {
 
-                //Ask For Permissions To Read Notifications (Should Be Automatically Granted)
+                //Ask For Permissions To Read Notifications
                 var access = await Listener.RequestAccessAsync();
                 if (access != UserNotificationListenerAccessStatus.Allowed)
                 {
                     var msg = "Failed To Start Notification Listener: Permission Denied";
-                    Logger.LogError(msg);
-                    NotificationTester.Toast("Something Went Wrong", msg);
+                    DaemonErrorHandler.ThrowNonCritical(new DaemonError("listener_failure_no_permission", msg));
                     return;
                 }
+
 
                 try
                 {
@@ -58,9 +58,12 @@ namespace TopNotify.Daemon
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError("Could Not Intercept Notifications Because The Application Is Not Packaged");
+                    var msg = "Failed To Start Notification Listener: Not Packaged";
+                    DaemonErrorHandler.ThrowNonCritical(new DaemonError("listener_failure_not_packaged", msg));
+                    return;
                 }
 
+                CanListenToNotifications = true;
 
             });
 
