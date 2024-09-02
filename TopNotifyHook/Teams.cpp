@@ -2,6 +2,7 @@
 #include <easyhook.h>
 #include <mmsystem.h>
 #include "Settings.h"
+#include <algorithm> 
 
 void Teams::SetupHooks() {
 	HOOK_TRACE_INFO posHook = { NULL };
@@ -44,8 +45,16 @@ BOOL Teams::SetWindowPosHook(HWND hWnd, HWND hWndInsertAfter, int x, int y, int 
 				//Do Nothing
 			}
 			else if (GlobalSettings::LoadedSettingsFile->Location == NotifyLocation::Custom) {
-				overrideX = (GlobalSettings::LoadedSettingsFile->CustomPositionPercentX / 100 * GlobalSettings::LoadedSettingsFile->__ScreenWidth) + 15; // Alignment Offset Of 15
-				overrideY = (GlobalSettings::LoadedSettingsFile->CustomPositionPercentY / 100 * GlobalSettings::LoadedSettingsFile->__ScreenHeight) + 15;
+
+				int xPosition = (int)(GlobalSettings::LoadedSettingsFile->CustomPositionPercentX / 100 * GlobalSettings::LoadedSettingsFile->__ScreenWidth);
+				int yPosition = (int)(GlobalSettings::LoadedSettingsFile->CustomPositionPercentY / 100 * GlobalSettings::LoadedSettingsFile->__ScreenHeight);
+
+				//Make Sure Position Isn't Out Of Bounds
+				xPosition = std::clamp(xPosition, 0, (GlobalSettings::LoadedSettingsFile->__ScreenWidth - cx) - 15);
+				yPosition = std::clamp(yPosition, 0, (GlobalSettings::LoadedSettingsFile->__ScreenHeight - cy) - 15);
+
+				overrideX = xPosition + 15; // Alignment Offset Of 15
+				overrideY = yPosition + 15;
 			}
 		}
 
