@@ -7,7 +7,7 @@ export default function NotificationTransparency() {
             {
                 //Slider Is In Uncontrolled Mode For Performance Reasons
                 //So We Need To Wait For The Config To Load Before Setting The Default Value
-                (rerender == 0) ?
+                (Config.Location < 0) ?
                     (<></>) :
                     (
                         <Slider size="lg" onChangeEnd={ChangeTransparency} defaultValue={Config.Opacity * 20}>
