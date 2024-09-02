@@ -18,13 +18,25 @@ namespace TopNotify.Daemon
 
         }
 
-        //Called When A Notification Pops Up
+        /// <summary>
+        /// Detects Whether The Interceptor Should Run
+        /// </summary>
+        public virtual bool ShouldEnable()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Called When A Notification Pops Up
+        /// </summary>
         public virtual void OnNotification(UserNotification notification)
         {
 
         }
 
-        //Run Often Just To Rediscover Windows/Configs And Such
+        /// <summary>
+        /// Run Often Just To Rediscover Windows/Configs And Such
+        /// </summary>
         public virtual void Reflow()
         {
             if (Daemon.Instance.Server != null)

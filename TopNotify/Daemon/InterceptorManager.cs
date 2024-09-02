@@ -26,14 +26,21 @@ namespace TopNotify.Daemon
         public UserNotificationListener Listener;
         public bool CanListenToNotifications = false;
 
+        public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new SoundInterceptor(), new TeamsInterceptor() };
+
         public void Start()
         {
             Instance = this;
             CurrentSettings = Settings.Get();
 
-            Interceptors.Add(new NativeInterceptor());
-            Interceptors.Add(new SoundInterceptor());
-            Interceptors.Add(new TeamsInterceptor());
+            foreach (var possibleInterceptor in InstalledInterceptors)
+            {
+                // Check If It's Eligible To Be Enabled
+                if (possibleInterceptor.ShouldEnable())
+                {
+                    Interceptors.Add(possibleInterceptor);
+                }
+            }
 
 
             Listener = UserNotificationListener.Current;
