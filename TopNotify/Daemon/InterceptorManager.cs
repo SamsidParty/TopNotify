@@ -107,7 +107,7 @@ namespace TopNotify.Daemon
                 {
                     i.Reflow();
                 }
-                catch { }
+                catch (Exception ex) { Logger.LogError(ex.ToString()); }
             }
         }
 
@@ -119,7 +119,7 @@ namespace TopNotify.Daemon
                 {
                     i.Update();
                 }
-                catch { }
+                catch (Exception ex) { Logger.LogError(ex.ToString()); }
             }
         }
 
@@ -179,7 +179,7 @@ namespace TopNotify.Daemon
                     i.Restart();
                     i.Reflow();
                 }
-                catch { }
+                catch (Exception ex) { Logger.LogError(ex.ToString()); }
             }
         }
     }
