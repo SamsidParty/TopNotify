@@ -58,6 +58,13 @@ export function DebugMenu() {
                             <label>Force Fallback Interceptor</label>
                             <Switch onChange={(e) => ChangeSwitch("EnableDebugForceFallbackMode", e)} isChecked={Config.EnableDebugForceFallbackMode} style={{ marginLeft: "auto" }} size='lg' />
                         </div>
+
+                        <Divider />
+
+                        <div className="flexx facenter fillx gap20">
+                            <label>Disable Bounds Correction</label>
+                            <Switch onChange={(e) => ChangeSwitch("EnableDebugRemoveBoundsCorrection", e)} isChecked={Config.EnableDebugRemoveBoundsCorrection} style={{ marginLeft: "auto" }} size='lg' />
+                        </div>
                     </DrawerBody>
 
                     <DrawerFooter>

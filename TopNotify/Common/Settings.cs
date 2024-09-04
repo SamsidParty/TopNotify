@@ -21,6 +21,7 @@ namespace TopNotify.Common
         // Debug
         public bool EnableDebugNotifications = false;
         public bool EnableDebugForceFallbackMode = false;
+        public bool EnableDebugRemoveBoundsCorrection = false;
 
         // From 0 To 5 (0 Is Fully Opaque, 5 Is Mostly Transparent)
         public float Opacity = 0;

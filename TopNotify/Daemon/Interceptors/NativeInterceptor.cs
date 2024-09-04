@@ -186,9 +186,12 @@ namespace TopNotify.Daemon
                 var xPosition = (int)(Settings.CustomPositionPercentX / 100f * RealMainDisplayWidth);
                 var yPosition = (int)(Settings.CustomPositionPercentY / 100f * RealMainDisplayHeight);
 
-                //Make Sure Position Isn't Out Of Bounds
-                xPosition = Math.Clamp(xPosition, 0, RealMainDisplayWidth - unscaledWidth);
-                yPosition = Math.Clamp(yPosition, 0, RealMainDisplayHeight - unscaledHeight);
+                if (!Settings.EnableDebugRemoveBoundsCorrection)
+                {
+                    // Make Sure Position Isn't Out Of Bounds
+                    xPosition = Math.Clamp(xPosition, 0, RealMainDisplayWidth - unscaledWidth);
+                    yPosition = Math.Clamp(yPosition, 0, RealMainDisplayHeight - unscaledHeight);
+                }
 
                 SetWindowPos(hwnd, 0, xPosition, yPosition, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
