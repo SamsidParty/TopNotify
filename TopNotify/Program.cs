@@ -109,6 +109,7 @@ namespace TopNotify.Common
             };
 
             WebScript.Register<Frontend>("frontend");
+            WebScript.Register<Windows10Support>("win10support");
 
             //Clean Up
             CleanUp.RegisterCleanUpAction(() =>
