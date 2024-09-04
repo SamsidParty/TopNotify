@@ -26,10 +26,7 @@ namespace TopNotify.Daemon
         public UserNotificationListener Listener;
         public bool CanListenToNotifications = false;
 
-        public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new TeamsInterceptor() };
-
-        //Delayed Until 2.4.5
-        //public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new SoundInterceptor(), new TeamsInterceptor(), new WhatsAppInterceptor() };
+        public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new SoundInterceptor(), new TeamsInterceptor(), new WhatsAppInterceptor() };
 
         public void Start()
         {
