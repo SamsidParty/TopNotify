@@ -171,15 +171,15 @@ namespace TopNotify.Daemon
             }
             else if (Settings.Location == NotifyLocation.TopRight)
             {
-                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - scaledWidth, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - unscaledWidth, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomLeft)
             {
-                SetWindowPos(hwnd, 0, 0, ScaledMainDisplayHeight - scaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, 0, ScaledMainDisplayHeight - unscaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomRight) // Default In Windows, But Here For Completeness Sake
             {
-                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - scaledWidth, ScaledMainDisplayHeight - scaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, ScaledMainDisplayWidth - unscaledWidth, ScaledMainDisplayHeight - unscaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else // Custom Position
             {
