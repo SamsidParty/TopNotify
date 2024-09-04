@@ -17,76 +17,76 @@ namespace TopNotify.Daemon
         public static string GetNotificationName()
         {
             var ci = CultureInfo.CurrentUICulture;
-            string lang = ci.TwoLetterISOLanguageName.ToLower();
+            string systemLanguage = ci.TwoLetterISOLanguageName.ToLower();
 
             //Currently Only A Handful Of Lanugages
             //Open An Issue To Request A Language
             //ISO 639-1 Format
-            if (lang == "en")
+            if (systemLanguage == "en")
             {
                 return "New notification";
             }
-            else if (lang == "fr")
+            else if (systemLanguage == "fr")
             {
                 return "Nouvelle notification";
             }
-            else if (lang == "he")
+            else if (systemLanguage == "he")
             {
                 return "הודעה חדשה";
             }
-            else if (lang == "es")
+            else if (systemLanguage == "es")
             {
                 return "Nueva notificación";
             }
-            else if (lang == "ja")
+            else if (systemLanguage == "ja")
             {
                 return "新しい通知";
             }
-            else if (lang == "pt")
+            else if (systemLanguage == "pt")
             {
                 return "Nova notificação";
             }
-            else if (lang == "de")
+            else if (systemLanguage == "de")
             {
                 return "Neue Benachrichtigung";
             }
-            else if (lang == "zh")
+            else if (systemLanguage == "zh")
             {
                 return "新通知";
             }
-            else if (lang == "it")
+            else if (systemLanguage == "it")
             {
                 return "Nuova notifica";
             }
-            else if (lang == "pl")
+            else if (systemLanguage == "pl")
             {
                 return "Nowe powiadomienie";
             }
-            else if (lang == "sv")
+            else if (systemLanguage == "sv")
             {
                 return "Ny avisering";
             }
-            else if (lang == "da")
+            else if (systemLanguage == "da")
             {
                 return "Ny meddelelse";
             }
-            else if (lang == "no")
+            else if (systemLanguage == "no")
             {
                 return "Ny melding";
             }
-            else if (lang == "ru")
+            else if (systemLanguage == "ru")
             {
                 return "Новое уведомление";
             }
-            else if (lang == "ar")
+            else if (systemLanguage == "ar")
             {
                 return "إشعار جديد";
             }
-            else if (lang == "hi")
+            else if (systemLanguage == "hi")
             {
                 return "नई सूचना";
             }
-            else if (lang == "ko")
+            else if (systemLanguage == "ko")
             {
                 return "새로운 알림";
             }
