@@ -22,44 +22,77 @@ namespace TopNotify.Daemon
             //Currently Only A Handful Of Lanugages
             //Open An Issue To Request A Language
             //ISO 639-1 Format
-            switch (lang)
+            if (lang == "en")
             {
-                case "en":
-                    return "New notification";
-                case "fr":
-                    return "Nouvelle notification";
-                case "he":
-                    return "הודעה חדשה";
-                case "es":
-                    return "Nueva notificación";
-                case "ja":
-                    return "新しい通知";
-                case "pt":
-                    return "Nova notificação";
-                case "de":
-                    return "Neue Benachrichtigung";
-                case "zh":
-                    return "新通知";
-                case "it":
-                    return "Nuova notifica";
-                case "pl":
-                    return "Nowe powiadomienie";
-                case "sv":
-                    return "Ny avisering";
-                case "da":
-                    return "Ny meddelelse";
-                case "no":
-                    return "Ny melding";
-                case "ru":
-                    return "Новое уведомление";
-                case "ar":
-                    return "إشعار جديد";
-                case "hi":
-                    return "नई सूचना";
-                case "ko":
-                    return "새로운 알림";
-                default:
-                    return "New notification";
+                return "New notification";
+            }
+            else if (lang == "fr")
+            {
+                return "Nouvelle notification";
+            }
+            else if (lang == "he")
+            {
+                return "הודעה חדשה";
+            }
+            else if (lang == "es")
+            {
+                return "Nueva notificación";
+            }
+            else if (lang == "ja")
+            {
+                return "新しい通知";
+            }
+            else if (lang == "pt")
+            {
+                return "Nova notificação";
+            }
+            else if (lang == "de")
+            {
+                return "Neue Benachrichtigung";
+            }
+            else if (lang == "zh")
+            {
+                return "新通知";
+            }
+            else if (lang == "it")
+            {
+                return "Nuova notifica";
+            }
+            else if (lang == "pl")
+            {
+                return "Nowe powiadomienie";
+            }
+            else if (lang == "sv")
+            {
+                return "Ny avisering";
+            }
+            else if (lang == "da")
+            {
+                return "Ny meddelelse";
+            }
+            else if (lang == "no")
+            {
+                return "Ny melding";
+            }
+            else if (lang == "ru")
+            {
+                return "Новое уведомление";
+            }
+            else if (lang == "ar")
+            {
+                return "إشعار جديد";
+            }
+            else if (lang == "hi")
+            {
+                return "नई सूचना";
+            }
+            else if (lang == "ko")
+            {
+                return "새로운 알림";
+            }
+            else
+            {
+                return "New notification";
             }
 
         }
