@@ -28,7 +28,7 @@ namespace TopNotify.Daemon
 
         public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new TeamsInterceptor() };
 
-        //Delayed Until 2.4.5
+        //Delayed Until A Future Version
         //public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new SoundInterceptor(), new TeamsInterceptor(), new WhatsAppInterceptor() };
 
         public void Start()
