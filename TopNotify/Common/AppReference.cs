@@ -31,7 +31,7 @@ namespace TopNotify.Common
         /// <summary>
         /// Helps Identify If The App Is Installed Or Not, And Whether To Activate It
         /// </summary>
-        public AppDiscovery Discovery;
+        public AppDiscovery[] Discovery;
 
         /// <summary>
         /// The Value Depending On The ReferenceType

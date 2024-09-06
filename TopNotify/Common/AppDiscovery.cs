@@ -27,6 +27,22 @@ namespace TopNotify.Common
         public string SearchTerm;
 
         /// <summary>
+        /// Checks If An App Is Installed Based On Multiple Discovery Parameters
+        /// </summary>
+        public static bool IsAppInstalled(AppDiscovery[] discoveries)
+        {
+            foreach (var discovery in discoveries)
+            {
+                if (IsAppInstalled(discovery))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks If An App Is Installed Based On It's Discovery Parameters
         /// </summary>
         public static bool IsAppInstalled(AppDiscovery discovery)

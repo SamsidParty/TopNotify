@@ -5,10 +5,12 @@
         "DisplayName": "All Other Apps",
         "DisplayIcon": "/Image/DefaultAppReferenceIcon.svg",
         "SoundPath": "windows/win11",
-        "Discovery": {
-            "Method": 0,
-            "SearchTerm": ""
-        }
+        "Discovery": [
+            {
+                "Method": 0,
+                "SearchTerm": ""
+            }
+        ]
     },
     {
         "ReferenceType": 0,
@@ -16,10 +18,12 @@
         "DisplayName": "WhatsApp Desktop",
         "DisplayIcon": "/Image/ThirdParty/WhatsApp.svg",
         "SoundPath": "windows/win11",
-        "Discovery": {
-            "Method": 1,
-            "SearchTerm": "WhatsAppDesktop"
-        }
+        "Discovery": [
+            {
+                "Method": 1,
+                "SearchTerm": "WhatsAppDesktop"
+            }
+        ]
     },
     {
         "ReferenceType": 0,
@@ -27,9 +31,11 @@
         "DisplayName": "Discord Desktop",
         "DisplayIcon": "/Image/ThirdParty/Discord.svg",
         "SoundPath": "windows/win11",
-        "Discovery": {
-            "Method": 2,
-            "SearchTerm": "%appdata%\\discord"
-        }
+        "Discovery": [
+            {
+                "Method": 2,
+                "SearchTerm": "%appdata%\\discord"
+            }
+        ]
     }
 ]
