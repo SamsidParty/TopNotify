@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Common;
 using WebFramework.Backend;
 using static TopNotify.Daemon.NativeInterceptor;
 
@@ -19,20 +20,13 @@ namespace TopNotify.Daemon
 
         public override bool ShouldEnable()
         {
-            var allApps = Directory.GetDirectories("C:\\Program Files\\WindowsApps");
-
-            foreach (var app in allApps) 
+            var discovery = new AppDiscovery()
             {
-                if (app.Contains("MSTeams"))
-                {
-                    Logger.LogInfo("MS Teams Interception Is Enabled");
-                    return true;
-                }
-            }
+                Method = AppDiscoveryMethod.MatchMSIX,
+                SearchTerm = "MSTeams"
+            };
 
-            Logger.LogInfo("MS Teams Interception Is Not Enabled");
-
-            return false;
+            return AppDiscovery.IsAppInstalled(discovery);
         }
 
         /// <summary>

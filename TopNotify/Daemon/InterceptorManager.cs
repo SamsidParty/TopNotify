@@ -29,12 +29,13 @@ namespace TopNotify.Daemon
         public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new TeamsInterceptor() };
 
         //Delayed Until A Future Version
-        //public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new SoundInterceptor(), new TeamsInterceptor(), new WhatsAppInterceptor() };
+        //public static Interceptor[] InstalledInterceptors = { new NativeInterceptor(), new SoundInterceptor(), new TeamsInterceptor() };
 
         public void Start()
         {
             Instance = this;
             CurrentSettings = Settings.Get();
+            AppReference.EnsurePresetsAreValid();
 
             foreach (var possibleInterceptor in InstalledInterceptors)
             {

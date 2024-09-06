@@ -29,21 +29,26 @@ namespace TopNotify.Common
         public AppReferenceType ReferenceType;
 
         /// <summary>
+        /// Helps Identify If The App Is Installed Or Not, And Whether To Activate It
+        /// </summary>
+        public AppDiscovery Discovery;
+
+        /// <summary>
         /// The Value Depending On The ReferenceType
         /// </summary>
-        public string ID = "Other";
+        public string ID;
 
-        public string DisplayName = "All Other Apps";
+        public string DisplayName;
 
         /// <summary>
         /// URL Of The App's Icon, Can Be A Data URL
         /// </summary>
-        public string DisplayIcon = "/Image/DefaultAppReferenceIcon.svg";
+        public string DisplayIcon;
 
         /// <summary>
         /// Relative Path To The WAV File Stored In WWW/Audio, Without .wav Extension
         /// </summary>
-        public string SoundPath = "windows/win11";
+        public string SoundPath;
 
         /// <summary>
         /// Identifies An AppReference Based On A Notification
@@ -75,6 +80,29 @@ namespace TopNotify.Common
         }
 
         /// <summary>
+        /// Enables And Disables Presets Based On Whether They Are Installed
+        /// </summary>
+        public static void EnsurePresetsAreValid()
+        {
+            var presets = GetPresets();
+
+            foreach (var preset in presets)
+            {
+                if (AppDiscovery.IsAppInstalled(preset.Discovery))
+                {
+                    EnsurePresetExists(preset.ID);
+                }
+                else
+                {
+                    EnsurePresetDoesntExist(preset.ID);
+                }
+            }
+
+            // Save
+            Settings.Overwrite(JsonConvert.SerializeObject(InterceptorManager.Instance.CurrentSettings));
+        }
+
+        /// <summary>
         /// Checks If An AppReference Exists In The Config Matching The ID Of The Parameter, And Adds It If It Doesn't Exist
         /// Can Only Be Run On The Daemon
         /// </summary>
@@ -96,7 +124,6 @@ namespace TopNotify.Common
 
             // The AppReference Doesn't Exist In The Config, Add It
             InterceptorManager.Instance.CurrentSettings.AppReferences.Add(appReference);
-            Settings.Overwrite(JsonConvert.SerializeObject(InterceptorManager.Instance.CurrentSettings));
         }
 
 
@@ -114,7 +141,6 @@ namespace TopNotify.Common
                 {
                     // The AppReference Exists, Remove It
                     InterceptorManager.Instance.CurrentSettings.AppReferences.Remove(appRef);
-                    Settings.Overwrite(JsonConvert.SerializeObject(InterceptorManager.Instance.CurrentSettings));
                     break;
                 }
             }

@@ -77,7 +77,9 @@ function App() {
 
             <NotificationTransparency></NotificationTransparency>
 
-            { /* <Divider /> <ManageNotificationSounds></ManageNotificationSounds> */ }
+            <Divider />
+            
+            <ManageNotificationSounds></ManageNotificationSounds>
 
             <br></br>
 

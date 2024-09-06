@@ -201,6 +201,11 @@ body {
     width: 200px;
 }
 
+.appReferenceSoundItem img {
+    width: 24px;
+    height: 24px;
+}
+
 @media (prefers-color-scheme: dark) {
     .footerLogo {
         filter: none;

@@ -48,15 +48,6 @@ namespace TopNotify.Common
         public static Settings Get()
         {
             var value = JsonConvert.DeserializeObject<Settings>(GetRaw());
-
-            // Add Default AppReferences
-            // Serialization Doesn't Work Properly If This Is Set As The Default Value In The Initializer
-            // This Is The Workaround
-            if (value.AppReferences.Count == 0)
-            {
-                value.AppReferences.Add(new AppReference());
-            }
-
             return value;
         }
 

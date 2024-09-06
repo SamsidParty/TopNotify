@@ -1,16 +1,35 @@
 [
     {
         "ReferenceType": 0,
+        "ID": "Other",
+        "DisplayName": "All Other Apps",
+        "DisplayIcon": "/Image/DefaultAppReferenceIcon.svg",
+        "SoundPath": "windows/win11",
+        "Discovery": {
+            "Method": 0,
+            "SearchTerm": ""
+        }
+    },
+    {
+        "ReferenceType": 0,
         "ID": "WhatsApp",
         "DisplayName": "WhatsApp Desktop",
         "DisplayIcon": "/Image/ThirdParty/WhatsApp.svg",
-        "SoundPath": "windows/win11"
+        "SoundPath": "windows/win11",
+        "Discovery": {
+            "Method": 1,
+            "SearchTerm": "WhatsAppDesktop"
+        }
     },
     {
         "ReferenceType": 0,
         "ID": "Discord",
         "DisplayName": "Discord Desktop",
         "DisplayIcon": "/Image/ThirdParty/Discord.svg",
-        "SoundPath": "windows/win11"
+        "SoundPath": "windows/win11",
+        "Discovery": {
+            "Method": 2,
+            "SearchTerm": "%appdata%\\discord"
+        }
     }
 ]
