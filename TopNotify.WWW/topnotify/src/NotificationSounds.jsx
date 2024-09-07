@@ -33,9 +33,22 @@ export default function ManageNotificationSounds() {
         _setIsOpen(v);
     }
 
-    var setIsPickerOpen = (v) => {
+    var setIsPickerOpen = (v, id) => {
         _setIsOpen(!v);
         _setIsPickerOpen(v);
+    }
+
+    var applySound = (sound) => {
+
+        for (var i = 0; i < Config.AppReferences.length; i++) {
+            if (Config.AppReferences[i].ID == window.soundPickerReferenceID) {
+                Config.AppReferences[i].SoundPath = sound.Path;
+                break;
+            }
+        }
+
+        UploadConfig();
+        setIsPickerOpen(false);
     }
 
     return (
@@ -73,19 +86,15 @@ export default function ManageNotificationSounds() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
-            <SoundPicker setIsPickerOpen={setIsPickerOpen} isOpen={isPickerOpen}></SoundPicker>
+            <SoundPicker applySound={applySound} setIsPickerOpen={setIsPickerOpen} isOpen={isPickerOpen}></SoundPicker>
         </div>
     )
 }
 
 function AppReferenceSoundItem(props) {
 
-    var setSoundPath = (soundPath) => {
-        props.appReference.SoundPath = soundPath;
-        UploadConfig();
-    }
-
     var pickSound = () => {
+        window.soundPickerReferenceID = props.appReference.ID;
         props.setIsPickerOpen(true);
     }
 
@@ -126,7 +135,7 @@ function SoundPicker(props) {
                     <div className="soundPackList">
                         {
                             soundPacks.map((soundPack, i) => {
-                                return (<SoundPack soundPack={soundPack} key={i}></SoundPack>)
+                                return (<SoundPack applySound={props.applySound} soundPack={soundPack} key={i}></SoundPack>)
                             })
                         }
                     </div>
@@ -157,7 +166,7 @@ function SoundPack(props) {
                     props.soundPack.Sounds.map((sound, i) => {
                         return (
                             <div className="soundItem" key={i}>
-                                <Button className="soundItemButton">
+                                <Button onClick={() => props.applySound(sound)} className="soundItemButton">
                                     <img src={sound.Icon}></img>
                                 </Button>
                                 <h5>{sound.Name}&nbsp;<Button onClick={() => playSound(sound)} className="iconButton">&#xeb51;</Button></h5>
