@@ -9,19 +9,13 @@ import {
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
-    DrawerCloseButton,
-    Select
+    DrawerCloseButton
 } from '@chakra-ui/react'
-
-window.NotificationSoundList = [
-    "windows/win11",
-    "windows/win10",
-    "windows/win7"
-]
 
 export default function ManageNotificationSounds() {
 
     var [isOpen, _setIsOpen] = useState(false);
+    var [isPickerOpen, _setIsPickerOpen] = useState(false);
 
     var setIsOpen = (v) => {
 
@@ -35,6 +29,11 @@ export default function ManageNotificationSounds() {
         }
 
         _setIsOpen(v);
+    }
+
+    var setIsPickerOpen = (v) => {
+        _setIsOpen(!v);
+        _setIsPickerOpen(v);
     }
 
     return (
@@ -59,7 +58,7 @@ export default function ManageNotificationSounds() {
                                 return (
                                     <Fragment key={i}>
                                         <Divider/>
-                                        <AppReferenceSoundItem appReference={appReference}></AppReferenceSoundItem>
+                                        <AppReferenceSoundItem setIsPickerOpen={setIsPickerOpen} appReference={appReference}></AppReferenceSoundItem>
                                     </Fragment>
                                 )
                             })
@@ -72,6 +71,7 @@ export default function ManageNotificationSounds() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
+            <SoundPicker setIsPickerOpen={setIsPickerOpen} isOpen={isPickerOpen}></SoundPicker>
         </div>
     )
 }
@@ -83,19 +83,55 @@ function AppReferenceSoundItem(props) {
         UploadConfig();
     }
 
+    var pickSound = () => {
+        props.setIsPickerOpen(true);
+    }
+
     return (
         <div className="appReferenceSoundItem">
             <img src={props.appReference.DisplayIcon || "/Image/DefaultAppReferenceIcon.svg"}></img>
             <h4>{props.appReference.DisplayName}</h4>
             <div className="selectSoundButton">
-                <Select value={props.appReference.SoundPath} onChange={(e) => setSoundPath(e.target.value)}>
-                    {
-                        NotificationSoundList.map((sound, i) => {
-                            return (<option key={i} value={sound}>{sound}</option>)
-                        })
-                    }
-                </Select>
+                <Button onClick={pickSound}>{props.appReference.SoundPath}</Button>
             </div>
         </div>
+    )
+}
+
+function SoundPicker(props) {
+
+    var [soundPacks, setSoundPacks] = useState([]);
+
+    setTimeout(async () => {
+        var request = await fetch("/Meta/SoundPacks.json");
+        var response = await request.json();
+
+        setSoundPacks(response);
+    }, 0);
+
+    return (
+        <Drawer
+            blockScrollOnMount={false}
+            isOpen={props.isOpen}
+            placement='top'
+            onClose={() => props.setIsPickerOpen(false)}
+        >
+            <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Select Sound</DrawerHeader>
+
+                <DrawerBody>
+                    {
+                        soundPacks.map((soundPack) => {
+                            return (<h4>{soundPack.Name}</h4>)
+                        })
+                    }
+                </DrawerBody>
+
+                <DrawerFooter>
+                    
+                </DrawerFooter>
+            </DrawerContent>
+        </Drawer>
     )
 }

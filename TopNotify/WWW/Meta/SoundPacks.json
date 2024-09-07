@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "Windows Sounds",
+        "Description": "Includes Sounds From Both Modern & Classic Versions",
+        "Sounds": [
+            {
+                "Path": "windows/win11",
+                "Name": "Windows 11",
+                "Icon": "/Image/ThirdParty/Windows11.svg"
+            },
+            {
+                "Path": "windows/win10",
+                "Name": "Windows 10",
+                "Icon": "/Image/ThirdParty/Windows10.svg"
+            }
+        ]
+    }
+]

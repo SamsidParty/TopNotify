@@ -252,6 +252,7 @@ label {
 
 .chakra-modal__content {
     height: 100%;
+    width: 100%;
 }
 
 *::-webkit-scrollbar {
