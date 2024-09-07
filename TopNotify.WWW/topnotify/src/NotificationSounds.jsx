@@ -2,6 +2,8 @@ import { Button, Divider } from '@chakra-ui/react'
 
 import { useState, Fragment } from 'react';
 
+import "./CSS/NotificationSounds.css";
+
 import {
     Drawer,
     DrawerBody,

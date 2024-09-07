@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import DragMode from './DragMode.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
-import './index.css'
+import './CSS/App.css'
 import { useFirstRender, waitUntil } from './Helper.jsx'
 
 window.serverURL = "http://" + window.location.host + "/";

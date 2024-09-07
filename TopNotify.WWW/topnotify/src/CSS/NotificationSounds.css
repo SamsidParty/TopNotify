@@ -1,0 +1,15 @@
+.appReferenceSoundItem {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.appReferenceSoundItem .selectSoundButton {
+    margin-left: auto;
+    width: 200px;
+}
+
+.appReferenceSoundItem img {
+    width: 24px;
+    height: 24px;
+}

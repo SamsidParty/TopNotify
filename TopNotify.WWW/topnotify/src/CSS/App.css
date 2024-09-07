@@ -73,87 +73,6 @@ body {
 }
 
 
-.previewContainer {
-    width: 100%;
-    background-image: url("/Image/BackgroundDecoration.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 5px;
-    position: relative;
-    margin-top: 20px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.previewContainer .taskbarPreview {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--col-overlay);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.previewContainer .taskbarPreview img {
-    height: 80%;
-}
-
-.previewContainer .notificationWindowPreview {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.previewContainer .notificationWindowPreview .notificationPreview {
-    background-color: var(--col-text-inverted);
-    border-radius: 5px;
-}
-
-.previewContainer .notificationWindowPreview .notificationPreview img {
-    height: 100%;
-    width: auto;
-    filter: invert(100%);
-}
-
-.previewContainer .locationSelect {
-    border-radius: 5px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.2rem;
-}
-
-.previewContainer .locationSelectButton {
-    background-color: var(--col-overlay) !important;
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 1.8rem;
-    font-weight: 100;
-}
-
-.previewContainer .locationSelectButton:hover {
-    opacity: 0.8;
-}
-
-.previewContainer .customLocationSelectButton { 
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-    .previewContainer .notificationWindowPreview .notificationPreview img {
-        filter: none;
-    }
-}
 
 .errorMessage {
     height: 40px;
@@ -190,21 +109,6 @@ body {
     filter: invert(100);
 }
 
-.appReferenceSoundItem {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.appReferenceSoundItem .selectSoundButton {
-    margin-left: auto;
-    width: 200px;
-}
-
-.appReferenceSoundItem img {
-    width: 24px;
-    height: 24px;
-}
 
 @media (prefers-color-scheme: dark) {
     .footerLogo {

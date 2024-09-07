@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from '@chakra-ui/react'
-import './DragMode.css'
+import './CSS/DragMode.css'
 
 addEventListener("mouseup", (e) => {
     if (e.button == 0) {

@@ -1,5 +1,6 @@
 
 import { Button } from "@chakra-ui/react";
+import "./CSS/Preview.css";
 
 var previewScale = 0.241666667; // Relative to actual scale
 
