@@ -69,6 +69,7 @@ export default function ManageNotificationSounds() {
                     <DrawerHeader>Notification Sounds</DrawerHeader>
 
                     <DrawerBody>
+                        <div className="errorMessage"><h4>&#xea06;</h4>You May Need To Turn Off Sounds In Certain Apps</div>
                         {
                             window.Config.AppReferences.map((appReference, i) => {
                                 return (
@@ -104,7 +105,7 @@ function AppReferenceSoundItem(props) {
             <img src={props.appReference.DisplayIcon || "/Image/DefaultAppReferenceIcon.svg"}></img>
             <h4>{props.appReference.DisplayName}</h4>
             <div className="selectSoundButton">
-                <Button onClick={pickSound}>{props.appReference.SoundPath}</Button>
+                <Button onClick={pickSound}>&#xeb04;&nbsp;Change Sound</Button>
             </div>
         </div>
     )
