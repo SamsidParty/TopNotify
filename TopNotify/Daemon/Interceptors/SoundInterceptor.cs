@@ -34,7 +34,7 @@ namespace TopNotify.Daemon
         {
             try
             {
-                var command = $"reg add HKCU\\AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current /t REG_SZ /ve /d \"{GetFullSoundPath(FAKE_SOUND)}\" /f";
+                var command = $"reg add HKCU\\AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current /t REG_SZ /ve /d \"{GetCopiedSoundPath(FAKE_SOUND)}\" /f";
                 Util.SimpleCMD(command);
             }
             catch (Exception ex) { Logger.LogError(ex.ToString()); }
@@ -45,22 +45,22 @@ namespace TopNotify.Daemon
         /// </summary>
         void EnsureFakeSoundValidity()
         {
-            if (!Directory.Exists(Path.GetDirectoryName(GetFullSoundPath(FAKE_SOUND))))
+            if (!Directory.Exists(Path.GetDirectoryName(GetCopiedSoundPath(FAKE_SOUND))))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(GetFullSoundPath(FAKE_SOUND)));
+                Directory.CreateDirectory(Path.GetDirectoryName(GetCopiedSoundPath(FAKE_SOUND)));
             }
 
-            if (!File.Exists(GetFullSoundPath(FAKE_SOUND)))
+            if (!File.Exists(GetCopiedSoundPath(FAKE_SOUND)))
             {
                 //Copy The File If It Doesn't Exist
                 //This Will Copy The File From The Application Directory (Read Only) To The AppData Directory
                 //Because We Can't Change Permissions In The Application Directory
-                Logger.LogInfo("Copying Sound File Into" +  GetFullSoundPath(FAKE_SOUND));
-                File.Copy(GetSourceSoundPath(FAKE_SOUND), GetFullSoundPath(FAKE_SOUND));
+                Logger.LogInfo("Copying Sound File Into" +  GetCopiedSoundPath(FAKE_SOUND));
+                File.Copy(GetSourceSoundPath(FAKE_SOUND), GetCopiedSoundPath(FAKE_SOUND));
             }
 
             //Check Permissions, Add "ALL APPLICATION PACKAGES" If Needed
-            var fileInfo = new FileInfo(GetFullSoundPath(FAKE_SOUND));
+            var fileInfo = new FileInfo(GetCopiedSoundPath(FAKE_SOUND));
             var fileSecurity = fileInfo.GetAccessControl();
             var perms = fileSecurity.GetAccessRules(true, false, typeof(SecurityIdentifier));
             var hasAllAppPerms = false;
@@ -88,9 +88,9 @@ namespace TopNotify.Daemon
 
 
         /// <summary>
-        /// Gets The Full Path Of A Sound From It's Relative Path
+        /// Gets The Path Of A Sound In The AppData Folder
         /// </summary>
-        public static string GetFullSoundPath(string soundRelativePath)
+        public string GetCopiedSoundPath(string soundRelativePath)
         {
             return Path.Combine(Common.Settings.GetAppDataFolder(), "NotificationSounds", soundRelativePath.Replace("/", "\\") + ".wav");
         }
@@ -98,15 +98,47 @@ namespace TopNotify.Daemon
         /// <summary>
         /// Gets The Path Of The Sound Built In The Application Folder
         /// </summary>
-        public static string GetSourceSoundPath(string soundRelativePath)
+        public string GetSourceSoundPath(string soundRelativePath)
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Audio", soundRelativePath.Replace("/", "\\") + ".wav");
+        }
+
+        /// <summary>
+        /// Gets The Path Of The Sound, Automatically Determining If It's In The App Folder Or AppData Folder
+        /// </summary>
+        public string GetSoundPath(string soundPath)
+        {
+            if (soundPath == "internal/default")
+            {
+                // Find The SoundPath Of The Default AppReference
+                foreach (var appRef in Settings.AppReferences)
+                {
+                    if (appRef.ID == "Other" && appRef.SoundPath != "internal/default")
+                    {
+                        return GetSoundPath(appRef.SoundPath);
+                    }
+                }
+            }
+
+            var copiedPath = GetCopiedSoundPath(soundPath);
+            var sourcePath = GetSourceSoundPath(soundPath);
+
+            if (File.Exists(copiedPath))
+            {
+                return copiedPath;
+            }
+            else if (File.Exists(sourcePath))
+            {
+                return copiedPath;
+            }
+
+            return GetSourceSoundPath("windows/win11");
         }
 
         public override void OnNotification(UserNotification notification)
         {
             var appRef = AppReference.FromNotification(notification);
-            var soundFilePath = GetSourceSoundPath(appRef.SoundPath);
+            var soundFilePath = GetSoundPath(appRef.SoundPath);
 
             if (!isPlaying)
             {
