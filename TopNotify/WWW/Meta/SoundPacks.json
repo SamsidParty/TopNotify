@@ -1,7 +1,20 @@
 [
     {
+        "Name": "Your Collection",
+        "Description": ".WAV Files In Your Music Folder Will Show Up Here",
+        "ID": "custom_sound_path",
+        "Sounds": [
+            {
+                "Path": "internal/silent",
+                "Name": "No Sound",
+                "Icon": "/Image/NoSound.svg"
+            }
+        ]
+    },
+    {
         "Name": "Windows Sounds",
         "Description": "Includes Sounds From Both Modern & Classic Versions",
+        "ID": "windows",
         "Sounds": [
             {
                 "Path": "windows/win11",

@@ -104,7 +104,7 @@ namespace TopNotify.Daemon
         }
 
         /// <summary>
-        /// Gets The Path Of The Sound, Automatically Determining If It's In The App Folder Or AppData Folder
+        /// Gets The Path Of The Sound, Automatically Determining If It's In The App Folder, AppData Folder, Or Custom Path
         /// </summary>
         public string GetSoundPath(string soundPath)
         {
@@ -119,17 +119,29 @@ namespace TopNotify.Daemon
                     }
                 }
             }
-
-            var copiedPath = GetCopiedSoundPath(soundPath);
-            var sourcePath = GetSourceSoundPath(soundPath);
-
-            if (File.Exists(copiedPath))
+            // Sound Uses A Custom Path
+            else if (soundPath.StartsWith("custom_sound_path/"))
             {
-                return copiedPath;
+                var customPath = soundPath.Replace("custom_sound_path/", "");
+
+                if (File.Exists(customPath))
+                {
+                    return customPath;
+                }
             }
-            else if (File.Exists(sourcePath))
+            else
             {
-                return copiedPath;
+                var copiedPath = GetCopiedSoundPath(soundPath);
+                var sourcePath = GetSourceSoundPath(soundPath);
+
+                if (File.Exists(copiedPath))
+                {
+                    return copiedPath;
+                }
+                else if (File.Exists(sourcePath))
+                {
+                    return copiedPath;
+                }
             }
 
             return GetSourceSoundPath("windows/win11");

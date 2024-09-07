@@ -13,7 +13,7 @@ namespace TopNotify.GUI
         public static bool InterceptWallpaperRequest(HttpListenerContext context)
         {
 
-            //Check If The Request Is For The Wallpaper
+            // Check If The Request Is For The Wallpaper
             if (
                 context.Request.Url != null &&
                 context.Request.Url.LocalPath.EndsWith("BackgroundDecoration.jpg") &&
