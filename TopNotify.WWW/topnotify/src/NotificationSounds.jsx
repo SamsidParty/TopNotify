@@ -123,11 +123,13 @@ function SoundPicker(props) {
                 <DrawerHeader>Select Sound</DrawerHeader>
 
                 <DrawerBody>
-                    {
-                        soundPacks.map((soundPack) => {
-                            return (<h4>{soundPack.Name}</h4>)
-                        })
-                    }
+                    <div className="soundPackList">
+                        {
+                            soundPacks.map((soundPack, i) => {
+                                return (<SoundPack soundPack={soundPack} key={i}></SoundPack>)
+                            })
+                        }
+                    </div>
                 </DrawerBody>
 
                 <DrawerFooter>
@@ -135,5 +137,13 @@ function SoundPicker(props) {
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>
+    )
+}
+
+function SoundPack(props) {
+    return (
+        <div className="soundPack">
+            {props.soundPack.Name}
+        </div>
     )
 }
