@@ -1,5 +1,16 @@
 [
     {
+        "Name": "Your Collection",
+        "Description": ".WAV Files In Your Music Folder Will Show Up Here",
+        "Sounds": [
+            {
+                "Path": "internal/silent",
+                "Name": "No Sound",
+                "Icon": "/Image/NoSound.svg"
+            }
+        ]
+    },
+    {
         "Name": "Windows Sounds",
         "Description": "Includes Sounds From Both Modern & Classic Versions",
         "Sounds": [
@@ -12,6 +23,21 @@
                 "Path": "windows/win10",
                 "Name": "Notify 10",
                 "Icon": "/Image/ThirdParty/Windows10.svg"
+            },
+            {
+                "Path": "windows/win7",
+                "Name": "Notify 7",
+                "Icon": "/Image/ThirdParty/Windows7.svg"
+            },
+            {
+                "Path": "windows/winxp",
+                "Name": "Notify XP",
+                "Icon": "/Image/ThirdParty/WindowsXP.png"
+            },
+            {
+                "Path": "windows/winxp_error",
+                "Name": "Error XP",
+                "Icon": "/Image/ThirdParty/WindowsXP.png"
             }
         ]
     }
