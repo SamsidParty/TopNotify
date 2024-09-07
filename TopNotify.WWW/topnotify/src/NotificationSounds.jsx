@@ -1,6 +1,7 @@
 import { Button, Divider } from '@chakra-ui/react'
 
 import { useState, Fragment } from 'react';
+import { useFirstRender } from './Helper.jsx'
 
 import "./CSS/NotificationSounds.css";
 
@@ -113,12 +114,14 @@ function SoundPicker(props) {
 
     var [soundPacks, setSoundPacks] = useState([]);
 
-    setTimeout(async () => {
-        var request = await fetch("/Meta/SoundPacks.json");
-        var response = await request.json();
-
-        setSoundPacks(response);
-    }, 0);
+    if (useFirstRender()) {
+        setTimeout(async () => {
+            var request = await fetch("/Meta/SoundPacks.json");
+            var response = await request.json();
+    
+            setSoundPacks(response);
+        }, 0);
+    }
 
     return (
         <Drawer
@@ -152,6 +155,13 @@ function SoundPicker(props) {
 function SoundPack(props) {
 
     var playSound = (sound) => {
+
+        if (sound.Path.startsWith("custom_sound_path/")) {
+            var audio = new Audio("fs://" + sound.Path.replace("custom_sound_path/", ""));
+            audio.play();
+            return;
+        }
+
         var audio = new Audio("/Audio/" + sound.Path + ".wav");
         audio.play();
     }

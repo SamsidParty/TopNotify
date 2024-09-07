@@ -34,7 +34,7 @@ namespace TopNotify.GUI
                     dynamic soundToInject = new ExpandoObject();
                     soundToInject.Path = "custom_sound_path/" + wavFile;
                     soundToInject.Name = Path.GetFileNameWithoutExtension(wavFile);
-                    soundToInject.Icon = "/Image/NoSound.svg";
+                    soundToInject.Icon = "/Image/Sound.svg";
                     packToInject.Sounds.Add(soundToInject);
                 }
 
@@ -52,7 +52,7 @@ namespace TopNotify.GUI
                 return true;
             }
 
-            return false;
+                return false;
         }
 
         /// <summary>
