@@ -115,7 +115,7 @@ function SoundPicker(props) {
         <Drawer
             blockScrollOnMount={false}
             isOpen={props.isOpen}
-            placement='top'
+            placement='bottom'
             onClose={() => props.setIsPickerOpen(false)}
         >
             <DrawerContent>
@@ -141,9 +141,31 @@ function SoundPicker(props) {
 }
 
 function SoundPack(props) {
+
+    var playSound = (sound) => {
+        var audio = new Audio("/Audio/" + sound.Path + ".wav");
+        audio.play();
+    }
+
     return (
         <div className="soundPack">
-            {props.soundPack.Name}
+            <h3>{props.soundPack.Name}</h3>
+            <h4>{props.soundPack.Description}</h4>
+            <Divider></Divider>
+            <div className="soundList">
+                {
+                    props.soundPack.Sounds.map((sound, i) => {
+                        return (
+                            <div className="soundItem" key={i}>
+                                <Button className="soundItemButton">
+                                    <img src={sound.Icon}></img>
+                                </Button>
+                                <h5>{sound.Name}&nbsp;<Button onClick={() => playSound(sound)} className="iconButton">&#xeb51;</Button></h5>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }

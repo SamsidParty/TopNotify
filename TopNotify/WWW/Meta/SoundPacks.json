@@ -5,12 +5,12 @@
         "Sounds": [
             {
                 "Path": "windows/win11",
-                "Name": "Windows 11",
+                "Name": "Notify 11",
                 "Icon": "/Image/ThirdParty/Windows11.svg"
             },
             {
                 "Path": "windows/win10",
-                "Name": "Windows 10",
+                "Name": "Notify 10",
                 "Icon": "/Image/ThirdParty/Windows10.svg"
             }
         ]

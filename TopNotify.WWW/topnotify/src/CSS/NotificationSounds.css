@@ -13,3 +13,77 @@
     width: 24px;
     height: 24px;
 }
+
+.soundPackList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.soundPack {
+    background-color: var(--col-tertiary);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.soundPack h3 {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+}
+
+.soundPack h4 {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    opacity: 0.6;
+}
+
+.soundList {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.soundItem {
+    transition: opacity 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 134px;
+    max-width: 134px;
+    min-height: 134px;
+    max-height: 134px;
+    background-color: var(--col-tertiary);
+    border-radius: 5px;
+}
+
+.soundItem .soundItemButton {
+    width: 100%;
+    height: calc(134px - 28px);
+}
+
+.soundItem img {
+    height: 60px;
+}
+
+.soundItem .iconButton {
+    width: 20px !important;
+    height: 20px !important;
+    padding: 0 !important;
+    font-weight: 400 !important;
+}
+
+.soundItem h5 {
+    margin: auto;
+    font-size: 12px;
+}

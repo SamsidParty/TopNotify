@@ -35,7 +35,7 @@
     --col-primary: #5536e0;
     --col-primary-hover: #492fbb;
     --col-secondary: #acee3a;
-    --col-tertiary: #f3e7ff;
+    --col-tertiary: #ffffffab;
     --col-contrast: #ebebeb;
     --col-disabled: #251F29;
 
@@ -55,7 +55,7 @@
         --col-primary: #767df9;
         --col-primary-hover: #6268d3;
         --col-secondary: #BEF264;
-        --col-tertiary: #3D303B;
+        --col-tertiary: #50505031;
         --col-contrast: #343434;
         --col-disabled: #251F29;
     }
@@ -97,7 +97,7 @@ body {
     height: 40px;
     bottom: 0;
     border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--col-tertiary);
     display: flex;
     align-items: center;
 }
