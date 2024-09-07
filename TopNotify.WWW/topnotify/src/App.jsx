@@ -7,11 +7,13 @@ import ManageNotificationSounds from './NotificationSounds'
 import Preview from './Preview'
 import { DebugMenu } from './DebugMenu'
 import './IPCClient'
+import ReadAloud from './ReadAloud'
 
 
 window.Config = {
     Location: -1,
     Opacity: 0,
+    ReadAloud: false,
     AppReferences: []
 }
 
@@ -76,6 +78,10 @@ function App() {
             <Divider />
 
             <NotificationTransparency></NotificationTransparency>
+
+            <Divider />
+
+            <ReadAloud></ReadAloud>
 
             <Divider />
             

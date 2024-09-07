@@ -149,6 +149,8 @@ namespace TopNotify.Daemon
 
         public override void OnNotification(UserNotification notification)
         {
+            if (Settings.ReadAloud) { return; } // Don't Play A Sound If Text-To-Speech Is Playing
+
             var appRef = AppReference.FromNotification(notification);
             var soundFilePath = GetSoundPath(appRef.SoundPath);
 
