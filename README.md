@@ -9,6 +9,8 @@
 [![Code Size](https://img.shields.io/github/languages/code-size/SamsidParty/TopNotify?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/archive/refs/heads/develop.zip)
 [![Repo Size](https://img.shields.io/github/repo-size/SamsidParty/TopNotify?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/archive/refs/heads/develop.zip)
 
+[![Get It From Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/productId/9PFMDK0QHKQJ?ocid=pdpshare)
+
 Elevate your alerts with TopNotify, the ultimate notification customization tool.
 TopNotify is your ticket to a smarter, more efficient notification system. Say goodbye to missed alerts buried in the corner of your screen. With TopNotify, important messages can be anywhere you want.
 
@@ -20,8 +22,6 @@ TopNotify allows you to change the transparency of notifications, keeping both t
 
 Mystifying Misclicks:
 The Click-Through feature allows you to click behind the notifications, preventing you from accidentally opening them.
-
-[![Get It From Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/productId/9PFMDK0QHKQJ?ocid=pdpshare)
 
 ![TopNotify Header](/Docs/Screenshot3.png)
 
