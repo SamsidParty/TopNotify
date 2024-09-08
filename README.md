@@ -4,6 +4,11 @@
 - Change Transparency Of Notifications
 - Click-Through Notifications
 
+[![Download Count](https://img.shields.io/github/downloads/SamsidParty/TopNotify/total.svg?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/releases)
+[![Stars Count](https://img.shields.io/github/stars/SamsidParty/TopNotify.svg?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/stargazers)
+[![Code Size](https://img.shields.io/github/languages/code-size/SamsidParty/TopNotify?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/archive/refs/heads/develop.zip)
+[![Repo Size](https://img.shields.io/github/repo-size/SamsidParty/TopNotify?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/archive/refs/heads/develop.zip)
+
 Elevate your alerts with TopNotify, the ultimate notification customization tool.
 TopNotify is your ticket to a smarter, more efficient notification system. Say goodbye to missed alerts buried in the corner of your screen. With TopNotify, important messages can be anywhere you want.
 
