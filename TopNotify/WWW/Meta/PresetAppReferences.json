@@ -37,5 +37,18 @@
                 "SearchTerm": "%appdata%\\discord"
             }
         ]
+    },
+    {
+        "ReferenceType": 0,
+        "ID": "Outlook",
+        "DisplayName": "Outlook",
+        "DisplayIcon": "/Image/ThirdParty/Outlook.svg",
+        "SoundPath": "internal/default",
+        "Discovery": [
+            {
+                "Method": 1,
+                "SearchTerm": "Microsoft.OutlookForWindows"
+            }
+        ]
     }
 ]
