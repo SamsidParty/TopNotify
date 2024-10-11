@@ -52,11 +52,12 @@ namespace TopNotify.Common
             if (discovery.Method == AppDiscoveryMethod.MatchAlways) { return true; }
             else if (discovery.Method == AppDiscoveryMethod.MatchMSIX) 
             {
-                var allApps = Directory.GetDirectories("C:\\Program Files\\WindowsApps");
+                var getAppxPackageLines = Util.SimpleCMD("powershell -c \"Get-AppxPackage\"").Split("\n");
 
-                foreach (var app in allApps)
+                foreach (var getAppxPackageLine in getAppxPackageLines)
                 {
-                    if (app.Contains(discovery.SearchTerm))
+                    // Check If The Line Is The "Name : " Line 
+                    if (getAppxPackageLine.Contains("Name") && getAppxPackageLine.Contains(discovery.SearchTerm))
                     {
                         return true;
                     }
