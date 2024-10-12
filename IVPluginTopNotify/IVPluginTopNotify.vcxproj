@@ -137,7 +137,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>"C:\Users\SamarthCat\Documents\Programming Stuff\TopNotify\TopNotify\packages\EasyHookNativePackage.2.7.7097\build\native\lib\x64\v141\Release\EasyHook64.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"$(SolutionDir)packages\EasyHookNativePackage.2.7.7097\build\native\lib\x64\v141\Debug\EasyHook64.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

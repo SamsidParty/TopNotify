@@ -6,10 +6,10 @@ MinimumOSVersion: "10.0.19041.0"
 InstallerType: "msix"
 InstallModes: 
  - "silent"
-PackageFamilyName: "TODO"
+PackageFamilyName: "55968SamsidGameStudios.TopNotify_r9j5xrxak4zje"
 Installers: 
  - Architecture: "x64"
-   InstallerUrl: "https://github.com/SamsidParty/TopNotify/releases/download/%2.4.6%/TopNotify.Msix"
-   InstallerSha256: TODO
+   InstallerUrl: "https://github.com/SamsidParty/TopNotify/releases/download/2.4.6/TopNotify.Msix"
+   InstallerSha256: 1ab364e2ed182e0c879fd9ec7a730aafa47fd441facac8b5adccf77767026917
 ManifestType: "installer"
 ManifestVersion: "1.6.0"
