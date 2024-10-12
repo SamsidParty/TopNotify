@@ -1,5 +1,5 @@
 PackageIdentifier: "SamsidParty.TopNotifyWG"
-PackageVersion: "%{TOPNOTIFY_VERSION}%"
+PackageVersion: "2.4.6"
 PackageLocale: "en-US"
 Publisher: "SamsidParty"
 PublisherUrl: "https://www.samsidparty.com/"

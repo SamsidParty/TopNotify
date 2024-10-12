@@ -90,4 +90,8 @@
     </Reference>
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cd $(SolutionDir) &amp;&amp; cd ../TopNotify.WWW/topnotify &amp;&amp; npm run build" />
+  </Target>
+
 </Project>
