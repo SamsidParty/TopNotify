@@ -77,6 +77,7 @@ namespace TopNotify.Daemon
 
             foreach (Interceptor i in Interceptors)
             {
+                Logger.LogInfo("Started Interceptor: " + i.GetType().Name);
                 i.Start();
             }
             MainLoop();

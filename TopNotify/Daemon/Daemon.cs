@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using TopNotify.Common;
 using TopNotify.GUI;
+using WebFramework.Backend;
 
 namespace TopNotify.Daemon
 {
@@ -21,11 +22,7 @@ namespace TopNotify.Daemon
         public Daemon() {
             Instance = this;
 
-
-            if (Settings.Get().EnableDebugNotifications)
-            {
-                NotificationTester.Toast("Debug Notification", "Interceptor Daemon Started");
-            }
+            Logger.LogInfo("Interceptor Daemon Started");
 
             TrayIcon.Setup();
 

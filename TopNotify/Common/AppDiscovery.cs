@@ -27,6 +27,24 @@ namespace TopNotify.Common
         public string SearchTerm;
 
         /// <summary>
+        /// Cached Output Of Get-AppxPackage, Filtered To Only Include "Name: " Lines
+        /// </summary>
+        public static string[] AppxPackageLines
+        {
+            get
+            {
+                if (_AppxPackageLines == null)
+                {
+                    _AppxPackageLines = Util.SimpleCMD("powershell -c \"Get-AppxPackage | Select Name\"").Split("\n");
+                }
+
+                return _AppxPackageLines;
+            }
+        }
+
+        private static string[] _AppxPackageLines = null;
+
+        /// <summary>
         /// Checks If An App Is Installed Based On Multiple Discovery Parameters
         /// </summary>
         public static bool IsAppInstalled(AppDiscovery[] discoveries)
@@ -52,12 +70,10 @@ namespace TopNotify.Common
             if (discovery.Method == AppDiscoveryMethod.MatchAlways) { return true; }
             else if (discovery.Method == AppDiscoveryMethod.MatchMSIX) 
             {
-                var getAppxPackageLines = Util.SimpleCMD("powershell -c \"Get-AppxPackage\"").Split("\n");
-
-                foreach (var getAppxPackageLine in getAppxPackageLines)
+                foreach (var getAppxPackageLine in AppxPackageLines)
                 {
-                    // Check If The Line Is The "Name : " Line 
-                    if (getAppxPackageLine.Contains("Name") && getAppxPackageLine.Contains(discovery.SearchTerm))
+                    // Check If The Line Contains The Package Name
+                    if (getAppxPackageLine.Contains(discovery.SearchTerm))
                     {
                         return true;
                     }
