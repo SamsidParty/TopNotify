@@ -52,21 +52,21 @@ namespace TopNotify.Daemon
 
             if (!File.Exists(GetCopiedSoundPath(FAKE_SOUND)))
             {
-                //Copy The File If It Doesn't Exist
-                //This Will Copy The File From The Application Directory (Read Only) To The AppData Directory
-                //Because We Can't Change Permissions In The Application Directory
+                // Copy The File If It Doesn't Exist
+                // This Will Copy The File From The Application Directory (Read Only) To The AppData Directory
+                // Because We Can't Change Permissions In The Application Directory
                 Logger.LogInfo("Copying Sound File Into" +  GetCopiedSoundPath(FAKE_SOUND));
                 File.Copy(GetSourceSoundPath(FAKE_SOUND), GetCopiedSoundPath(FAKE_SOUND));
             }
 
-            //Check Permissions, Add "ALL APPLICATION PACKAGES" If Needed
+            // Check Permissions, Add "ALL APPLICATION PACKAGES" If Needed
             var fileInfo = new FileInfo(GetCopiedSoundPath(FAKE_SOUND));
             var fileSecurity = fileInfo.GetAccessControl();
             var perms = fileSecurity.GetAccessRules(true, false, typeof(SecurityIdentifier));
             var hasAllAppPerms = false;
 
-            //For Some Reason Linq .Where() Doesn't Work
-            //Use Normal Iteration
+            // For Some Reason Linq .Where() Doesn't Work
+            // Use Normal Iteration
             foreach (FileSystemAccessRule perm in perms)
             {
                 if (perm.IdentityReference.Value == "S-1-15-2-1") // S-1-15-2-1 Means All App Packages, https://renenyffenegger.ch/notes/Windows/security/SID/index
@@ -75,6 +75,8 @@ namespace TopNotify.Daemon
                 }
             }
 
+            // Windows Sometimes Won't Play The Sound Unless It Has Permission To Do So,
+            // Give File Permissions To "ALL APPLICATION PACKAGES"
             if (!hasAllAppPerms)
             {
                 Logger.LogInfo("Writing ALL APPLICATION PACKAGES Permission");
@@ -131,17 +133,12 @@ namespace TopNotify.Daemon
             }
             else
             {
+                // Check If Sound Is Present In The AppData Folder
+                // If It Is, Use That, Else Use The One Inside The App WWW Folder
                 var copiedPath = GetCopiedSoundPath(soundPath);
                 var sourcePath = GetSourceSoundPath(soundPath);
 
-                if (File.Exists(copiedPath))
-                {
-                    return copiedPath;
-                }
-                else if (File.Exists(sourcePath))
-                {
-                    return copiedPath;
-                }
+                return File.Exists(copiedPath) ? copiedPath : sourcePath;
             }
 
             return GetSourceSoundPath("windows/win11");
