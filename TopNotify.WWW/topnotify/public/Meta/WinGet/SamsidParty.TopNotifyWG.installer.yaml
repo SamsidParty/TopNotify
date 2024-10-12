@@ -1,0 +1,15 @@
+PackageIdentifier: "SamsidParty.TopNotifyWG"
+PackageVersion: "2.4.5"
+Platform: 
+ - "Windows.Desktop"
+MinimumOSVersion: "10.0.19041.0"
+InstallerType: "msix"
+InstallModes: 
+ - "silent"
+PackageFamilyName: "TODO"
+Installers: 
+ - Architecture: "x64"
+   InstallerUrl: "https://github.com/SamsidParty/TopNotify/releases/download/2.4.5/TopNotify.Msix"
+   InstallerSha256: TODO
+ManifestType: "installer"
+ManifestVersion: "1.6.0"
