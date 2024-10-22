@@ -91,6 +91,10 @@ body {
     color: var(--col-secondary);
 }
 
+.errorMessage.medium {
+    height: 60px;
+}
+
 .footer {
     position: absolute;
     width: 100%;

@@ -69,7 +69,7 @@ export default function ManageNotificationSounds() {
                     <DrawerHeader>Notification Sounds</DrawerHeader>
 
                     <DrawerBody>
-                        <div className="errorMessage"><h4>&#xea06;</h4>You May Need To Turn Off Sounds In Certain Apps</div>
+                        <div className="errorMessage medium"><h4>&#xea06;</h4>Some Apps Will Play Their Own Sounds, You May Have To Turn Them Off In The App To Prevent Multiple Sounds From Playing</div>
                         {
                             window.Config.AppReferences.map((appReference, i) => {
                                 return (
