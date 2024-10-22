@@ -61,7 +61,7 @@ namespace TopNotify.Common
         }
 
         /// <summary>
-        /// Checks If An App Is Installed Based On It's Discovery Parameters
+        /// Checks If An App Is Installed Based On Its Discovery Parameters
         /// </summary>
         public static bool IsAppInstalled(AppDiscovery discovery)
         {

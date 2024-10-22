@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using TopNotify.Daemon;
 using WebFramework.Backend;
+using Windows.ApplicationModel;
 using Windows.Foundation.Metadata;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -35,6 +36,7 @@ namespace TopNotify.Common
         public float CustomPositionPercentX = 0;
         public float CustomPositionPercentY = 0;
 
+        public Dictionary<string, DiscoveredApp> DiscoveredApps = new Dictionary<string, DiscoveredApp>();
         public List<AppReference> AppReferences = new List<AppReference>();
 
         // Dynamic Fields That Are Cached, Useful For Interop
