@@ -29,11 +29,6 @@ namespace TopNotify.Common
         public AppReferenceType ReferenceType;
 
         /// <summary>
-        /// Helps Identify If The App Is Installed Or Not, And Whether To Activate It
-        /// </summary>
-        public AppDiscovery[] Discovery;
-
-        /// <summary>
         /// The Value Depending On The ReferenceType
         /// </summary>
         public string ID;

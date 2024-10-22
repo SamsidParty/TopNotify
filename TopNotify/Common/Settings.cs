@@ -103,13 +103,6 @@ namespace TopNotify.Common
                     DisplayName = "All Other Apps",
                     DisplayIcon = "/Image/DefaultAppReferenceIcon.svg",
                     SoundPath = "windows/win11",
-                    Discovery = new AppDiscovery[]
-                    {
-                        new AppDiscovery() {
-                            Method = AppDiscoveryMethod.MatchAlways,
-                            SearchTerm = "",
-                        }
-                    }
                 } 
             );
 
