@@ -84,9 +84,34 @@ namespace TopNotify.Common
         /// </summary>
         public static string GetFilePath()
         {
-            var defaultSettings = JsonConvert.SerializeObject(new Settings(), Formatting.Indented);
+            var defaultSettings = JsonConvert.SerializeObject(GetDefaultSettings(), Formatting.Indented);
             var value = GetFilePath("Settings.json", Encoding.UTF8.GetBytes(defaultSettings));
             return value;
+        }
+
+        public static Settings GetDefaultSettings()
+        {
+            var defaultSettings = new Settings();
+
+            // Add The Default App Reference
+            defaultSettings.AppReferences.Add(new AppReference()
+                {
+                    ReferenceType = 0,
+                    ID = "Other",
+                    DisplayName = "All Other Apps",
+                    DisplayIcon = "/Image/DefaultAppReferenceIcon.svg",
+                    SoundPath = "windows/win11",
+                    Discovery = new AppDiscovery[]
+                    {
+                        new AppDiscovery() {
+                            Method = AppDiscoveryMethod.MatchAlways,
+                            SearchTerm = "",
+                        }
+                    }
+                } 
+            );
+
+            return defaultSettings;
         }
 
         /// <summary>
@@ -101,7 +126,6 @@ namespace TopNotify.Common
             {
                 //Create Default File
                 File.WriteAllBytes(file, defaultValue != null ? defaultValue : new byte[0]); // Write default value if it's not null
-                Validate(Get());
 
                 if (fileName == "Settings.json")
                 {
@@ -135,18 +159,11 @@ namespace TopNotify.Common
             try
             {
                 File.WriteAllText(Settings.GetFilePath(), newData);
-                Settings.Validate(Settings.Get());
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex.ToString());
             }
-        }
-
-        public static void Validate(Settings settings)
-        {
-            // This Function Used To Create Startup Shortcuts Before MSIX
-            // Does Nothing Now, Startup Shortcuts Are Managed By MSIX
         }
 
         /// <summary>

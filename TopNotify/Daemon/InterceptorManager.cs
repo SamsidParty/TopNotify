@@ -32,7 +32,6 @@ namespace TopNotify.Daemon
         {
             Instance = this;
             CurrentSettings = Settings.Get();
-            AppReference.EnsurePresetsAreValid();
 
             foreach (var possibleInterceptor in InstalledInterceptors)
             {
