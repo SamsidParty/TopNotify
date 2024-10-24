@@ -102,6 +102,7 @@ namespace TopNotify.Common
                     DisplayName = "All Other Apps",
                     DisplayIcon = "/Image/DefaultAppReferenceIcon.svg",
                     SoundPath = "windows/win11",
+                    SoundDisplayName = "Notify 11"
                 } 
             );
 

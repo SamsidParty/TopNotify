@@ -44,6 +44,7 @@ export default function ManageNotificationSounds() {
         for (var i = 0; i < Config.AppReferences.length; i++) {
             if (Config.AppReferences[i].ID == window.soundPickerReferenceID) {
                 Config.AppReferences[i].SoundPath = sound.Path;
+                Config.AppReferences[i].SoundDisplayName = sound.Name;
                 break;
             }
         }
@@ -105,7 +106,7 @@ function AppReferenceSoundItem(props) {
             <img src={props.appReference.DisplayIcon || "/Image/DefaultAppReferenceIcon.svg"}></img>
             <h4>{props.appReference.DisplayName}</h4>
             <div className="selectSoundButton">
-                <Button onClick={pickSound}>&#xeb04;&nbsp;Change Sound</Button>
+                <Button onClick={pickSound}>{props.appReference.SoundDisplayName}&nbsp;&#xeb04;</Button>
             </div>
         </div>
     )

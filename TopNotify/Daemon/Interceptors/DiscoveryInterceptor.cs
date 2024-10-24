@@ -29,6 +29,7 @@ namespace TopNotify.Daemon
                     DisplayName = appInfo.DisplayInfo.DisplayName,
                     ID = appInfo.DisplayInfo.DisplayName,
                     SoundPath = "internal/default",
+                    SoundDisplayName = "Default Sound",
                     ReferenceType = AppReferenceType.AppName
                 };
 

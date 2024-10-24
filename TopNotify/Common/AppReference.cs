@@ -46,6 +46,11 @@ namespace TopNotify.Common
         public string SoundPath;
 
         /// <summary>
+        /// The Name Of The Sound Displayed To The User
+        /// </summary>
+        public string SoundDisplayName;
+
+        /// <summary>
         /// Identifies An AppReference Based On A Notification
         /// </summary>
         public static AppReference FromNotification(UserNotification notification)
