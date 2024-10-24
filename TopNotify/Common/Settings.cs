@@ -36,7 +36,6 @@ namespace TopNotify.Common
         public float CustomPositionPercentX = 0;
         public float CustomPositionPercentY = 0;
 
-        public Dictionary<string, DiscoveredApp> DiscoveredApps = new Dictionary<string, DiscoveredApp>();
         public List<AppReference> AppReferences = new List<AppReference>();
 
         // Dynamic Fields That Are Cached, Useful For Interop

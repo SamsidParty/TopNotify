@@ -155,8 +155,6 @@ namespace TopNotify.Daemon
             {
                 isPlaying = true;
 
-                Logger.LogInfo("Playing Sound " + soundFilePath);
-
                 // Play Sound Without Blocking The Main Thread
                 Task.Run(() =>
                 {

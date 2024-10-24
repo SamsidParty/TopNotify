@@ -16,13 +16,25 @@ namespace TopNotify.Daemon
         {
             // Store The App's Info, So That In The Future It Can Be Used To Create An AppReference
             var appInfo = notification.AppInfo;
+            var appReferences = Settings.AppReferences;
+            var alreadyHasAppReference = appReferences.Where((r) => r.ID == appInfo.DisplayInfo.DisplayName).Any();
 
-            if (!Settings.DiscoveredApps.ContainsKey(appInfo.DisplayInfo.DisplayName))
+            if (!alreadyHasAppReference)
             {
                 // Add The AppInfo To The Settings File
                 var settingsFile = TopNotify.Common.Settings.Get();
-                settingsFile.DiscoveredApps[appInfo.DisplayInfo.DisplayName] = DiscoveredApp.FromAppInfo(appInfo);
-                TopNotify.Common.Settings.Overwrite(JsonConvert.SerializeObject(settingsFile));
+
+                var appReference = new AppReference()
+                {
+                    DisplayName = appInfo.DisplayInfo.DisplayName,
+                    ID = appInfo.DisplayInfo.DisplayName,
+                    SoundPath = "internal/default",
+                    ReferenceType = AppReferenceType.AppName
+                };
+
+                settingsFile.AppReferences.Add(appReference);
+
+                TopNotify.Common.Settings.Overwrite(JsonConvert.SerializeObject(settingsFile)); // Write The Settings File
                 InterceptorManager.Instance.OnSettingsChanged(); // Tells The InterceptorManager To Reload The Settings File
             }
 
