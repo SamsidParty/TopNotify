@@ -12,6 +12,7 @@ using TopNotify.Common;
 using WebFramework.Backend;
 using Windows.Devices.Display.Core;
 using Windows.Media.DialProtocol;
+using static TopNotify.Daemon.NativeInterceptor;
 
 namespace TopNotify.Daemon
 {
@@ -19,13 +20,14 @@ namespace TopNotify.Daemon
     {
         #region WinAPI
 
-        [DllImport("Shcore.dll")]
+
+        [DllImport("shcore.dll")]
         private static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
 
-        [DllImport("User32.dll")]
+        [DllImport("user32.dll")]
         internal static extern IntPtr MonitorFromPoint([In] Point pt, [In] uint dwFlags);
 
-        [DllImport("User32.dll")]
+        [DllImport("user32.dll")]
         static extern bool GetMonitorInfo(IntPtr hMonitor, [In, Out] MonitorInfo lpmi);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
@@ -96,7 +98,13 @@ namespace TopNotify.Daemon
 
                 if (GetMonitorInfo(hMonitor, currentMonitorInfo))
                 {
-                    NotificationTester.MessageBox(currentMonitorInfo.DeviceName, currentMonitorInfo.DeviceName);
+                    monitors.Add(new MonitorData()
+                    {
+                        GraphicsDriverName = "",
+                        FriendlyName = currentMonitorInfo.DeviceName,
+                        ID = currentMonitorInfo.DeviceName,
+                        Path = currentMonitorInfo.DeviceName,
+                    });
                 }
                 return true;
             }, IntPtr.Zero);
@@ -112,7 +120,13 @@ namespace TopNotify.Daemon
                 
             }
 
-            GetMonitors();
+            try
+            {
+                GetMonitors();
+            }
+            catch (Exception ex) {
+                NotificationTester.MessageBox("Error", ex.ToString());
+            }
 
             // Return Primary Display
             return MonitorFromPoint(new Point(0, 0), 0x00000001);

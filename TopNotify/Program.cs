@@ -92,8 +92,8 @@ namespace TopNotify.Common
 
         public static async Task App()
         {
-            //DevTools.Enable();
-            //DevTools.HotReload("http://127.0.0.1:25631"); // Vite Dev URL
+            DevTools.Enable();
+            DevTools.HotReload("http://127.0.0.1:25631"); // Vite Dev URL
             //Logger.ForceOpenConsole();
 
             //Change Color Based On Theme (light, dark)

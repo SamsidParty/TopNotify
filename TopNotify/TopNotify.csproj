@@ -78,10 +78,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IVPluginTopNotify\IVPluginTopNotify.vcxproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="WebFramework">
       <HintPath>WebFramework.dll</HintPath>
     </Reference>

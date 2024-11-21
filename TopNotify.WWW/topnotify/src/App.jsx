@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Switch, Divider } from '@chakra-ui/react'
+import { Button, Switch, Divider, Select } from '@chakra-ui/react'
 import NotificationTransparency from './Transparency'
 import ClickThrough from './ClickThrough'
 import TestNotification from './TestNotification'
@@ -8,6 +8,7 @@ import Preview from './Preview'
 import { DebugMenu } from './DebugMenu'
 import './IPCClient'
 import ReadAloud from './ReadAloud'
+import MonitorSelect from './MonitorSelect'
 
 
 window.Config = {
@@ -58,6 +59,7 @@ function App() {
             <DebugMenu></DebugMenu>
 
             <h2>TopNotify</h2>
+            <MonitorSelect></MonitorSelect>
 
             <Preview></Preview>
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TopNotify.Common
 {
+    [Serializable]
     public class MonitorData
     {
         /// <summary>
@@ -35,7 +36,7 @@ namespace TopNotify.Common
         {
             get
             {
-                return FriendlyName + " (" + Path + ") Connected To " + GraphicsDriverName;
+                return FriendlyName + " (" + Path + ") " + GraphicsDriverName;
             }
         }
     }

@@ -44,6 +44,7 @@ namespace TopNotify.Common
         public int __ScreenWidth = 0;
         public int __ScreenHeight = 0;
         public float __ScreenScale = 1;
+        public List<MonitorData> __MonitorData;
 
         // Deprecated Settings
         [Deprecated("Use CustomPositionPercentX Instead", DeprecationType.Deprecate, 241)] public int CustomPositionX = 0; // Deprecated In Favor Of Percentage Units
@@ -171,6 +172,7 @@ namespace TopNotify.Common
             __ScreenWidth = ResolutionFinder.GetRealResolution().Width;
             __ScreenHeight = ResolutionFinder.GetRealResolution().Height;
             __ScreenScale = ResolutionFinder.GetScale();
+            __MonitorData = ResolutionFinder.GetMonitors();
         }
 
     }
