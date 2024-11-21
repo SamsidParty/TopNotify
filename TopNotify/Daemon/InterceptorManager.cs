@@ -31,7 +31,7 @@ namespace TopNotify.Daemon
             new NativeInterceptor(),
             new DiscoveryInterceptor(),
             new SoundInterceptor(),
-            new TeamsInterceptor(),
+            //new TeamsInterceptor(), // Disabled Due To Instability, TODO: Find A Better Method That Doesn't Involve Hooking
             new ReadAloudInterceptor()
         };
 
