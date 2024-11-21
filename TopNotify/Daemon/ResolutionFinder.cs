@@ -114,22 +114,39 @@ namespace TopNotify.Daemon
 
         private static IntPtr GetPreferredDisplay()
         {
+            var returnedMonitor = IntPtr.Zero;
+
+            // Find Loaded Settings File Or Load It
+            Settings settingsFile;
+
+            if (InterceptorManager.Instance != null)
+            {
+                settingsFile = InterceptorManager.Instance.CurrentSettings;
+            }
+            else
+            {
+                settingsFile = Settings.Get();
+            }
+
             // Determine Whether To Use A Non-Primary Monitor
-            if (InterceptorManager.Instance != null && InterceptorManager.Instance.CurrentSettings.PreferredMonitor != "primary")
+            if (settingsFile.PreferredMonitor != "primary")
             {
-                
+                // Try To Find The Preferred Monitor
+                EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero,
+                delegate (IntPtr hMonitor, IntPtr hdcMonitor, ref Rect lprcMonitor, IntPtr dwData)
+                {
+                    MonitorInfo currentMonitorInfo = new MonitorInfo();
+
+                    if (GetMonitorInfo(hMonitor, currentMonitorInfo) && currentMonitorInfo.DeviceName == settingsFile.PreferredMonitor)
+                    {
+                        returnedMonitor = hMonitor;
+                    }
+                    return true;
+                }, IntPtr.Zero);
             }
 
-            try
-            {
-                GetMonitors();
-            }
-            catch (Exception ex) {
-                NotificationTester.MessageBox("Error", ex.ToString());
-            }
-
-            // Return Primary Display
-            return MonitorFromPoint(new Point(0, 0), 0x00000001);
+            // Return Primary Display If returnedMonitor Is 0
+            return (returnedMonitor != IntPtr.Zero) ? returnedMonitor : MonitorFromPoint(new Point(0, 0), 0x00000001);
         }
 
         public static Rectangle GetScaledResolution()
