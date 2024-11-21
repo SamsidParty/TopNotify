@@ -11,6 +11,7 @@ using TopNotify.Daemon;
 using WebFramework;
 using WebFramework.Backend;
 using WebFramework.PT;
+using static TopNotify.Daemon.ResolutionFinder;
 
 namespace TopNotify.GUI
 {
@@ -105,6 +106,15 @@ namespace TopNotify.GUI
                 Rectangle DragRect = new Rectangle();
                 NativeInterceptor.GetWindowRect(hwnd, ref DragRect);
 
+                // Find The Bounds Of The Preferred Monitor
+                var hMonitor = ResolutionFinder.GetPreferredDisplay();
+                MonitorInfo currentMonitorInfo = new MonitorInfo();
+                ResolutionFinder.GetMonitorInfo(hMonitor, currentMonitorInfo);
+                var originX = currentMonitorInfo.Monitor.Left;
+                var originY = currentMonitorInfo.Monitor.Top;
+
+                // Offset The Bounds Of The Window To Match The Preferred Monitor
+                DragRect = new Rectangle(DragRect.X - originX, DragRect.Y - originY, DragRect.Width, DragRect.Height);
 
                 //The Window Size Of Notifications Is 396 * 120 Scaled
                 //The Draw Size Of Notifications Is 364 * 109 Scaled
