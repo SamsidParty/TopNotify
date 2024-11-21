@@ -13,6 +13,7 @@ using SamsidParty_TopNotify.Daemon;
 using Windows.UI.Notifications.Management;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
+using static TopNotify.Daemon.ResolutionFinder;
 
 namespace TopNotify.Daemon
 {
@@ -66,10 +67,10 @@ namespace TopNotify.Daemon
 
         public IntPtr hwnd;
         public ExtendedStyleManager ExStyleManager;
-        public int ScaledMainDisplayWidth;
-        public int ScaledMainDisplayHeight;
-        public int RealMainDisplayWidth;
-        public int RealMainDisplayHeight;
+        public int ScaledPreferredDisplayWidth;
+        public int ScaledPreferredDisplayHeight;
+        public int RealPreferredDisplayWidth;
+        public int RealPreferredDisplayHeight;
         public float ScaleFactor;
 
         public override void Start()
@@ -120,10 +121,10 @@ namespace TopNotify.Daemon
                     foundHwnd = IntPtr.Zero; // Always use fallback mode if this setting is enabled
                 }
 
-                ScaledMainDisplayWidth = ResolutionFinder.GetScaledResolution().Width;
-                ScaledMainDisplayHeight = ResolutionFinder.GetScaledResolution().Height;
-                RealMainDisplayWidth = ResolutionFinder.GetRealResolution().Width;
-                RealMainDisplayHeight = ResolutionFinder.GetRealResolution().Height;
+                ScaledPreferredDisplayWidth = ResolutionFinder.GetScaledResolution().Width;
+                ScaledPreferredDisplayHeight = ResolutionFinder.GetScaledResolution().Height;
+                RealPreferredDisplayWidth = ResolutionFinder.GetRealResolution().Width;
+                RealPreferredDisplayHeight = ResolutionFinder.GetRealResolution().Height;
                 ScaleFactor = ResolutionFinder.GetInverseScale();
 
                 //The Notification Isn't In A Supported Language
@@ -135,7 +136,7 @@ namespace TopNotify.Daemon
                         Rectangle rect = new Rectangle();
                         GetWindowRect(win, ref rect);
 
-                        if ((ScaledMainDisplayWidth - rect.X) == 396)
+                        if ((ScaledPreferredDisplayWidth - rect.X) == 396)
                         {
                             foundHwnd = win;
                         }
@@ -158,8 +159,16 @@ namespace TopNotify.Daemon
         {
             base.Update();
 
+            // Find The Bounds Of The Notification Window
             Rectangle NotifyRect = new Rectangle();
             GetWindowRect(hwnd, ref NotifyRect);
+
+            // Find The Bounds Of The Preferred Monitor
+            var hMonitor = ResolutionFinder.GetPreferredDisplay();
+            MonitorInfo currentMonitorInfo = new MonitorInfo();
+            ResolutionFinder.GetMonitorInfo(hMonitor, currentMonitorInfo);
+            var originX = currentMonitorInfo.Monitor.Left;
+            var originY = currentMonitorInfo.Monitor.Top;
 
             var scaledWidth = (int)((NotifyRect.Width - NotifyRect.X * ScaleFactor));
             var scaledHeight = (int)((NotifyRect.Height - NotifyRect.Y * ScaleFactor));
@@ -169,33 +178,33 @@ namespace TopNotify.Daemon
             if (Settings.Location == NotifyLocation.TopLeft)
             {
                 //Easy Peesy
-                SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, originX + 0, originY + 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.TopRight)
             {
-                SetWindowPos(hwnd, 0, RealMainDisplayWidth - unscaledWidth, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, originX + (RealPreferredDisplayWidth - unscaledWidth), 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomLeft)
             {
-                SetWindowPos(hwnd, 0, 0, RealMainDisplayHeight - unscaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, originX + 0, originY + (RealPreferredDisplayHeight - unscaledHeight - (int)Math.Round(50f)), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else if (Settings.Location == NotifyLocation.BottomRight) // Default In Windows, But Here For Completeness Sake
             {
-                SetWindowPos(hwnd, 0, RealMainDisplayWidth - unscaledWidth, RealMainDisplayHeight - unscaledHeight - (int)Math.Round(50f), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, originX + (RealPreferredDisplayWidth - unscaledWidth), originY + (RealPreferredDisplayHeight - unscaledHeight - (int)Math.Round(50f)), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
             else // Custom Position
             {
-                var xPosition = (int)(Settings.CustomPositionPercentX / 100f * RealMainDisplayWidth);
-                var yPosition = (int)(Settings.CustomPositionPercentY / 100f * RealMainDisplayHeight);
+                var xPosition = (int)(Settings.CustomPositionPercentX / 100f * RealPreferredDisplayWidth);
+                var yPosition = (int)(Settings.CustomPositionPercentY / 100f * RealPreferredDisplayHeight);
 
                 if (!Settings.EnableDebugRemoveBoundsCorrection)
                 {
                     // Make Sure Position Isn't Out Of Bounds
-                    xPosition = Math.Clamp(xPosition, 0, RealMainDisplayWidth - unscaledWidth);
-                    yPosition = Math.Clamp(yPosition, 0, RealMainDisplayHeight - unscaledHeight);
+                    xPosition = Math.Clamp(xPosition, 0, RealPreferredDisplayWidth - unscaledWidth);
+                    yPosition = Math.Clamp(yPosition, 0, RealPreferredDisplayHeight - unscaledHeight);
                 }
 
-                SetWindowPos(hwnd, 0, xPosition, yPosition, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+                SetWindowPos(hwnd, 0, originX + xPosition, originY + yPosition, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
 
         }
