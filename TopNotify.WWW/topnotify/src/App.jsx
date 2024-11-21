@@ -59,9 +59,12 @@ function App() {
             <DebugMenu></DebugMenu>
 
             <h2>TopNotify</h2>
-            <MonitorSelect></MonitorSelect>
 
             <Preview></Preview>
+
+            <Divider />
+
+            <MonitorSelect></MonitorSelect>
 
             {
                 window.errorList.map((error, i) => {
