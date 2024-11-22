@@ -11,7 +11,7 @@ export default defineConfig({
             tStart: '%{',
             tEnd: '}%',
             replace: {
-                "TOPNOTIFY_VERSION": "2.4.6"
+                "TOPNOTIFY_VERSION": "2.6.0"
             },
             replaceFiles: [
                 resolve(join(__dirname, '..\\..\\TopNotify\\WWW\\Meta\\AppxManifest.xml')),

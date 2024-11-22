@@ -91,12 +91,6 @@ function App() {
             <Divider />
             
             <ManageNotificationSounds></ManageNotificationSounds>
-
-            <br></br>
-
-            <div className="footer">
-                <img className="footerLogo" src="/Image/PartyWordmarkIconMono.png"></img>
-            </div>
         </div>
     )
 }
