@@ -79,11 +79,18 @@ namespace TopNotify.Daemon
             // Give File Permissions To "ALL APPLICATION PACKAGES"
             if (!hasAllAppPerms)
             {
-                Logger.LogInfo("Writing ALL APPLICATION PACKAGES Permission");
-                InheritanceFlags iFlags = InheritanceFlags.None;
-                PropagationFlags pFlags = PropagationFlags.None;
-                fileSecurity.AddAccessRule(new FileSystemAccessRule("ALL APPLICATION PACKAGES", FileSystemRights.ReadAndExecute, iFlags, pFlags, AccessControlType.Allow));
-                fileInfo.SetAccessControl(fileSecurity);
+                try
+                {
+                    Logger.LogInfo("Writing ALL APPLICATION PACKAGES Permission");
+                    InheritanceFlags iFlags = InheritanceFlags.None;
+                    PropagationFlags pFlags = PropagationFlags.None;
+                    fileSecurity.AddAccessRule(new FileSystemAccessRule("ALL APPLICATION PACKAGES", FileSystemRights.ReadAndExecute, iFlags, pFlags, AccessControlType.Allow));
+                    fileInfo.SetAccessControl(fileSecurity);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError("Failed To Write ALL APPLICATION PACKAGES Permission: " + ex.ToString());
+                }
             }
 
         }
