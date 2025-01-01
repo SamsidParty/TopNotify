@@ -1,0 +1,24 @@
+.sideBar {
+    width: 15rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.sideBar .sideBarButton {
+    width: 100%;
+    background-color: transparent;
+    color: var(--col-text);
+    border: none;
+    display: flex;
+    font-size: 1rem;
+    gap: 1rem;
+    height: 3.5rem;
+}
+
+.sideBar .sideBarButton.selectedSideBarButton {
+    background-color: var(--col-primary-washed);
+}

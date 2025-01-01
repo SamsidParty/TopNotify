@@ -1,9 +1,21 @@
+
+
 .splashScreen {
+    transition: opacity 0.3s, transform 0.3s;
+    opacity: 0;
+    transform: scale(0.9);
+
+    position: absolute;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.splashScreen.showSplashScreen {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .splashInnerBox {
