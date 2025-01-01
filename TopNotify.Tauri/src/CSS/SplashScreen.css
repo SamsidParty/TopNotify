@@ -1,0 +1,21 @@
+.splashScreen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.splashInnerBox {
+    display: flex;
+    gap: 1rem;
+}
+
+.splashInnerBox h1 {
+    font-size: 3rem;
+}
+
+.splashInnerBox img {
+    width: 5rem;
+    height: 5rem;
+}

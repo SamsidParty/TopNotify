@@ -12,9 +12,14 @@
   "app": {
     "windows": [
       {
-        "title": "topnotify",
-        "width": 800,
-        "height": 600
+        "fullscreen": false,
+        "width": 1280,
+        "height": 720,
+        "resizable": false,
+        "title": "TopNotify",
+        "visible": true,
+        "transparent": true,
+        "center": true
       }
     ],
     "security": {
