@@ -89,6 +89,10 @@ namespace TopNotify.Daemon
             else if (systemLanguage == "ko")
             {
                 return "새로운 알림";
+            }            
+            else if (systemLanguage == "sk")
+            {
+                return "Nové oznámenie";
             }
             else
             {
