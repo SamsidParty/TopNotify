@@ -68,6 +68,9 @@ namespace TopNotify.Common
 
             if (args.Contains("--settings"))
             {
+                // Copy The Wallpaper File So That The GUI Can Access It
+                WallpaperFinder.CopyWallpaper();
+
                 //Open The GUI App In Settings Mode
                 Logger.SetFileName("gui");
 
@@ -115,7 +118,6 @@ namespace TopNotify.Common
             CleanUp.RegisterCleanUpAction(() =>
             {
                 ToastNotificationManagerCompat.Uninstall();
-                WallpaperFinder.CleanUp();
             });
 
             await AppManager.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW"), OnReady);

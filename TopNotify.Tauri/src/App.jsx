@@ -5,6 +5,7 @@ import "./CSS/PrimeReact.css";
 import SplashScreen from "./Pages/SplashScreen";
 import { OpenConnectionToDaemon } from "./DaemonInterface";
 import SideBar from "./Components/SideBar";
+import PositionPage from "./Pages/PositionPage";
 
 function App() {
 
@@ -37,6 +38,7 @@ function AppSplitView() {
     return (
         <div className="appSplitView">
             <SideBar></SideBar>
+            <PositionPage></PositionPage>
         </div>
     )
 }

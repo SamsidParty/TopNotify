@@ -1,4 +1,5 @@
 .sideBar {
+    min-width: 15rem;
     width: 15rem;
     height: 100%;
     display: flex;

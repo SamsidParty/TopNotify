@@ -20,8 +20,8 @@ body {
     --col-text: #111111;
     --col-text-washed: #3d3d3d;
     --col-text-overlay: #111111;
-    --col-primary: #7006d4;
-    --col-primary-washed: #bf9afa8a;
+    --col-primary: #5536e0;
+    --col-primary-washed: #d6cdff;
     --col-primary-hover: #492fbb;
     --col-tertiary: #ffffff;
     --col-contrast: #ebebeb;
@@ -46,8 +46,8 @@ body {
         --col-text: #F1ECF3;
         --col-text-washed: #d8d8d8;
         --col-text-overlay: #F1ECF3;
-        --col-primary: #7006d4;
-        --col-primary-washed: #45009e;
+        --col-primary: #767df9;
+        --col-primary-washed: #767df9;
         --col-primary-hover: #6268d3;
         --col-tertiary: #121212;
         --col-contrast: #343434;
