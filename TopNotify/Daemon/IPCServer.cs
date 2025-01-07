@@ -102,6 +102,10 @@ namespace TopNotify.Daemon
                 {
                     InterceptorManager.Instance.OnSettingsChanged();
                 }
+                else if (type == IPCPacketType.SpawnTestNotification)
+                {
+                    NotificationTester.SpawnTestNotification();
+                }
             }
             catch (Exception ex)
             {

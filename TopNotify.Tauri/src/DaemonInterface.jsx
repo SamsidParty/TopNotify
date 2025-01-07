@@ -53,3 +53,7 @@ export async function ApplyConfig() {
     // Tell The Daemon To Reload The Config File
     window.ipcSocket.send(new Uint8Array([4])); // IPCPacket.UpdateConfig = 0x04
 }
+
+export async function SpawnTestNotification() {
+    window.ipcSocket.send(new Uint8Array([7])); // IPCPacket.SpawnTestNotification = 0x07
+}

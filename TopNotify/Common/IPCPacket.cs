@@ -15,5 +15,6 @@ namespace TopNotify.Common
         UpdateConfig, // GUI To Daemon, Tells The Interceptor That The Config Has Changed
         RequestErrorList, // GUI To Daemon, Asks For A List Of Errors To Display
         FulfillErrorListRequest, // Daemon To GUI, Returns A List Of DaemonErrors in JSON Format
+        SpawnTestNotification // GUI To Daemon, Spawns A Test Notification
     }
 }

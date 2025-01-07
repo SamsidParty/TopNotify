@@ -16,6 +16,11 @@ namespace TopNotify.Common
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
 
+        public static void SpawnTestNotification()
+        {
+            Toast("Test Notification", "This Is A Test Notification");
+        }
+
         public static void Toast(string title, string content)
         {
             new ToastContentBuilder()

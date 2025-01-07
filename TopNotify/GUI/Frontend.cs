@@ -26,7 +26,7 @@ namespace TopNotify.GUI
         [JSFunction("SpawnTestNotification")]
         public async void SpawnTestNotification()
         {
-            NotificationTester.Toast("Test Notification", "This Is A Test Notification");
+            NotificationTester.SpawnTestNotification();
         }
 
         //Called By JavaScript
