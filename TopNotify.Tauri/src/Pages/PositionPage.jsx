@@ -1,6 +1,7 @@
 import { readFile } from "@tauri-apps/plugin-fs"
 import { useState } from "react";
 import "../CSS/PositionPage.css";
+import { ApplyConfig } from "../DaemonInterface";
 
 
 function CalculatePreviewScale() {
@@ -21,18 +22,18 @@ function CalculatePreviewContainerStyle() {
     return { width: previewWidth, height: (previewWidth * CalculatePreviewAspectRatio()) };
 }
 
-function CalculateNotificationPreviwStyle() { 
+function CalculateNotificationPreviewStyle(forceLocation) { 
 
     //The displayed size is 364 * 109, which has a scale of 0.919191917 * 0.717105263 relative to the window
 
     return {
-        width: CalculateNotificationWindowPreviewStyle().width * 0.919191917,
-        height: CalculateNotificationWindowPreviewStyle().height * 0.717105263,
+        width: CalculateNotificationWindowPreviewStyle(forceLocation).width * 0.919191917,
+        height: CalculateNotificationWindowPreviewStyle(forceLocation).height * 0.717105263,
         opacity: (window.currentConfig.Opacity != undefined) ? (1 - (window.currentConfig.Opacity / 5)) : 0
     }
 }
 
-function CalculateNotificationWindowPreviewStyle() {
+function CalculateNotificationWindowPreviewStyle(forceLocation) {
 
     //The window size (not displayed size) of windows notifications are 396 * 152
     var standardWidth = 396 * CalculatePreviewScale();
@@ -48,31 +49,31 @@ function CalculateNotificationWindowPreviewStyle() {
     var scaledMainDisplayWidth = CalculatePreviewContainerStyle().width;
     var scaledMainDisplayHeight = CalculatePreviewContainerStyle().height;
 
-    if (!!window.currentConfig.Location) {
-        if (window.currentConfig.Location == 0) { // Top left
-            posX = 0;
-            posY = 0;
-        }
-        else if (window.currentConfig.Location == 1) { // Top Right
-            posX = scaledMainDisplayWidth - style.width;
-            posY = 0;
-        }
-        else if (window.currentConfig.Location == 2) { // Bottom Left
-            posX = 0;
-            posY = scaledMainDisplayHeight - style.height - (50 * CalculatePreviewScale());
-        }
-        else if (window.currentConfig.Location == 3) { // Bottom Right
-            posX = scaledMainDisplayWidth - style.width;
-            posY = scaledMainDisplayHeight - style.height - (50 * CalculatePreviewScale());
-        }
-        else { // Custom
-            posX = window.currentConfig.CustomPositionPercentX / 100 * scaledMainDisplayWidth;
-            posY = window.currentConfig.CustomPositionPercentY / 100 * scaledMainDisplayHeight;
+    var location = (forceLocation !== undefined) ? forceLocation :  window.currentConfig.Location;
 
-            //Make Sure Position Isn't Out Of Bounds
-            posX = Math.max(0, Math.min(posX, scaledMainDisplayWidth - style.width));
-            posY = Math.max(0, Math.min(posY, scaledMainDisplayHeight - style.height));
-        }
+    if (location == 0) { // Top left
+        posX = 0;
+        posY = 0;
+    }
+    else if (location == 1) { // Top Right
+        posX = scaledMainDisplayWidth - style.width;
+        posY = 0;
+    }
+    else if (location == 2) { // Bottom Left
+        posX = 0;
+        posY = scaledMainDisplayHeight - style.height - (50 * CalculatePreviewScale());
+    }
+    else if (location == 3) { // Bottom Right
+        posX = scaledMainDisplayWidth - style.width;
+        posY = scaledMainDisplayHeight - style.height - (50 * CalculatePreviewScale());
+    }
+    else { // Custom
+        posX = window.currentConfig.CustomPositionPercentX / 100 * scaledMainDisplayWidth;
+        posY = window.currentConfig.CustomPositionPercentY / 100 * scaledMainDisplayHeight;
+
+        //Make Sure Position Isn't Out Of Bounds
+        posX = Math.max(0, Math.min(posX, scaledMainDisplayWidth - style.width));
+        posY = Math.max(0, Math.min(posY, scaledMainDisplayHeight - style.height));
     }
 
     style.left = posX;
@@ -102,10 +103,32 @@ export default function PositionPage() {
             <div style={CalculatePreviewContainerStyle()} className="displayPreview">
                 <img className="wallpaper" src={wallpaperSource || "/Image/BackgroundDecoration.png"}></img>
                 <div className="notificationWindowPreview" style={CalculateNotificationWindowPreviewStyle()}>
-                    <div className="notificationPreview" style={CalculateNotificationPreviwStyle()}>
+                    <div className="notificationPreview" style={CalculateNotificationPreviewStyle()}>
                         <img src="/Image/NotificationPreview.png"></img>
                     </div>
                 </div>
+
+                {
+                    ([0, 1, 2, 3]).map((location) => (location != window.currentConfig.Location && <GhostNotification key={location} location={location}></GhostNotification>))
+                }
+
+            </div>
+        </div>
+    )
+}
+
+function GhostNotification({ location }) {
+    
+    var applyLocation = async () => {
+        window.currentConfig.Location = location;
+        window.setRerender();
+        await ApplyConfig();
+    }
+
+    return (
+        <div onClick={applyLocation} className="notificationWindowPreview" style={CalculateNotificationWindowPreviewStyle(location)}>
+            <div className="ghostNotificationPreview" style={CalculateNotificationPreviewStyle(location)}>
+                
             </div>
         </div>
     )

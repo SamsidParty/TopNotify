@@ -1,5 +1,3 @@
-
-
 window.currentConfig = null;
 
 export function OpenConnectionToDaemon() {
@@ -44,4 +42,14 @@ export function OpenConnectionToDaemon() {
 export function RequestConfig() {
     // Ask The Daemon For The Config File
     window.ipcSocket.send(new Uint8Array([0])); // IPCPacket.RequestConfig = 0x00
+}
+
+export async function ApplyConfig() {
+
+    if (!window.currentConfig) { return; }
+
+    // TODO: Send The File To The Daemon
+
+    // Tell The Daemon To Reload The Config File
+    window.ipcSocket.send(new Uint8Array([4])); // IPCPacket.UpdateConfig = 0x04
 }
