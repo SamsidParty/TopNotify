@@ -1,5 +1,0 @@
-PackageIdentifier: "SamsidParty.TopNotifyWG"
-PackageVersion: "%{TOPNOTIFY_VERSION}%"
-DefaultLocale: "en-US"
-ManifestType: "version"
-ManifestVersion: "1.6.0"
