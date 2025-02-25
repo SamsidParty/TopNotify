@@ -36,7 +36,7 @@ namespace TopNotify.Common
 
         public static Icon FindAppIcon()
         {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "Icon.ico");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dist", "Image", "Icon.ico");
             return new Icon(path);
         }
 

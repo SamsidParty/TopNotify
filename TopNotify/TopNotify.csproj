@@ -6,8 +6,8 @@
     <RootNamespace>SamsidParty_TopNotify</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ApplicationIcon>WWW\Image\Icon.ico</ApplicationIcon>
-    <ApplicationManifest>WWW\Meta\manifest.xml</ApplicationManifest>
+    <ApplicationIcon>dist\Image\Icon.ico</ApplicationIcon>
+    <ApplicationManifest>dist\Meta\manifest.xml</ApplicationManifest>
     <PackageId>TopNotify</PackageId>
     <AssemblyName>TopNotify</AssemblyName>
     <SignAssembly>False</SignAssembly>
@@ -32,12 +32,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebugType>none</DebugType>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="WWW\**">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="BUILD\**" />
