@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IgniteView.Core;
+using Newtonsoft.Json;
 using SamsidParty_TopNotify.Daemon;
 using System;
 using System.Collections.Generic;
@@ -10,38 +11,34 @@ using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
 using TopNotify.Daemon;
-using WebFramework;
-using WebFramework.Backend;
-using WebFramework.PT;
 
 namespace TopNotify.GUI
 {
-    public partial class Frontend : WebScript
+    public partial class Frontend
     {
-
         static bool isSaving = false;
 
         //Called By JavaScript
         //Spawns A Test Notification
-        [JSFunction("SpawnTestNotification")]
-        public async void SpawnTestNotification()
+        [Command("SpawnTestNotification")]
+        public static void SpawnTestNotification()
         {
             NotificationTester.SpawnTestNotification();
         }
 
         //Called By JavaScript
         //Tells C# To Send The Config To JS
-        [JSFunction("RequestConfig")]
-        public void RequestConfig()
+        [Command("RequestConfig")]
+        public void RequestConfig(WebWindow target)
         {
-            Document.RunFunction("window.SetConfig", Settings.GetForIPC());
+            target.CallFunction("window.SetConfig", Settings.GetForIPC());
         }
 
 
         //Called By JavaScript
         //Write Settings File
-        [JSFunction("WriteConfigFile")]
-        public static async void WriteConfigFile(string data)
+        [Command("WriteConfigFile")]
+        public static async void WriteConfigFile(WebWindow target, string data)
         {
 
             if (isSaving) { return; }
@@ -52,15 +49,15 @@ namespace TopNotify.GUI
             await Task.Delay(100); // Prevent Crashing Daemon From Spamming Button
 
             // Tell The Daemon The Config Has Changed Via JavaScript Websockets
-            WindowManager.MainWindow.Document.RunFunction("window.UpdateConfig");
+            target.CallFunction("window.UpdateConfig");
 
             isSaving = false;
         }
 
-        [JSFunction("OpenAppFolder")]
-        public static async Task OpenAppFolder()
+        [Command("OpenAppFolder")]
+        public static async Task OpenAppFolder(WebWindow target)
         {
-            Process.Start("explorer.exe", await SharedIO.File.GetAppdataDirectory());
+            Process.Start("explorer.exe", target.CurrentAppManager.CurrentIdentity.AppDataPath);
         }
     }
 }

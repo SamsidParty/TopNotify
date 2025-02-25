@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
-using WebFramework.Backend;
 using static TopNotify.Daemon.NativeInterceptor;
 
 namespace TopNotify.Daemon
@@ -63,7 +62,6 @@ namespace TopNotify.Daemon
                     {
                         await Task.Delay(2000);
                         var result = InjectIntoProcess(teamsProcess.Id, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotifyHook.dll"));
-                        Logger.LogInfo("Teams Injector Returned: " + Marshal.PtrToStringUni(result));
                     });
                 }
             }

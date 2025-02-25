@@ -3,22 +3,20 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using WebFramework;
-using WebFramework.PT;
 using Microsoft.Toolkit.Uwp.Notifications;
-using WebFramework.Backend;
 using TopNotify.Daemon;
 using TopNotify.Common;
 using TopNotify.GUI;
+using IgniteView.Core;
+using IgniteView.Desktop;
 
 namespace TopNotify.Common
 {
     public class Program
     {
 
-        public static ThemeBasedColor TitlebarColor;
-
         public static Daemon.Daemon Background;
+        public static AppManager GUI;
 
         [STAThread]
         public static void Main(string[] args)
@@ -61,8 +59,7 @@ namespace TopNotify.Common
                 Environment.Exit(3);
             }
 
-            AppManager.Publisher = "SamsidParty";
-            AppManager.AppID = "TopNotify";
+            
 
             if (args.Contains("--debug-process")) { Debugger.Launch(); } // Start Debugging
 
@@ -72,7 +69,6 @@ namespace TopNotify.Common
                 WallpaperFinder.CopyWallpaper();
 
                 //Open The GUI App In Settings Mode
-                Logger.SetFileName("gui");
 
                 if (Settings.Get().EnableDebugNotifications)
                 {
@@ -80,14 +76,13 @@ namespace TopNotify.Common
                     NotificationTester.Toast("Debug Notification", "Started Settings GUI");
                 }
 
-                PTWindowProvider.Activate();
-                AppManager.Validate(args, "SamsidParty", "TopNotify");
+                DesktopPlatformManager.Activate();
+                GUI = new ViteAppManager();
                 App();
             }
             else
             {
                 //Open The Background Daemon
-                Logger.SetFileName("daemon");
                 Background = new Daemon.Daemon();
             }
 
@@ -95,39 +90,20 @@ namespace TopNotify.Common
 
         public static async Task App()
         {
-            //DevTools.Enable();
-            //DevTools.HotReload("http://127.0.0.1:25631"); // Vite Dev URL
-            //Logger.ForceOpenConsole();
 
-            //Change Color Based On Theme (light, dark)
-            TitlebarColor = new ThemeBasedColor(Color.FromArgb(255, 255, 255), Color.FromArgb(34, 34, 34));
-
-            WindowManager.Options = new WindowOptions()
-            {
-                TitlebarColor = TitlebarColor,
-                StartWidthHeight = new Rectangle(400, 600, (int)(520f * ResolutionFinder.GetScale()), (int)(780f * ResolutionFinder.GetScale())),
-                LockWidthHeight = true,
-                EnableAcrylic = true,
-                IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "IconSmall.png")
-            };
-
-            WebScript.Register<Frontend>("frontend");
-            WebScript.Register<Windows10Support>("win10support");
+            var mainWindow =
+                WebWindow.Create()
+                .WithTitle("TopNotify")
+                .WithBounds(new LockedWindowBounds((int)(520f * ResolutionFinder.GetScale()), (int)(780f * ResolutionFinder.GetScale())))
+                .Show();
 
             //Clean Up
-            CleanUp.RegisterCleanUpAction(() =>
+            GUI.OnCleanUp += () =>
             {
                 ToastNotificationManagerCompat.Uninstall();
-            });
+            };
 
-            await AppManager.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW"), OnReady);
-        }
-
-        public static async Task OnReady(WebWindow w)
-        {
-            w.BackgroundColor = TitlebarColor;
-            RequestInterceptor.RegisterInterceptor(WallpaperFinder.InterceptWallpaperRequest);
-            RequestInterceptor.RegisterInterceptor(SoundFinder.InterceptSoundRequest);
+            GUI.Run();
         }
 
     }

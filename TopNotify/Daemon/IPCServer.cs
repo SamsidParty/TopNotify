@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using Logger = WebFramework.Backend.Logger;
 using TopNotify.Common;
 using SamsidParty_TopNotify.Daemon;
 using Newtonsoft.Json;
@@ -29,7 +28,6 @@ namespace TopNotify.Daemon
         {
             if (SocketServer != null)
             {
-                Logger.LogInfo("Starting Daemon WebSocket Server");
                 SocketServer.Start();
             }
         }
@@ -38,7 +36,6 @@ namespace TopNotify.Daemon
         {
             if (SocketServer != null)
             {
-                Logger.LogInfo("Stopping Daemon WebSocket Server");
                 SocketServer.Stop();
             }
         }
@@ -77,18 +74,14 @@ namespace TopNotify.Daemon
                 var type = (IPCPacketType)e.RawData[0];
                 packet = packet.Skip(1).ToArray(); // Removes The First (IPCPacketType) Byte
 
-                Logger.LogInfo("Recieved Packet Of Type: " + type.ToString());
-
                 if (type == IPCPacketType.RequestConfig)
                 {
-                    Logger.LogInfo("Sending FulfillConfigRequest Packet To Client");
                     var requestData = new byte[] { (byte)IPCPacketType.FulfillConfigRequest };
                     requestData = requestData.Concat(Encoding.UTF8.GetBytes(Settings.GetForIPC())).ToArray();
                     Send(requestData);
                 }
                 else if (type == IPCPacketType.RequestErrorList)
                 {
-                    Logger.LogInfo("Sending FulfillErrorListRequest Packet To Client");
                     var requestData = new byte[] { (byte)IPCPacketType.FulfillErrorListRequest };
                     requestData = requestData.Concat(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(DaemonErrorHandler.Errors))).ToArray();
                     Send(requestData);
@@ -109,7 +102,7 @@ namespace TopNotify.Daemon
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex.ToString());
+                
             }
         }
     }

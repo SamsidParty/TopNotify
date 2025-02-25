@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using WebFramework.Backend;
 
 namespace TopNotify.Common
 {
@@ -43,7 +42,6 @@ namespace TopNotify.Common
 
         public static string FindExe()
         {
-            Logger.LogInfo("Exe Located: " + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotify.exe"));
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TopNotify.exe");
         }
     }

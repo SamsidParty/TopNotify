@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
 using TopNotify.Daemon;
-using WebFramework.Backend;
 
 namespace TopNotify.GUI
 {
@@ -90,8 +89,6 @@ namespace TopNotify.GUI
 
         public static void Quit(object Sender, EventArgs e)
         {
-            Logger.CloseLog();
-
             //Clean Up
             Daemon.Daemon.Instance.Server.Stop();
 
@@ -125,7 +122,7 @@ namespace TopNotify.GUI
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex.ToString());
+                
             }
         }
 

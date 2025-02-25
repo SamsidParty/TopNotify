@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using IgniteView.Core;
+using IgniteView.Desktop;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,16 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
 using TopNotify.Daemon;
-using WebFramework;
-using WebFramework.Backend;
-using WebFramework.PT;
 using static TopNotify.Daemon.ResolutionFinder;
 
 namespace TopNotify.GUI
 {
-    public partial class Frontend : WebScript
+    public partial class Frontend
     {
-        public static PTWebWindow DragModeWindow;
+        public static WebWindow DragModeWindow;
 
         #region WinAPI 
 
@@ -43,23 +42,22 @@ namespace TopNotify.GUI
 
         //Called By JavaScript
         //Creates A Draggable Window To Position Notifications
-        [JSFunction("EnterDragMode")]
-        public async Task EnterDragMode()
+        [Command("EnterDragMode")]
+        public static async Task EnterDragMode(WebWindow target)
         {
-            Logger.LogInfo("Entering Drag Mode");
 
             var currentConfig = Settings.Get();
 
             //Hide The Main Window
-            var mainHwnd = (WindowManager.MainWindow as PTWebWindow).Native.WindowHandle;
+            var mainHwnd = target.NativeHandle;
             ShowWindow(mainHwnd, 0);
 
             //Set Mode To Custom Position In Config
             currentConfig.Location = NotifyLocation.Custom;
-            WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
+            WriteConfigFile(target, JsonConvert.SerializeObject(currentConfig));
 
             var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
-            var windowSize = new Size((int)(364f * ResolutionFinder.GetScale()), (int)(109f * ResolutionFinder.GetScale()));
+            var windowBounds = new LockedWindowBounds((int)(364f * ResolutionFinder.GetScale()), (int)(109f * ResolutionFinder.GetScale()));
 
             //Create A Seperate Thread To Lock The Draggable Window To The Cursor Position
             var t = new Thread(DragModeThread);
@@ -68,39 +66,32 @@ namespace TopNotify.GUI
             ShowCursor(false);
             SetCursorPos(windowLocation.X + 30 + (int)(16f * ResolutionFinder.GetScale()), windowLocation.Y + (int)(29f * ResolutionFinder.GetScale()));
 
-            DragModeWindow = (PTWebWindow)(await WindowManager.Create(new WindowOptions()
-            {
-                EnableAcrylic = true,
-                StartWidthHeight = new Rectangle(windowLocation, windowSize),
-                LockWidthHeight = true,
-                DisableTitlebar = true,
-                URLSuffix = "?drag",
-                IconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Image", "Blank.png")
-            }));
+            DragModeWindow =
+                WebWindow.Create("/index.html?drag")
+                .WithTitle("")
+                .WithBounds(windowBounds);
 
-            SetForegroundWindow(DragModeWindow.Native.WindowHandle);
+            SetForegroundWindow(DragModeWindow.NativeHandle);
             t.Start();
         }
 
 
-        //Called By JavaScript
-        //Captures The Draggable Window Position And Writes It To The Config
-        [JSFunction("ExitDragMode")]
+        // Called By JavaScript
+        // Captures The Draggable Window Position And Writes It To The Config
+        [Command("ExitDragMode")]
         public void ExitDragMode()
         {
             if (DragModeWindow != null)
             {
-                Logger.LogInfo("Exiting Drag Mode");
-
                 ShowCursor(true);
 
                 //Show The Main Window
-                var mainHwnd = (WindowManager.MainWindow as PTWebWindow).Native.WindowHandle;
+                var mainWindow = DragModeWindow.CurrentAppManager.OpenWindows[0];
+                var mainHwnd = mainWindow.NativeHandle;
                 ShowWindow(mainHwnd, 5);
                 SetForegroundWindow(mainHwnd);
 
-                var native = DragModeWindow.Native;
-                var hwnd = (IntPtr)native.WindowHandle;
+                var hwnd = DragModeWindow.NativeHandle;
 
                 //Find Position Of Window
                 Rectangle DragRect = new Rectangle();
@@ -124,14 +115,10 @@ namespace TopNotify.GUI
                 var currentConfig = Settings.Get();
                 currentConfig.CustomPositionPercentX = ((float)DragRect.X - (16f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
                 currentConfig.CustomPositionPercentY = ((float)DragRect.Y - (29f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
-                WriteConfigFile(JsonConvert.SerializeObject(currentConfig));
+                WriteConfigFile(mainWindow, JsonConvert.SerializeObject(currentConfig));
 
                 DragModeWindow.Close();
                 DragModeWindow = null;
-
-                //Set Config On Main Window
-                var mainWindowFrontend = (Frontend)(WindowManager.MainWindow.AttachedScripts.Where((ws) => ws.GetType() == typeof(Frontend)).FirstOrDefault());
-                mainWindowFrontend.RequestConfig();
             }
         }
 
@@ -139,7 +126,7 @@ namespace TopNotify.GUI
         public static void DragModeThread()
         {
             Point cursorPos;
-            IntPtr dragModeHandle = DragModeWindow.Native.WindowHandle;
+            IntPtr dragModeHandle = DragModeWindow.NativeHandle;
 
             while (DragModeWindow != null)
             {

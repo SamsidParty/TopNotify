@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
-using WebFramework.Backend;
 using Windows.UI.Notifications;
 using Windows.UI.Notifications.Management;
 
@@ -83,7 +82,6 @@ namespace TopNotify.Daemon
 
             foreach (Interceptor i in Interceptors)
             {
-                Logger.LogInfo("Started Interceptor: " + i.GetType().Name);
                 i.Start();
             }
             MainLoop();
@@ -120,7 +118,7 @@ namespace TopNotify.Daemon
                 {
                     i.Reflow();
                 }
-                catch (Exception ex) { Logger.LogError(ex.ToString()); }
+                catch (Exception ex) { }
             }
         }
 
@@ -132,7 +130,7 @@ namespace TopNotify.Daemon
                 {
                     i.Update();
                 }
-                catch (Exception ex) { Logger.LogError(ex.ToString()); }
+                catch (Exception ex) { }
             }
         }
 
@@ -192,7 +190,7 @@ namespace TopNotify.Daemon
                     i.Restart();
                     i.Reflow();
                 }
-                catch (Exception ex) { Logger.LogError(ex.ToString()); }
+                catch (Exception ex) { }
             }
         }
     }

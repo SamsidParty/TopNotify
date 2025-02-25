@@ -9,7 +9,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
-using WebFramework.Backend;
 using Windows.Devices.Display.Core;
 using Windows.Media.DialProtocol;
 using static TopNotify.Daemon.NativeInterceptor;

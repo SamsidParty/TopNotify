@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.17763.0</TargetFramework>
     <RootNamespace>SamsidParty_TopNotify</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -77,13 +77,23 @@
     <PackageReference Include="websocket-sharp-Net6.0" Version="1.0.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="WebFramework">
-      <HintPath>WebFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="WebFramework.PT">
-      <HintPath>WebFramework.PT.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<!-- IgniteView -->
+	<ItemGroup>
+		<PackageReference Include="IgniteView.Desktop" Version="*" />
+	</ItemGroup>
+	<PropertyGroup>
+		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+		<JSFramework>react</JSFramework>
+		<!-- This is required for IgniteView to know what js framework you are using -->
+		<ScriptsURL>https://raw.githubusercontent.com/SamsidParty/IgniteView/refs/heads/main/IgniteView.Scripts</ScriptsURL>
+		<PreBuildCommand>node -e "fetch('$(ScriptsURL)/Prebuild.js').then((c) =&gt; c.text().then(eval))" "$(ScriptsURL)" "$(MSBuildProjectDirectory.Replace('\', '\\'))" "$(Configuration)" "$(JSFramework)"</PreBuildCommand>
+		<PostBuildCommand>node -e "fetch('$(ScriptsURL)/Postbuild.js').then((c) =&gt; c.text().then(eval))" "$(ScriptsURL)" "$(MSBuildProjectDirectory.Replace('\', '\\'))" "$(Configuration)" "$(JSFramework)"</PostBuildCommand>
+	</PropertyGroup>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="$(PreBuildCommand) &quot;$(OutputPath.Replace('\', '\\'))&quot;" />
+	</Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="$(PostBuildCommand) &quot;$(OutputPath.Replace('\', '\\'))&quot;" />
+	</Target>
 
 </Project>

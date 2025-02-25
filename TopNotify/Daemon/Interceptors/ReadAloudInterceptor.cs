@@ -4,7 +4,6 @@ using System.Linq;
 using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
-using WebFramework.Backend;
 using Windows.UI.Notifications;
 
 namespace TopNotify.Daemon

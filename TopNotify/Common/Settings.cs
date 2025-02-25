@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using TopNotify.Daemon;
-using WebFramework.Backend;
 using Windows.ApplicationModel;
 using Windows.Foundation.Metadata;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -160,7 +159,6 @@ namespace TopNotify.Common
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex.ToString());
             }
         }
 

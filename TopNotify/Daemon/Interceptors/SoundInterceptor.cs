@@ -13,7 +13,6 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
-using WebFramework.Backend;
 using Windows.UI.Notifications;
 
 namespace TopNotify.Daemon
@@ -37,7 +36,7 @@ namespace TopNotify.Daemon
                 var command = $"reg add HKCU\\AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current /t REG_SZ /ve /d \"{GetCopiedSoundPath(FAKE_SOUND)}\" /f";
                 Util.SimpleCMD(command);
             }
-            catch (Exception ex) { Logger.LogError(ex.ToString()); }
+            catch (Exception ex) { }
         }
 
         /// <summary>
@@ -55,7 +54,6 @@ namespace TopNotify.Daemon
                 // Copy The File If It Doesn't Exist
                 // This Will Copy The File From The Application Directory (Read Only) To The AppData Directory
                 // Because We Can't Change Permissions In The Application Directory
-                Logger.LogInfo("Copying Sound File Into" +  GetCopiedSoundPath(FAKE_SOUND));
                 File.Copy(GetSourceSoundPath(FAKE_SOUND), GetCopiedSoundPath(FAKE_SOUND));
             }
 
@@ -81,7 +79,6 @@ namespace TopNotify.Daemon
             {
                 try
                 {
-                    Logger.LogInfo("Writing ALL APPLICATION PACKAGES Permission");
                     InheritanceFlags iFlags = InheritanceFlags.None;
                     PropagationFlags pFlags = PropagationFlags.None;
                     fileSecurity.AddAccessRule(new FileSystemAccessRule("ALL APPLICATION PACKAGES", FileSystemRights.ReadAndExecute, iFlags, pFlags, AccessControlType.Allow));
@@ -89,7 +86,7 @@ namespace TopNotify.Daemon
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError("Failed To Write ALL APPLICATION PACKAGES Permission: " + ex.ToString());
+
                 }
             }
 

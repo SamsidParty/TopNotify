@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
-using WebFramework.Backend;
 using TopNotify.Common;
 using SamsidParty_TopNotify.Daemon;
 using Windows.UI.Notifications.Management;
