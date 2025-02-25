@@ -14,7 +14,7 @@ using TopNotify.Daemon;
 
 namespace TopNotify.GUI
 {
-    public partial class Frontend
+    public class MainCommands
     {
         static bool isSaving = false;
 
@@ -27,18 +27,17 @@ namespace TopNotify.GUI
         }
 
         //Called By JavaScript
-        //Tells C# To Send The Config To JS
+        //Sends The Config File
         [Command("RequestConfig")]
-        public void RequestConfig(WebWindow target)
+        public static void RequestConfig(WebWindow target)
         {
-            target.CallFunction("window.SetConfig", Settings.GetForIPC());
+            target.CallFunction("SetConfig", Settings.GetForIPC());
         }
-
 
         //Called By JavaScript
         //Write Settings File
         [Command("WriteConfigFile")]
-        public static async void WriteConfigFile(WebWindow target, string data)
+        public static void WriteConfigFile(WebWindow target, string data)
         {
 
             if (isSaving) { return; }
@@ -46,7 +45,7 @@ namespace TopNotify.GUI
 
             Settings.Overwrite(data);
 
-            await Task.Delay(100); // Prevent Crashing Daemon From Spamming Button
+            Thread.Sleep(100); // Prevent Crashing Daemon From Spamming Button
 
             // Tell The Daemon The Config Has Changed Via JavaScript Websockets
             target.CallFunction("window.UpdateConfig");

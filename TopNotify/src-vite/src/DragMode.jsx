@@ -4,9 +4,9 @@ import { Button } from '@chakra-ui/react'
 import './CSS/DragMode.css'
 
 addEventListener("mouseup", (e) => {
-    if (e.button == 0) {
-        //Exit Drag Mode
-        window.ExitDragMode();
+    if (e.button == 0 && window.location.href.includes("?drag")) {
+        // Exit Drag Mode
+        igniteView.commandBridge.ExitDragMode();
     }
 })
 

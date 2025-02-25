@@ -42,6 +42,7 @@ namespace TopNotify.Common
                 return !commandLine.ToLower().Contains("--settings");
             }).Any();
 
+            #if !GUI_DEBUG
             if (!args.Contains("--settings") && isDaemonRunning && !isGUIRunning)
             {
                 //Open GUI Instead Of Daemon
@@ -58,12 +59,19 @@ namespace TopNotify.Common
                 //Exit To Prevent Multiple Daemons
                 Environment.Exit(3);
             }
+            #endif
 
-            
+
+
+
 
             if (args.Contains("--debug-process")) { Debugger.Launch(); } // Start Debugging
 
+            #if !GUI_DEBUG
             if (args.Contains("--settings"))
+            #else
+            if (true)
+            #endif
             {
                 // Copy The Wallpaper File So That The GUI Can Access It
                 WallpaperFinder.CopyWallpaper();

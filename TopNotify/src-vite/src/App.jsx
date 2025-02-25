@@ -19,8 +19,8 @@ window.Config = {
 }
 
 // Called By C#, Sets The window.Config Object To The Saved Config File
-window.SetConfig = (e) => {
-    Config = JSON.parse(e);
+window.SetConfig = async (config) => {
+    Config = JSON.parse(config);
     window.setRerender(rerender + 1);
 }
 
@@ -31,7 +31,7 @@ window.UploadConfig = () => {
         return;
     }
 
-    window.WriteConfigFile(JSON.stringify(Config));
+    igniteView.commandBridge.WriteConfigFile(JSON.stringify(Config));
     window.setRerender(rerender + 1);
 }
 

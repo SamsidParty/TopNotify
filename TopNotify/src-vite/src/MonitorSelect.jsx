@@ -2,7 +2,7 @@ import { Button, Switch, Divider, Select } from '@chakra-ui/react'
 
 export default function MonitorSelect(props) {
     return (
-        <Select className='monitorSelect' value={Config?.PreferredMonitor} onChange={(e) => { ChangeValue("PreferredMonitor", e.target.value); RequestConfig(); } }>
+        <Select className='monitorSelect' value={Config?.PreferredMonitor} onChange={(e) => { ChangeValue("PreferredMonitor", e.target.value); igniteView.commandBridge.RequestConfig(); } }>
             <option value="primary">Primary Monitor</option>
             {
                 Config?.__MonitorData?.map((monitor) => {

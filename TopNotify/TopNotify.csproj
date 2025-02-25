@@ -15,13 +15,22 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <UseWindowsForms>False</UseWindowsForms>
     <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;GUI Debug</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GUI Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GUI Debug|x64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 

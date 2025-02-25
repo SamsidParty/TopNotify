@@ -14,7 +14,7 @@ using static TopNotify.Daemon.ResolutionFinder;
 
 namespace TopNotify.GUI
 {
-    public partial class Frontend
+    public class DragModeCommands
     {
         public static WebWindow DragModeWindow;
 
@@ -54,7 +54,7 @@ namespace TopNotify.GUI
 
             //Set Mode To Custom Position In Config
             currentConfig.Location = NotifyLocation.Custom;
-            WriteConfigFile(target, JsonConvert.SerializeObject(currentConfig));
+            MainCommands.WriteConfigFile(target, JsonConvert.SerializeObject(currentConfig));
 
             var windowLocation = new Point((int)(currentConfig.CustomPositionPercentX / 100f * ResolutionFinder.GetRealResolution().Width), (int)(currentConfig.CustomPositionPercentY / 100f * ResolutionFinder.GetRealResolution().Height) + 32);
             var windowBounds = new LockedWindowBounds((int)(364f * ResolutionFinder.GetScale()), (int)(109f * ResolutionFinder.GetScale()));
@@ -115,7 +115,7 @@ namespace TopNotify.GUI
                 var currentConfig = Settings.Get();
                 currentConfig.CustomPositionPercentX = ((float)DragRect.X - (16f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
                 currentConfig.CustomPositionPercentY = ((float)DragRect.Y - (29f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
-                WriteConfigFile(mainWindow, JsonConvert.SerializeObject(currentConfig));
+                MainCommands.WriteConfigFile(mainWindow, JsonConvert.SerializeObject(currentConfig));
 
                 DragModeWindow.Close();
                 DragModeWindow = null;
