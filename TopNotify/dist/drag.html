@@ -7,21 +7,59 @@
     <title></title>
     <style>
         body {
-            background-color: transparent !important;
-            background-image: url("/Image/DragModeBackground.png");
+            background-color: #0000007c !important;
+            background-size: contain;
+            background-repeat: no-repeat;
+            overflow: hidden;
             margin: 0;
+        }
+
+        .border {
+            position: absolute;
+            left: 0.3rem;
+            right: 0.3rem;
+            top: 0.3rem;
+            bottom: 0.3rem;
+            border: 5px dashed rgba(255, 255, 255, 0.575);
+            border-radius: 4px;
+        }
+
+        .dragMode {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            align-items: center;
+        }
+
+        .dragMode img {
+            display: flex;
+            height: 80vh;
+            width: auto;
+        }
+
+        .coordinates {
+            color: white;
+            position: absolute;
+            right: 0.7rem;
+            bottom: 0.7rem;
         }
     </style>
 </head>
 
 <body oncontextmenu="return false;">
 
-    <div className="dragMode app loaded">
-        <h4>Select Custom Position</h4>
-        <p>Move Your Mouse To The Desired Notification Position, Then Left Click To Confirm.</p>
+    <div class="border"></div>
+    <p class="coordinates"></p>
+    <div class="dragMode">
+        <img src="/Image/LeftClick.png">
     </div>
 
     <script>
+
+        window.updateCoordinates = (x, y) => {
+            document.querySelector(".coordinates").innerText = `(${x}, ${y})`
+        }
+
         igniteView.commandBridge.invoke("FocusDragMode");
         setTimeout(() => igniteView.commandBridge.invoke("FocusDragMode"), 500); // Focus again after devtools open
 

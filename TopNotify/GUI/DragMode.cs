@@ -149,6 +149,7 @@ namespace TopNotify.GUI
                 cursorPos.Y -= 30;
 
                 SetWindowPos(dragModeHandle, 0, cursorPos.X, cursorPos.Y, 0, 0, 0x0001);
+                DragModeWindow?.CallFunction("window.updateCoordinates", cursorPos.X, cursorPos.Y);
 
                 Thread.Sleep(0);
             }
