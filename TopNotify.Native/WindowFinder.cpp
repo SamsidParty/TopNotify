@@ -81,7 +81,7 @@ HWND* _Gui_BuildWindowList
 /********************************************************/
 
 extern "C" {
-	__declspec(dllexport) BOOL Gui_RealEnumWindows(WNDENUMPROC in_Proc, LPARAM in_Param)
+	__declspec(dllexport) BOOL TopNotifyEnumWindows(WNDENUMPROC in_Proc, LPARAM in_Param)
 	{
 		/* locals */
 		INT   lv_Cnt;

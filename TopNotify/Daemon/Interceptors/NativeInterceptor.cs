@@ -54,8 +54,8 @@ namespace TopNotify.Daemon
         const short SWP_NOZORDER = 0X4;
         const int SWP_SHOWWINDOW = 0x0040;
 
-        [DllImport("IVPluginTopNotify.dll")]
-        private static extern bool Gui_RealEnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+        [DllImport("TopNotify.Native")]
+        private static extern bool TopNotifyEnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
@@ -90,7 +90,7 @@ namespace TopNotify.Daemon
             IntPtr found = IntPtr.Zero;
             List<IntPtr> windows = new List<IntPtr>();
 
-            Gui_RealEnumWindows(delegate (IntPtr hwnd, IntPtr param)
+            TopNotifyEnumWindows(delegate (IntPtr hwnd, IntPtr param)
             {
                 var classGet = new StringBuilder(1024);
                 GetClassName(hwnd, classGet, classGet.Capacity);

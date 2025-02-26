@@ -8,13 +8,6 @@
   The user interface of TopNotify, allows the user to change settings.
   Runs on IgniteView and React, using npm/vite for development.
 
-- ## IVPluginTopNotify
-  A native C++ DLL to provide some helper functions, allows for certain API/library calls that won't work with C#.
-
-- ## TopNotifyHook
-  A native C++ DLL that gets injected into certain apps (eg. Microsoft Teams) to provide support for unique notification GUIs.
-  The code in this DLL hooks certain windows API functions (eg. SetWindowPos) and reports window handles back to the daemon.
-
 # Finding Window Handles
 
 To operate, TopNotify must find the handle (window ID) of the notification window.

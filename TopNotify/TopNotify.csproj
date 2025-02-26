@@ -52,23 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="EasyHook64.dll" />
-    <None Remove="IVPluginTopNotify.dll" />
-    <None Remove="TopNotifyHook.dll" />
-    <None Remove="WebFramework.dll" />
-    <None Remove="WebFramework.PT.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="EasyHook64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IVPluginTopNotify.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TopNotifyHook.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Remove="iv2runtime\win-x64\native\TopNotify.Native.dll" />
+    <None Remove="TopNotify.Native.dll" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,7 +69,12 @@
 
 	<!-- IgniteView -->
 	<ItemGroup>
-		<PackageReference Include="IgniteView.Desktop" Version="*" />
+		<PackageReference Include="IgniteView.Desktop" Version="2.0.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="iv2runtime\win-x64\native\TopNotify.Native.dll">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 	<PropertyGroup>
 		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>

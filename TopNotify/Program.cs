@@ -9,6 +9,8 @@ using TopNotify.Common;
 using TopNotify.GUI;
 using IgniteView.Core;
 using IgniteView.Desktop;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace TopNotify.Common
 {
@@ -61,6 +63,7 @@ namespace TopNotify.Common
             }
             #endif
 
+            DesktopPlatformManager.Activate(); // Needed here to initiate plugin DLL loading
 
             if (args.Contains("--debug-process")) { Debugger.Launch(); } // Start Debugging
 
@@ -70,9 +73,6 @@ namespace TopNotify.Common
             if (true)
             #endif
             {
-                // Copy The Wallpaper File So That The GUI Can Access It
-                WallpaperFinder.CopyWallpaper();
-
                 //Open The GUI App In Settings Mode
 
                 if (Settings.Get().EnableDebugNotifications)
@@ -81,7 +81,6 @@ namespace TopNotify.Common
                     NotificationTester.Toast("Debug Notification", "Started Settings GUI");
                 }
 
-                DesktopPlatformManager.Activate();
                 GUI = new ViteAppManager();
                 App();
             }
@@ -95,6 +94,8 @@ namespace TopNotify.Common
 
         public static async Task App()
         {
+            // Copy The Wallpaper File So That The GUI Can Access It
+            WallpaperFinder.CopyWallpaper();
 
             var mainWindow =
                 WebWindow.Create()
@@ -102,10 +103,11 @@ namespace TopNotify.Common
                 .WithBounds(new LockedWindowBounds((int)(520f * ResolutionFinder.GetScale()), (int)(780f * ResolutionFinder.GetScale())))
                 .Show();
 
-            //Clean Up
+            // Clean Up
             GUI.OnCleanUp += () =>
             {
                 ToastNotificationManagerCompat.Uninstall();
+                WallpaperFinder.CleanUp();
             };
 
             GUI.Run();
