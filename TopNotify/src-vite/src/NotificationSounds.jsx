@@ -118,10 +118,7 @@ function SoundPicker(props) {
 
     if (useFirstRender()) {
         setTimeout(async () => {
-            var request = await fetch("/Meta/SoundPacks.json");
-            var response = await request.json();
-    
-            setSoundPacks(response);
+            setSoundPacks(JSON.parse(await igniteView.commandBridge.FindSounds()));
         }, 0);
     }
 
@@ -156,17 +153,7 @@ function SoundPicker(props) {
 
 function SoundPack(props) {
 
-    var playSound = (sound) => {
-
-        if (sound.Path.startsWith("custom_sound_path/")) {
-            var audio = new Audio("fs://" + sound.Path.replace("custom_sound_path/", ""));
-            audio.play();
-            return;
-        }
-
-        var audio = new Audio("/Audio/" + sound.Path + ".wav");
-        audio.play();
-    }
+    var playSound = (sound) => igniteView.commandBridge.PreviewSound(sound.Path);
 
     return (
         <div className="soundPack">

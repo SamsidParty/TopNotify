@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IgniteView.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -6,53 +7,43 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Daemon;
 
 namespace TopNotify.GUI
 {
     public class SoundFinder
     {
-
-        public static bool InterceptSoundRequest(HttpListenerContext context)
+        [Command("FindSounds")]
+        public static string FindSounds()
         {
+            // Read The Current List Of Sound Packs
+            var jsonFile = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dist", "Meta", "SoundPacks.json"));
+            var soundPacks = JsonConvert.DeserializeObject<List<ExpandoObject>>(jsonFile);
 
-            // Check If The Request Is For List Of Sound Packs
-            if (
-                context.Request.Url != null &&
-                context.Request.Url.LocalPath.EndsWith("SoundPacks.json")
-            )
+            // Inject Files From Music Folder Into The JSON File
+            dynamic packToInject = soundPacks.Where((dynamic pack) => pack.ID == "custom_sound_path").FirstOrDefault();
+            var wavFiles = GetWAVFilesInMusicFolder();
+
+            foreach (var wavFile in wavFiles)
             {
-                // Read The Current List Of Sound Packs
-                var jsonFile = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Meta", "SoundPacks.json"));
-                var soundPacks = JsonConvert.DeserializeObject<List<ExpandoObject>>(jsonFile);
-
-                // Inject Files From Music Folder Into The JSON File
-                dynamic packToInject = soundPacks.Where((dynamic pack) => pack.ID == "custom_sound_path").FirstOrDefault();
-                var wavFiles = GetWAVFilesInMusicFolder();
-
-                foreach (var wavFile in wavFiles)
-                {
-                    dynamic soundToInject = new ExpandoObject();
-                    soundToInject.Path = "custom_sound_path/" + wavFile;
-                    soundToInject.Name = Path.GetFileNameWithoutExtension(wavFile);
-                    soundToInject.Icon = "/Image/Sound.svg";
-                    packToInject.Sounds.Add(soundToInject);
-                }
-
-                // Send To GUI
-                jsonFile = JsonConvert.SerializeObject(soundPacks);
-                var input = Encoding.UTF8.GetBytes(jsonFile);
-
-                context.Response.ContentLength64 = input.Length;
-                context.Response.AddHeader("Content-Type", "application/json");
-                context.Response.OutputStream.Write(input, 0, input.Length);
-                context.Response.OutputStream.Flush();
-
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-
-                return true;
+                dynamic soundToInject = new ExpandoObject();
+                soundToInject.Path = "custom_sound_path/" + wavFile;
+                soundToInject.Name = Path.GetFileNameWithoutExtension(wavFile);
+                soundToInject.Icon = "/Image/Sound.svg";
+                packToInject.Sounds.Add(soundToInject);
             }
 
-                return false;
+            // Send To GUI
+            return JsonConvert.SerializeObject(soundPacks);
+        }
+
+        /// <summary>
+        /// Plays the provided sound ID
+        /// </summary>
+        [Command("PreviewSound")]
+        public static void PreviewSound(string soundID)
+        {
+            SoundInterceptor.PlaySoundWithoutTimeout(soundID);
         }
 
         /// <summary>

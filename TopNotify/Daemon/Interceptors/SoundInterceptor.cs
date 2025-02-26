@@ -96,7 +96,7 @@ namespace TopNotify.Daemon
         /// <summary>
         /// Gets The Path Of A Sound In The AppData Folder
         /// </summary>
-        public string GetCopiedSoundPath(string soundRelativePath)
+        public static string GetCopiedSoundPath(string soundRelativePath)
         {
             return Path.Combine(Common.Settings.GetAppDataFolder(), "NotificationSounds", soundRelativePath.Replace("/", "\\") + ".wav");
         }
@@ -104,20 +104,20 @@ namespace TopNotify.Daemon
         /// <summary>
         /// Gets The Path Of The Sound Built In The Application Folder
         /// </summary>
-        public string GetSourceSoundPath(string soundRelativePath)
+        public static string GetSourceSoundPath(string soundRelativePath)
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WWW", "Audio", soundRelativePath.Replace("/", "\\") + ".wav");
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dist", "Audio", soundRelativePath.Replace("/", "\\") + ".wav");
         }
 
         /// <summary>
         /// Gets The Path Of The Sound, Automatically Determining If It's In The App Folder, AppData Folder, Or Custom Path
         /// </summary>
-        public string GetSoundPath(string soundPath)
+        public static string GetSoundPath(string soundPath)
         {
             if (soundPath == "internal/default")
             {
                 // Find The SoundPath Of The Default AppReference
-                foreach (var appRef in Settings.AppReferences)
+                foreach (var appRef in Settings.Get().AppReferences)
                 {
                     if (appRef.ID == "Other" && appRef.SoundPath != "internal/default")
                     {
@@ -171,6 +171,22 @@ namespace TopNotify.Daemon
             }
 
             base.OnNotification(notification);
+        }
+
+        /// <summary>
+        /// Plays a sound without any delay or timeout
+        /// </summary>
+        public static void PlaySoundWithoutTimeout(string soundPath)
+        {
+            var soundFilePath = GetSoundPath(soundPath);
+
+            Task.Run(() =>
+            {
+                using (var p = new SoundPlayer(soundFilePath))
+                {
+                    p.Play();
+                }
+            });
         }
 
         public override void Reflow()
