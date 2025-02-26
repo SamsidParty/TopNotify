@@ -89,9 +89,6 @@ namespace TopNotify.GUI
 
         public static void Quit(object Sender, EventArgs e)
         {
-            //Clean Up
-            Daemon.Daemon.Instance.Server.Stop();
-
             //Kill Other Instances
             var instances = Process.GetProcessesByName("TopNotify");
             foreach (var instance in instances)

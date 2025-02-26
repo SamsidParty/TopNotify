@@ -6,7 +6,6 @@ import TestNotification from './TestNotification'
 import ManageNotificationSounds from './NotificationSounds'
 import Preview from './Preview'
 import { DebugMenu } from './DebugMenu'
-import './IPCClient'
 import ReadAloud from './ReadAloud'
 import MonitorSelect from './MonitorSelect'
 
@@ -67,7 +66,7 @@ function App() {
             <MonitorSelect></MonitorSelect>
 
             {
-                window.errorList.map((error, i) => {
+                window.errorList?.map((error, i) => {
                     return (<ErrorMessage key={i} error={error}></ErrorMessage>)
                 })
             }

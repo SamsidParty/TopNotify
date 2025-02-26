@@ -106,11 +106,6 @@ namespace TopNotify.Daemon
 
         public void Reflow()
         {
-            if (Daemon.Instance.Server != null)
-            {
-                Daemon.Instance.Server.UpdateHandles();
-            }
-
             foreach (Interceptor i in Interceptors)
             {
                 try
@@ -173,13 +168,6 @@ namespace TopNotify.Daemon
 
         public void OnSettingsChanged()
         {
-
-            //Send The New Settings File To All IPC Clients
-            if (Daemon.Instance.Server != null)
-            {
-                Daemon.Instance.Server.UpdateSettingsFile();
-            }
-
             CurrentSettings = Settings.Get();
 
             foreach (Interceptor i in Interceptors)

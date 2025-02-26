@@ -16,7 +16,6 @@ namespace TopNotify.Daemon
         public static Daemon Instance;
 
         public InterceptorManager Manager;
-        public IPCServer Server;
 
         public Daemon() {
             Instance = this;
@@ -26,9 +25,6 @@ namespace TopNotify.Daemon
             Thread managerThread = new Thread(CreateManager);
             managerThread.Start();
 
-            Thread ipcThread = new Thread(CreateIPC);
-            ipcThread.Start();
-
             TrayIcon.MainLoop();
         }
 
@@ -36,12 +32,6 @@ namespace TopNotify.Daemon
         {
             Manager = new InterceptorManager();
             Manager.Start();
-        }
-
-        public void CreateIPC()
-        {
-            Server = new IPCServer();
-            Server.Start();
         }
     }
 }

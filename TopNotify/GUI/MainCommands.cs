@@ -47,8 +47,8 @@ namespace TopNotify.GUI
 
             Thread.Sleep(100); // Prevent Crashing Daemon From Spamming Button
 
-            // Tell The Daemon The Config Has Changed Via JavaScript Websockets
-            target.CallFunction("window.UpdateConfig");
+            // Tell The Daemon The Config Has Changed
+            
 
             isSaving = false;
         }
