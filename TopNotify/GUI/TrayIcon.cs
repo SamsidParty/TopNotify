@@ -12,12 +12,8 @@ namespace TopNotify.GUI
 {
     public class TrayIcon
     {
-
         public static Assembly WinForms;
-
-
         public static dynamic Application = null;
-
 
 
         /// <summary>

@@ -62,9 +62,6 @@ namespace TopNotify.Common
             #endif
 
 
-
-
-
             if (args.Contains("--debug-process")) { Debugger.Launch(); } // Start Debugging
 
             #if !GUI_DEBUG

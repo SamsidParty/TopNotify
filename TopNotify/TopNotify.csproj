@@ -72,6 +72,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="KdSoft.MailSlot" Version="1.1.0" />
+    <PackageReference Include="KdSoft.MailSlotListener" Version="1.0.4" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />

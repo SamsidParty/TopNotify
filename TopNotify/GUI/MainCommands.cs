@@ -48,7 +48,7 @@ namespace TopNotify.GUI
             Thread.Sleep(100); // Prevent Crashing Daemon From Spamming Button
 
             // Tell The Daemon The Config Has Changed
-            
+            Daemon.Daemon.SendCommandToDaemon("UpdateConfig");
 
             isSaving = false;
         }
