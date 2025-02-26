@@ -16,12 +16,12 @@
 
         .border {
             position: absolute;
-            left: 0.3rem;
-            right: 0.3rem;
-            top: 0.3rem;
-            bottom: 0.3rem;
-            border: 5px dashed rgba(255, 255, 255, 0.575);
-            border-radius: 4px;
+            left: 5vh;
+            right: 5vh;
+            top: 5vh;
+            bottom: 5vh;
+            border: 5vh dashed rgba(255, 255, 255, 0.575);
+            border-radius: 4vh;
         }
 
         .dragMode {
@@ -40,8 +40,25 @@
         .coordinates {
             color: white;
             position: absolute;
-            right: 0.7rem;
-            bottom: 0.7rem;
+            right: 16vh;
+            bottom: 16vh;
+            font-size: 12vh;
+            margin: 0;
+            font-family: monospace;
+        }
+
+        .instructions * {
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .instructions h4 {
+            font-size: 16vh;
+        }
+
+        .instructions p {
+            font-size: 14vh;
         }
     </style>
 </head>
@@ -52,6 +69,10 @@
     <p class="coordinates"></p>
     <div class="dragMode">
         <img src="/Image/LeftClick.png">
+        <div class="instructions">
+            <h4>Drag to desired position</h4>
+            <p>Left-click to confirm</p>
+        </div>
     </div>
 
     <script>
