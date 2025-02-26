@@ -113,7 +113,7 @@ namespace TopNotify.Daemon
 
             try
             {
-                var foundHwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.GetNotificationName());
+                var foundHwnd = FindWindow("Windows.UI.Core.CoreWindow", Language.NotificationName);
 
                 if (Settings.EnableDebugForceFallbackMode)
                 {
