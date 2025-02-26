@@ -96,6 +96,7 @@ namespace TopNotify.Common
         {
             // Copy The Wallpaper File So That The GUI Can Access It
             WallpaperFinder.CopyWallpaper();
+            AppManager.Instance.RegisterDynamicFileRoute("/wallpaper.jpg", WallpaperFinder.WallpaperRoute);
 
             var mainWindow =
                 WebWindow.Create()

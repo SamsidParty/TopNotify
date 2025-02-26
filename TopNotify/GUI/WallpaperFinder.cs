@@ -1,50 +1,44 @@
-﻿using System;
+﻿using IgniteView.Core;
+using MimeMapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
+using WatsonWebserver.Core;
 
 namespace TopNotify.GUI
 {
     internal class WallpaperFinder
     {
-        public static bool InterceptWallpaperRequest(HttpListenerContext context)
+        public static async Task WallpaperRoute(HttpContextBase ctx)
         {
-
-            // Check If The Request Is For The Wallpaper
             if (
-                context.Request.Url != null &&
-                context.Request.Url.LocalPath.EndsWith("BackgroundDecoration.jpg") &&
+                ctx.Request.Url != null &&
                 CopyWallpaper() != null
             )
             {
+
                 // Send The Current Wallpaper
                 var wallpaperFile = CopyWallpaper(); 
 
-                var input = new FileStream(wallpaperFile, FileMode.Open, FileAccess.Read);
+                var fileStream = new FileStream(wallpaperFile, FileMode.Open, FileAccess.Read);
 
-                if (input.CanSeek)
+                if (fileStream.CanSeek)
                 {
-                    context.Response.ContentLength64 = input.Length;
+                    ctx.Response.ContentLength = fileStream.Length;
                 }
 
-                context.Response.AddHeader("Content-Type", "image/jpeg");
+                ctx.Response.StatusCode = 200;
+                ctx.Response.ContentType = "image/jpeg";
+                await ctx.Response.Send(fileStream.Length, fileStream);
 
-                byte[] buffer = new byte[1024 * 32];
-                int nbytes;
-                while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                    context.Response.OutputStream.Write(buffer, 0, nbytes);
-                input.Close();
-                context.Response.OutputStream.Flush();
-
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-
-                return true;
+                await fileStream.DisposeAsync();
             }
 
-            return false;
+            ctx.Response.StatusCode = 404;
         }
 
         public static string CopyWallpaper()

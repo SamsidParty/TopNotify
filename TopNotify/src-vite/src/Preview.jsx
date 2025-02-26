@@ -8,11 +8,11 @@ function CalculatePreviewContainerStyle() {
     var previewWidth = 464;
     var aspect = 0.5625; // 16:9
 
-    if (!!window.Config.__ScreenWidth) {
+    if (window.Config.__ScreenWidth) {
         aspect = window.Config.__ScreenHeight / window.Config.__ScreenWidth;
     }
 
-    return { width: previewWidth, height: (previewWidth * aspect) };
+    return { width: previewWidth, height: (previewWidth * aspect), backgroundImage: `url('${igniteView.resolverURL + "/wallpaper.jpg"}')` };
 }
 
 function CalculateTaskbarPreviewStyle() {
@@ -20,7 +20,7 @@ function CalculateTaskbarPreviewStyle() {
     var standardHeight = 48 * previewScale;
 
     return { 
-        height: !!window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
+        height: window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
     };
 }
 
@@ -31,8 +31,8 @@ function CalculateNotificationWindowPreviewStyle() {
     var standardHeight = 152 * previewScale;
 
     var style = { 
-        width: !!window.Config.__ScreenScale ? (standardWidth * window.Config.__ScreenScale) : standardWidth,
-        height: !!window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
+        width: window.Config.__ScreenScale ? (standardWidth * window.Config.__ScreenScale) : standardWidth,
+        height: window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
     };
 
     var posX = 0;
@@ -40,7 +40,7 @@ function CalculateNotificationWindowPreviewStyle() {
     var scaledMainDisplayWidth = CalculatePreviewContainerStyle().width;
     var scaledMainDisplayHeight = CalculatePreviewContainerStyle().height;
 
-    if (!!window.Config.Location) {
+    if (window.Config.Location) {
         if (window.Config.Location == 0) { // Top left
             posX = 0;
             posY = 0;

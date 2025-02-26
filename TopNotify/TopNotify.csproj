@@ -69,7 +69,7 @@
 
 	<!-- IgniteView -->
 	<ItemGroup>
-		<PackageReference Include="IgniteView.Desktop" Version="2.0.2" />
+		<PackageReference Include="IgniteView.Desktop" Version="2.0.4" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Include="iv2runtime\win-x64\native\TopNotify.Native.dll">
