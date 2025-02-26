@@ -32,10 +32,7 @@ function Dispatcher() {
     var MainMethod = App;
 
     if (useFirstRender()) {
-        setTimeout(async () => {
-            await waitUntil(() => !!igniteView.commandBridge.RequestConfig); // Wait Until The RequestConfig Function Is Available To Use
-            igniteView.commandBridge.RequestConfig(); // Tells C# React Is Ready, And To Send The Config File
-        }, 0);
+        igniteView.commandBridge.invoke("RequestConfig");
     }
 
     return (
