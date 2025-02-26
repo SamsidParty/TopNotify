@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
 using TopNotify.Daemon;
+using Windows.Security.Credentials;
 using static TopNotify.Daemon.ResolutionFinder;
 
 namespace TopNotify.GUI
@@ -45,7 +46,6 @@ namespace TopNotify.GUI
         [Command("EnterDragMode")]
         public static async Task EnterDragMode(WebWindow target)
         {
-
             var currentConfig = Settings.Get();
 
             //Hide The Main Window
@@ -67,19 +67,27 @@ namespace TopNotify.GUI
             SetCursorPos(windowLocation.X + 30 + (int)(16f * ResolutionFinder.GetScale()), windowLocation.Y + (int)(29f * ResolutionFinder.GetScale()));
 
             DragModeWindow =
-                WebWindow.Create("/index.html?drag")
+                WebWindow.Create("/drag.html")
                 .WithTitle("")
-                .WithBounds(windowBounds);
+                .WithoutTitleBar()
+                .WithBounds(windowBounds)
+                .With((w) => (w as Win32WebWindow).BackgroundMode = Win32WebWindow.WindowBackgroundMode.Acrylic)
+                .Show();
 
             SetForegroundWindow(DragModeWindow.NativeHandle);
             t.Start();
         }
 
+        [Command("FocusDragMode")]
+        public static void FocusDragMode(WebWindow target)
+        {
+            SetForegroundWindow(target.NativeHandle);
+        }
 
         // Called By JavaScript
         // Captures The Draggable Window Position And Writes It To The Config
         [Command("ExitDragMode")]
-        public void ExitDragMode()
+        public static void ExitDragMode()
         {
             if (DragModeWindow != null)
             {
@@ -116,6 +124,8 @@ namespace TopNotify.GUI
                 currentConfig.CustomPositionPercentX = ((float)DragRect.X - (16f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
                 currentConfig.CustomPositionPercentY = ((float)DragRect.Y - (29f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
                 MainCommands.WriteConfigFile(mainWindow, JsonConvert.SerializeObject(currentConfig));
+
+                mainWindow.SendConfig();
 
                 DragModeWindow.Close();
                 DragModeWindow = null;

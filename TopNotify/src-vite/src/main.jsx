@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import DragMode from './DragMode.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
 import './CSS/App.css'
 import { useFirstRender, waitUntil } from './Helper.jsx'
@@ -30,12 +29,7 @@ function RootComponent(params) {
 }
 
 function Dispatcher() {
-    
     var MainMethod = App;
-
-    if (window.location.href.includes("?drag")) {
-        MainMethod = DragMode;
-    }
 
     if (useFirstRender()) {
         setTimeout(async () => {

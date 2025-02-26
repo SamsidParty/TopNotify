@@ -31,7 +31,7 @@ namespace TopNotify.GUI
         [Command("RequestConfig")]
         public static void RequestConfig(WebWindow target)
         {
-            target.CallFunction("SetConfig", Settings.GetForIPC());
+            target.SendConfig();
         }
 
         //Called By JavaScript

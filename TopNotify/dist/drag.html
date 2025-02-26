@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+        body {
+            background-color: transparent !important;
+            background-image: url("/Image/DragModeBackground.png");
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;">
+
+    <div className="dragMode app loaded">
+        <h4>Select Custom Position</h4>
+        <p>Move Your Mouse To The Desired Notification Position, Then Left Click To Confirm.</p>
+    </div>
+
+    <script>
+        igniteView.commandBridge.invoke("FocusDragMode");
+        setTimeout(() => igniteView.commandBridge.invoke("FocusDragMode"), 500); // Focus again after devtools open
+
+        // Exit drag mode when clicked
+        addEventListener("mouseup", (e) => {
+            if (e.button == 0) {
+                igniteView.commandBridge.ExitDragMode();
+            }
+        })
+    </script>
+</body>
+
+</html>
