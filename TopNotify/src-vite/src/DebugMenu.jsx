@@ -41,7 +41,11 @@ export function DebugMenu() {
                 onClose={() => setIsOpen(false)}
             >
                 <DrawerContent>
-                    <DrawerCloseButton />
+                    
+                    <div className="windowCloseButton">
+                        <Button className="iconButton" onClick={() => setIsOpen(false)}>&#xea5f;</Button>
+                    </div>
+
                     <DrawerHeader>Debug Menu</DrawerHeader>
 
                     <DrawerBody>

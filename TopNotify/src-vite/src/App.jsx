@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Switch, Divider, Select } from '@chakra-ui/react'
+import { Button, Switch, Divider, Container } from '@chakra-ui/react'
 import NotificationTransparency from './Transparency'
 import ClickThrough from './ClickThrough'
 import TestNotification from './TestNotification'
@@ -57,11 +57,18 @@ function App() {
 
             <DebugMenu></DebugMenu>
 
-            <h2>TopNotify</h2>
+            <div onMouseOver={window.igniteView.dragWindow} className="draggableHeader">
+                <img src="/Image/IconTiny.png"></img>
+                <h2>TopNotify</h2>
+            </div>
+
+            <div className="windowCloseButton">
+                <Button className="iconButton" onClick={() => window.close()}>&#xeb55;</Button>
+            </div>
+
+            <TestNotification></TestNotification>
 
             <Preview></Preview>
-
-            <Divider />
 
             <MonitorSelect></MonitorSelect>
 
@@ -71,25 +78,17 @@ function App() {
                 })
             }
 
-            <Divider />
+            <Container>
+                <ClickThrough></ClickThrough>
+                <Divider />
+                <NotificationTransparency></NotificationTransparency>
+            </Container>
 
-            <TestNotification></TestNotification>
-
-            <Divider />
-
-            <ClickThrough></ClickThrough>
-
-            <Divider />
-
-            <NotificationTransparency></NotificationTransparency>
-
-            <Divider />
-
-            <ReadAloud></ReadAloud>
-
-            <Divider />
-            
-            <ManageNotificationSounds></ManageNotificationSounds>
+            <Container>
+                <ReadAloud></ReadAloud>
+                <Divider />
+                <ManageNotificationSounds></ManageNotificationSounds>
+            </Container>
         </div>
     )
 }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
 import './CSS/App.css'
+import './CSS/ChakraOverrides.css'
 import { useFirstRender, waitUntil } from './Helper.jsx'
 
 window.serverURL = "http://" + window.location.host + "/";

@@ -14,6 +14,7 @@
     transition: opacity 0.3s, transform 0.3s;
     opacity: 0;
     transform: scale(0.95);
+    position: relative;
 }
 
 .app.loaded {
@@ -26,6 +27,9 @@
     font-family: Main, Icon;
     color: var(--col-text);
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    font-size: 1.7vh;
 
     --col-bg: white;
     --col-overlay: rgba(255, 255, 255, 0.5);
@@ -37,12 +41,12 @@
     --col-secondary: #acee3a;
     --col-tertiary: #ffffffab;
     --col-contrast: #ebebeb;
+    --col-border: #bbbbbb;
     --col-disabled: #251F29;
+    --image-bg: url("/Image/BackgroundLight.png");
 
-    --chakra-colors-blue-500: var(--col-primary) !important;
-    --chakra-colors-blue-200: var(--col-primary) !important;
-    --drawer-bg: transparent !important;
-    --drawer-box-shadow: none !important;
+
+    image-rendering: auto;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,6 +62,8 @@
         --col-tertiary: #50505031;
         --col-contrast: #343434;
         --col-disabled: #251F29;
+        --col-border: #433e46;
+        --image-bg: url("/Image/BackgroundDark.png");
     }
 }
 
@@ -70,6 +76,9 @@ body {
     height: 100vh;
     width: 100vw;
     background-color: transparent !important;
+    background-image: var(--image-bg) !important;
+    background-size: cover !important;
+    image-rendering: pixelated;
 }
 
 
@@ -121,12 +130,30 @@ body {
     }
 }
 
-h2, .chakra-modal__header {
-    margin: 0 !important;
-    line-height: 40px !important;
-    font-size: 30px !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.05em !important;
+
+.draggableHeader {
+    display: flex;
+    margin-right: 15%;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 17px;
+}
+
+.draggableHeader img {
+    height: 5vh;
+    width: auto;
+}
+
+.windowCloseButton {
+    position: absolute;
+    right: 0px;
+    top: 18px;
+}
+
+.windowCloseButton button {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: var(--col-text) !important;
+    font-weight: 400 !important;
 }
 
 .buttonContainer button {
@@ -139,9 +166,9 @@ label {
 }
 
 .iconButton {
-    width: 30px !important;
+    width: 25px !important;
     min-width: 0px !important;
-    height: 30px !important;
+    height: 25px !important;
     padding: 2px !important;
     font-size: 17px !important;
     color: white !important;
@@ -150,17 +177,6 @@ label {
 
 .iconButton:hover {
     opacity: 0.8;
-}
-
-.chakra-divider {
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.chakra-modal__content {
-    height: 100%;
-    width: 100%;
 }
 
 *::-webkit-scrollbar {

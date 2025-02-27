@@ -5,8 +5,10 @@
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -72,6 +74,11 @@
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.monitorSelect {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
 }
 
 @media (prefers-color-scheme: dark) {

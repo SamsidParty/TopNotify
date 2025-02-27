@@ -6,7 +6,7 @@ export default function MonitorSelect(props) {
             <option value="primary">Primary Monitor</option>
             {
                 Config?.__MonitorData?.map((monitor) => {
-                    return (<option value={monitor.ID}>{monitor.DisplayName}</option>)
+                    return (<option key={monitor.ID} value={monitor.ID}>{monitor.DisplayName}</option>)
                 })
             }
         </Select>

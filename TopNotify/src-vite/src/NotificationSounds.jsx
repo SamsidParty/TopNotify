@@ -66,22 +66,29 @@ export default function ManageNotificationSounds() {
                 onClose={() => setIsOpen(false)}
             >
                 <DrawerContent>
-                    <DrawerCloseButton />
-                    <DrawerHeader>Notification Sounds</DrawerHeader>
+                    
+                    <div className="windowCloseButton">
+                        <Button className="iconButton" onClick={() => setIsOpen(false)}>&#xea5f;</Button>
+                    </div>
+
+                    <DrawerHeader onMouseOver={window.igniteView.dragWindow}>Notification Sounds</DrawerHeader>
 
                     <DrawerBody>
-                        <div className="errorMessage medium"><h4>&#xea06;</h4>Some Apps Will Play Their Own Sounds, You May Have To Turn Them Off In The App To Prevent Multiple Sounds From Playing</div>
-                        {
-                            window.Config.AppReferences.map((appReference, i) => {
-                                return (
-                                    <Fragment key={i}>
-                                        <Divider/>
-                                        <AppReferenceSoundItem setIsPickerOpen={setIsPickerOpen} appReference={appReference}></AppReferenceSoundItem>
-                                    </Fragment>
-                                )
-                            })
-                        }
-                        <Divider/>
+                        <div className="errorMessage medium"><h4>&#xea06;</h4>Some apps will play their own sounds, you may have to turn them off in-app to prevent overlapping audio.</div>
+                            {
+                                window.Config.AppReferences.map((appReference, i) => {
+                                    return (
+                                        <Fragment key={i}>
+                                            <Divider/>
+                                            <AppReferenceSoundItem setIsPickerOpen={setIsPickerOpen} appReference={appReference}></AppReferenceSoundItem>
+                                        </Fragment>
+                                    )
+                                })
+                            }
+                            <Divider/>
+                            {
+                                window.Config.AppReferences.length == 0 ? (<p>When an app sends a notification, TopNotify will capture it and it will show up here for you to modify the sounds.</p>) : null
+                            }
                     </DrawerBody>
 
                     <DrawerFooter>
@@ -118,7 +125,8 @@ function SoundPicker(props) {
 
     if (useFirstRender()) {
         setTimeout(async () => {
-            setSoundPacks(JSON.parse(await igniteView.commandBridge.FindSounds()));
+            var newSounds = JSON.parse(await igniteView.commandBridge.FindSounds());
+            setSoundPacks(newSounds);
         }, 0);
     }
 

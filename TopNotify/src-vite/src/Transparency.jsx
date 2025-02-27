@@ -2,7 +2,7 @@ import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Di
 
 export default function NotificationTransparency() {
     return (
-        <div className="flexy fillx gap20">
+        <div className="flexy fillx gap10">
             <label>Notification Transparency</label>
             {
                 //Slider Is In Uncontrolled Mode For Performance Reasons
