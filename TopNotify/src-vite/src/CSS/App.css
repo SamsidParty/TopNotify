@@ -67,6 +67,11 @@
     }
 }
 
+*[data-greyed-out="true"] {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 body {
     display: flex;
     flex-direction: column;

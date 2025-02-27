@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using IgniteView.Core;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,11 +26,14 @@ namespace TopNotify.Daemon
         SoundPlayer Player;
         bool isPlaying = false;
 
+        bool allowedToPlaySound = false;
+
         /// <summary>
         /// Sets The Notification Sound In The Registry To The Fake Sound File
         /// TopNotify Doesn't Have Registry Access Because Of MSIX, So Call CMD To Do It For Us
         /// </summary>
-        void InstallSoundInRegistry()
+        [Command("InstallSoundInRegistry")]
+        public static void InstallSoundInRegistry()
         {
             try
             {
@@ -37,6 +41,38 @@ namespace TopNotify.Daemon
                 Util.SimpleCMD(command);
             }
             catch (Exception ex) { }
+        }
+
+        /// <summary>
+        /// Reverts the notification sound to the default
+        /// </summary>
+        [Command("UninstallSoundInRegistry")]
+        public static void UninstallSoundInRegistry()
+        {
+            try
+            { 
+                // This is the default soundpath found in the windows 11 registry
+                var defaultSoundPath = Environment.ExpandEnvironmentVariables("%SystemRoot%\\media\\Windows Notify System Generic.wav");
+                var command = $"reg add HKCU\\AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current /t REG_SZ /ve /d \"{defaultSoundPath}\" /f";
+                Util.SimpleCMD(command);
+            }
+            catch (Exception ex) { }
+        }
+
+        /// <summary>
+        /// Detects whether the fake sound file is installed in the registry
+        /// </summary>
+        [Command("IsSoundInstalledInRegistry")]
+        public static bool IsSoundInstalledInRegistry()
+        {
+            try
+            {
+                var command = $"reg query HKCU\\AppEvents\\Schemes\\Apps\\.Default\\Notification.Default\\.Current /t REG_SZ /ve";
+                return Util.SimpleCMD(command)?.Contains("TopNotify") ?? false;
+            }
+            catch (Exception ex) { }
+
+            return false;
         }
 
         /// <summary>
@@ -89,6 +125,8 @@ namespace TopNotify.Daemon
 
                 }
             }
+
+            allowedToPlaySound = IsSoundInstalledInRegistry();
 
         }
 
@@ -150,7 +188,7 @@ namespace TopNotify.Daemon
 
         public override void OnNotification(UserNotification notification)
         {
-            if (Settings.ReadAloud) { return; } // Don't Play A Sound If Text-To-Speech Is Playing
+            if (Settings.ReadAloud || !allowedToPlaySound) { return; } // Don't Play A Sound If Text-To-Speech Is Playing Or If Disabled
 
             var appRef = AppReference.FromNotification(notification);
             var soundFilePath = GetSoundPath(appRef.SoundPath);
@@ -194,10 +232,15 @@ namespace TopNotify.Daemon
             base.Reflow();
         }
 
+        public override void Restart()
+        {
+            EnsureFakeSoundValidity();
+            base.Restart();
+        }
+
         public override void Start()
         {
-            InstallSoundInRegistry();
-            EnsureFakeSoundValidity();
+            Restart();
             base.Start();
         }
     }

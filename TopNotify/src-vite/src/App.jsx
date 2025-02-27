@@ -8,6 +8,7 @@ import Preview from './Preview'
 import { DebugMenu } from './DebugMenu'
 import ReadAloud from './ReadAloud'
 import MonitorSelect from './MonitorSelect'
+import SoundInterceptionToggle from './SoundInterceptionToggle'
 
 
 window.Config = {
@@ -86,6 +87,8 @@ function App() {
 
             <Container>
                 <ReadAloud></ReadAloud>
+                <Divider />
+                <SoundInterceptionToggle></SoundInterceptionToggle>
                 <Divider />
                 <ManageNotificationSounds></ManageNotificationSounds>
             </Container>

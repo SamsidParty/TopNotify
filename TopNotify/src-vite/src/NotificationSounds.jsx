@@ -55,8 +55,8 @@ export default function ManageNotificationSounds() {
 
     return (
         <div className="flexx facenter fillx gap20 buttonContainer">
-            <label>Edit Notification Sounds</label>
-            <Button style={{ marginLeft: "auto" }} className="iconButton" onClick={() => setIsOpen(true)}>
+            <label data-greyed-out={(!window.isInterceptionEnabled).toString()}>Edit Notification Sounds</label>
+            <Button data-greyed-out={(!window.isInterceptionEnabled).toString()} style={{ marginLeft: "auto" }} className="iconButton" onClick={() => setIsOpen(true)}>
                 &#xeb04;
             </Button>
             <Drawer
