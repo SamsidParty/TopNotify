@@ -9,6 +9,10 @@
     width: 200px;
 }
 
+.appReferenceSoundItem .selectSoundButton * {
+    float: right;
+}
+
 .appReferenceSoundItem img {
     width: 24px;
     height: 24px;

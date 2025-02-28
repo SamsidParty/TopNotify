@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import './CSS/App.css'
 import './CSS/ChakraOverrides.css'
 import { useFirstRender, waitUntil } from './Helper.jsx'
+import About from './About.jsx'
 
 window.serverURL = "http://" + window.location.host + "/";
 
@@ -32,10 +33,10 @@ function RootComponent(params) {
 function Dispatcher() {
     var MainMethod = App;
 
-    if (useFirstRender()) {
-        igniteView.commandBridge.invoke("RequestConfig");
+    if (window.location.search.includes("about")) {
+        MainMethod = About;
     }
-
+    
     return (
         <MainMethod></MainMethod>
     )

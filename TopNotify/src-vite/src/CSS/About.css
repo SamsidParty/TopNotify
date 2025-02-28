@@ -1,0 +1,37 @@
+.aboutButtons {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: auto;
+}
+
+.aboutButtons button {
+    margin: 2px;
+}
+
+.about .draggableHeader {
+    margin-bottom: 10px !important;
+}
+
+.about h4 {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: -0.05em;
+}
+
+.about h6 {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.about img {
+    width: 15vw;
+    height: auto;
+    margin: auto;
+}

@@ -1,4 +1,5 @@
 ﻿using IgniteView.Core;
+using IgniteView.Desktop;
 using Newtonsoft.Json;
 using SamsidParty_TopNotify.Daemon;
 using System;
@@ -24,6 +25,28 @@ namespace TopNotify.GUI
         public static void SpawnTestNotification()
         {
             NotificationTester.SpawnTestNotification();
+        }
+
+        //Called By JavaScript
+        //Opens The About Page
+        [Command("About")]
+        public static void About()
+        {
+            WebWindow.Create("/index.html?about")
+                .WithTitle("About TopNotify")
+                .WithBounds(new LockedWindowBounds((int)(480f * ResolutionFinder.GetScale()), (int)(300f * ResolutionFinder.GetScale())))
+                .With((w) => (w as Win32WebWindow).BackgroundMode = Win32WebWindow.WindowBackgroundMode.Acrylic)
+                .WithoutTitleBar()
+                .Show();
+        }
+
+        //Called By JavaScript
+        //Opens a URL
+        [Command("OpenURL")]
+        public static void OpenURL(string url)
+        {
+            url = url.Replace("&", "^&");
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
 
         //Called By JavaScript

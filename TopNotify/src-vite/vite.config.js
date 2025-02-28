@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react-swc'
 import transformPlugin from 'vite-plugin-transform';
 import { resolve, join } from 'path';
 
+var version = "3.0.0";
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
@@ -11,7 +13,7 @@ export default defineConfig({
             tStart: '%{',
             tEnd: '}%',
             replace: {
-                "TOPNOTIFY_VERSION": "2.6.0"
+                "TOPNOTIFY_VERSION": version
             },
             replaceFiles: [
                 resolve(join(__dirname, '..\\..\\TopNotify\\dist\\Meta\\AppxManifest.xml')),
@@ -24,5 +26,8 @@ export default defineConfig({
     ],
     build: {
         outDir: '..\\..\\TopNotify\\dist'
-    }
+    },    
+    define: {
+        TOPNOTIFY_VERSION: `"${version}"`,
+    },
 })

@@ -1,5 +1,5 @@
 PackageIdentifier: "SamsidParty.TopNotifyWG"
-PackageVersion: "2.6.0"
+PackageVersion: "3.0.0"
 Platform: 
  - "Windows.Desktop"
 MinimumOSVersion: "10.0.19041.0"
@@ -9,7 +9,7 @@ InstallModes:
 PackageFamilyName: "55968SamsidGameStudios.TopNotify_r9j5xrxak4zje"
 Installers: 
  - Architecture: "x64"
-   InstallerUrl: "https://github.com/SamsidParty/TopNotify/releases/download/2.6.0/TopNotify.Msix"
+   InstallerUrl: "https://github.com/SamsidParty/TopNotify/releases/download/3.0.0/TopNotify.Msix"
    InstallerSha256: 1ab364e2ed182e0c879fd9ec7a730aafa47fd441facac8b5adccf77767026917
 ManifestType: "installer"
 ManifestVersion: "1.6.0"

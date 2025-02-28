@@ -138,7 +138,11 @@ function SoundPicker(props) {
             onClose={() => props.setIsPickerOpen(false)}
         >
             <DrawerContent>
-                <DrawerCloseButton />
+                
+                <div className="windowCloseButton">
+                    <Button className="iconButton" onClick={() => props.setIsPickerOpen(false)}>&#xea5f;</Button>
+                </div>
+
                 <DrawerHeader>Select Sound</DrawerHeader>
 
                 <DrawerBody>

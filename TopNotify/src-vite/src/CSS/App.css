@@ -159,6 +159,7 @@ body {
     background-color: rgba(255, 255, 255, 0.06) !important;
     color: var(--col-text) !important;
     font-weight: 400 !important;
+    border-radius: 3px !important;
 }
 
 .buttonContainer button {
@@ -168,6 +169,20 @@ body {
 
 label {
     font-size: 14px;
+}
+
+button {
+    width: auto;
+    height: 25px;
+    padding: 14px !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    color: white !important;
+    border-radius: 3px !important;
+}
+
+button:hover {
+    opacity: 0.8;
 }
 
 .iconButton {
@@ -180,9 +195,6 @@ label {
     background-color: var(--col-primary) !important;
 }
 
-.iconButton:hover {
-    opacity: 0.8;
-}
 
 *::-webkit-scrollbar {
     background: transparent;

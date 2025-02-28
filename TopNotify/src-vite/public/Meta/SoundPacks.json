@@ -1,7 +1,7 @@
 [
     {
         "Name": "Your Collection",
-        "Description": ".WAV Files In Your Music Folder Will Show Up Here",
+        "Description": ".WAV files from your music folder will show up here",
         "ID": "custom_sound_path",
         "Sounds": [
             {
@@ -13,7 +13,7 @@
     },
     {
         "Name": "Windows Sounds",
-        "Description": "Includes Sounds From Both Modern & Classic Versions",
+        "Description": "Includes sounds from both modern & classic versions",
         "ID": "windows",
         "Sounds": [
             {
@@ -24,6 +24,11 @@
             {
                 "Path": "windows/win10",
                 "Name": "Notify 10",
+                "Icon": "/Image/ThirdParty/Windows10.svg"
+            },
+            {
+                "Path": "windows/win10alt",
+                "Name": "Notify 10 Alt",
                 "Icon": "/Image/ThirdParty/Windows10.svg"
             },
             {

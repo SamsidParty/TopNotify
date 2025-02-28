@@ -9,6 +9,7 @@ import { DebugMenu } from './DebugMenu'
 import ReadAloud from './ReadAloud'
 import MonitorSelect from './MonitorSelect'
 import SoundInterceptionToggle from './SoundInterceptionToggle'
+import { useFirstRender } from './Helper'
 
 
 window.Config = {
@@ -53,6 +54,10 @@ function App() {
     window.rerender = rerender;
     window.setRerender = setRerender;
     
+    if (useFirstRender()) {
+        igniteView.commandBridge.invoke("RequestConfig");
+    }
+
     return (
         <div className={'app' + ((rerender > 0) ? " loaded" : "")}>
 
@@ -92,6 +97,8 @@ function App() {
                 <Divider />
                 <ManageNotificationSounds></ManageNotificationSounds>
             </Container>
+
+            <Button onClick={() => igniteView.commandBridge.About()}>&#xeac5; About TopNotify</Button>
         </div>
     )
 }
