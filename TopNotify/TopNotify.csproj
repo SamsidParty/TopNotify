@@ -14,7 +14,7 @@
     <AssemblyOriginatorKeyFile>C:\Users\SamarthCat\Documents\Certificates\SamsidParty Private.pfx</AssemblyOriginatorKeyFile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <UseWindowsForms>False</UseWindowsForms>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;ARM64</Platforms>
     <Configurations>Debug;Release;GUI Debug</Configurations>
   </PropertyGroup>
 
@@ -22,7 +22,15 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GUI Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GUI Debug|ARM64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
@@ -35,6 +43,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebugType>none</DebugType>
   </PropertyGroup>
 
