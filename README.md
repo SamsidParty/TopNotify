@@ -23,9 +23,13 @@
   </div>
 </div>
 
-- Move Windows Notifications Anywhere On The Screen
-- Change Transparency Of Notifications
-- Click-Through Notifications
+# Features 🔥
+
+- Move notification popups anywhere on your screen
+- Make notifications show on another monitor
+- Change transparency of notifications
+- Click-Through notifications
+- Customize notification sounds for each app
 
 
 
