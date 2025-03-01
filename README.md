@@ -1,15 +1,33 @@
-# TopNotify
+<a id="readme-top"></a>
+
+<br />
+<div align="center">
+  <a href="https://github.com/SamsidParty/TopNotify">
+    <img src="./TopNotify/src-vite/public/Image/Icon.png" alt="TopNotify Logo" width="160" height="160">
+  </a>
+
+  <h3 align="center">TopNotify</h3>
+  <p align="center">
+    The ultimate notification customization tool for Windows
+    <br />
+    <br />
+  </p>
+  <div align="center">
+
+  <a href="">![Download Count](https://img.shields.io/github/downloads/SamsidParty/TopNotify/total.svg?style=for-the-badge)</a>
+  <a href="">![Stars Count](https://img.shields.io/github/stars/SamsidParty/TopNotify.svg?style=for-the-badge)</a>
+  <a href="">![Code Size](https://img.shields.io/github/languages/code-size/SamsidParty/TopNotify?style=for-the-badge)<a href="">
+  <a href="">![Repo Size](https://img.shields.io/github/repo-size/SamsidParty/TopNotify?style=for-the-badge)</a>
+  <a href="">[![Get It From Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/productId/9PFMDK0QHKQJ?ocid=pdpshare)</a>
+    
+  </div>
+</div>
 
 - Move Windows Notifications Anywhere On The Screen
 - Change Transparency Of Notifications
 - Click-Through Notifications
 
-[![Download Count](https://img.shields.io/github/downloads/SamsidParty/TopNotify/total.svg?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/releases)
-[![Stars Count](https://img.shields.io/github/stars/SamsidParty/TopNotify.svg?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/stargazers)
-[![Code Size](https://img.shields.io/github/languages/code-size/SamsidParty/TopNotify?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/archive/refs/heads/develop.zip)
-[![Repo Size](https://img.shields.io/github/repo-size/SamsidParty/TopNotify?style=for-the-badge)](https://github.com/SamsidParty/TopNotify/archive/refs/heads/develop.zip)
 
-[![Get It From Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/productId/9PFMDK0QHKQJ?ocid=pdpshare)
 
 Elevate your alerts with TopNotify, the ultimate notification customization tool.
 TopNotify is your ticket to a smarter, more efficient notification system. Say goodbye to missed alerts buried in the corner of your screen. With TopNotify, important messages can be anywhere you want.
