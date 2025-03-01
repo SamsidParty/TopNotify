@@ -59,6 +59,7 @@ namespace TopNotify.GUI
             return File.Exists(copiedWallpaperPath) ? copiedWallpaperPath : null;
         }
 
+        // Currently disabled to improve startup time
         public static void CleanUp()
         {
             var copiedWallpaperPath = "C:\\Users\\Public\\Downloads\\topnotify_tempwallpaper.jpg";

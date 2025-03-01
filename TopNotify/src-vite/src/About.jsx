@@ -13,7 +13,7 @@ export default function About() {
             </div>
 
             <img src="/Image/IconSmall.png"></img>
-            <h4>TopNotify v{window.TOPNOTIFY_VERSION}</h4>
+            <h4>TopNotify v3.0.0</h4>
             <h6>Developed by SamsidParty • Powered by IgniteView</h6>
 
             <div className="aboutButtons">

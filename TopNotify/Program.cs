@@ -110,7 +110,6 @@ namespace TopNotify.Common
             GUI.OnCleanUp += () =>
             {
                 ToastNotificationManagerCompat.Uninstall();
-                WallpaperFinder.CleanUp();
             };
 
             GUI.Run();
