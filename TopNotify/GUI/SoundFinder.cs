@@ -51,7 +51,15 @@ namespace TopNotify.GUI
         /// </summary>
         public static string[] GetWAVFilesInMusicFolder()
         {
-            return Directory.GetFiles(Environment.ExpandEnvironmentVariables("%USERPROFILE%\\Music"), "*.wav", SearchOption.AllDirectories);
+            var musicFolder = Environment.ExpandEnvironmentVariables("%USERPROFILE%\\Music");
+
+            // Music folder doesn't always exist https://github.com/SamsidParty/TopNotify/issues/40#issuecomment-2692353622
+            if (Directory.Exists(musicFolder))
+            {
+                return Directory.GetFiles(musicFolder, "*.wav", SearchOption.AllDirectories);
+            }
+
+            return new string[0];
         }
     }
 }
