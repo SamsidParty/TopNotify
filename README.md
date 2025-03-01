@@ -30,6 +30,7 @@
 - Change transparency of notifications
 - Click-Through notifications
 - Customize notification sounds for each app
+- Efficient performance with minimal CPU usage
 
 
 
