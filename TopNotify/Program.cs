@@ -74,13 +74,6 @@ namespace TopNotify.Common
             #endif
             {
                 //Open The GUI App In Settings Mode
-
-                if (Settings.Get().EnableDebugNotifications)
-                {
-                    Console.WriteLine("Started Settings GUI");
-                    NotificationTester.Toast("Debug Notification", "Started Settings GUI");
-                }
-
                 GUI = new ViteAppManager();
                 App();
             }
