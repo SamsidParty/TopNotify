@@ -19,10 +19,38 @@ namespace TopNotify.Common
 
         public static Daemon.Daemon Background;
         public static AppManager GUI;
+        public static IEnumerable<Process> ValidTopNotifyInstances;
+
+        public static bool IsDaemonRunning => ValidTopNotifyInstances.Where((p) => {
+            try
+            {
+                string commandLine;
+                ProcessCommandLine.Retrieve(p, out commandLine, ProcessCommandLine.Parameter.CommandLine);
+                return !commandLine.ToLower().Contains("--settings");
+            }
+            catch { }
+            return false;
+        }).Any();
+
+        public static bool IsGUIRunning => ValidTopNotifyInstances.Where((p) => {
+            try
+            {
+                string commandLine;
+                ProcessCommandLine.Retrieve(p, out commandLine, ProcessCommandLine.Parameter.CommandLine);
+                return commandLine.ToLower().Contains("--settings");
+            }
+            catch { }
+            return false;
+        }).Any();
 
         [STAThread]
         public static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
+            {
+                NotificationTester.MessageBox("Something went wrong with TopNotify", "Unfortunately, TopNotify has crashed. Details: " + e.ExceptionObject.ToString());
+            };
+
             //By Default, The App Will Be Launched In Daemon Mode
             //Daemon Mode Is A Background Process That Handles Changing The Position Of Notifications
             //If The "--settings" Arg Is Used, Then The App Will Launch In Settings Mode
@@ -30,19 +58,17 @@ namespace TopNotify.Common
             //These Mode Switches Ensure All Functions Of The App Use The Same Executable
 
             //Find Other Instances Of TopNotify
-            var validTopNotifyInstances = Process.GetProcessesByName("TopNotify").Where((p) => !p.HasExited && p.Id != Process.GetCurrentProcess().Id);
+            ValidTopNotifyInstances = Process.GetProcessesByName("TopNotify").Where((p) => {
+                try
+                {
+                    return !p.HasExited && p.Id != Process.GetCurrentProcess().Id;
+                }
+                catch { }
+                return false;
+            });
 
-            var isGUIRunning = validTopNotifyInstances.Where((p) => {
-                string commandLine;
-                ProcessCommandLine.Retrieve(p, out commandLine, ProcessCommandLine.Parameter.CommandLine);
-                return commandLine.ToLower().Contains("--settings");
-            }).Any();
-
-            var isDaemonRunning = validTopNotifyInstances.Where((p) => {
-                string commandLine;
-                ProcessCommandLine.Retrieve(p, out commandLine, ProcessCommandLine.Parameter.CommandLine);
-                return !commandLine.ToLower().Contains("--settings");
-            }).Any();
+            var isGUIRunning = IsGUIRunning;
+            var isDaemonRunning = IsDaemonRunning;
 
             #if !GUI_DEBUG
             if (!args.Contains("--settings") && isDaemonRunning && !isGUIRunning)
