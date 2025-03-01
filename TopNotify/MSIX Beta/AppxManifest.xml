@@ -3,7 +3,7 @@
   <!--Package created by MSIX Packaging Tool version: 1.2023.807.0-->
   <!--Use CN=68C2D20A-96CA-43CC-A323-A549C2786CDA For Prod-->
   <!--Use CN=SamsidParty For Beta-->
-  <Identity Name="55968SamsidGameStudios.TopNotifyBeta" Publisher="CN=SamsidParty" Version="2.6.1.0" ProcessorArchitecture="x64" />
+  <Identity Name="55968SamsidGameStudios.TopNotifyBeta" Publisher="CN=SamsidParty" Version="3.0.0.0" ProcessorArchitecture="x64" />
   <Properties>
     <DisplayName>TopNotify Beta</DisplayName>
     <PublisherDisplayName>SamsidParty</PublisherDisplayName>
@@ -15,6 +15,7 @@
   </Resources>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.22000.1" />
+    <PackageDependency Name="Microsoft.VCLibs.140.00.UWPDesktop" MinVersion="14.0.24217.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
   </Dependencies>
   <Applications>
     <Application Id="TopNotify" Executable="TopNotify.exe" uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL">

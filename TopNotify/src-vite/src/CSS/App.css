@@ -177,7 +177,7 @@ button {
     padding: 14px !important;
     font-size: 12px !important;
     font-weight: 400 !important;
-    color: white !important;
+    color: var(--col-text) !important;
     border-radius: 3px !important;
 }
 
