@@ -59,10 +59,10 @@ The Click-Through feature allows you to click behind the notifications, preventi
 
 Earlier Versions Of Windows 10 May Work, But Have Not Been Tested And Are Not Officially Supported.
 
-# Technical Details
-
-You can find technical details in [Technical.md](https://github.com/SamsidParty/TopNotify/blob/main/Docs/Technical.md)
-
 # Download
 
 Download The Latest MSIX/EXE Release From The [Releases](https://github.com/SamsidParty/TopNotify/releases) Page
+
+# Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=SamsidParty/TopNotify&type=Date)](https://star-history.com/#SamsidParty/TopNotify&Date)
