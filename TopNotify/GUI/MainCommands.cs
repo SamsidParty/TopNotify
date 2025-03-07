@@ -40,6 +40,24 @@ namespace TopNotify.GUI
                 .Show();
         }
 
+        [Command("GetVersion")]
+        public static string GetVersion()
+        {
+            // Read version from Appx Manifest
+            var appxManifest = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "AppxManifest.xml");
+            if (File.Exists(appxManifest)) { 
+                var manifestData = File.ReadAllText(appxManifest);
+
+                var from = manifestData.IndexOf("Version=\"") + "Version=\"".Length;
+                var to = manifestData.LastIndexOf("\"");
+
+                var result = manifestData.Substring(from, to - from);
+                return " v" + result.Substring(0, 5);
+            }
+
+            return " Debug";
+        }
+
         //Called By JavaScript
         //Opens a URL
         [Command("OpenURL")]

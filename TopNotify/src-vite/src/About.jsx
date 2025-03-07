@@ -1,7 +1,19 @@
 import { Button } from "@chakra-ui/react";
 import "./CSS/About.css";
+import { useState } from "react";
 
 export default function About() {
+
+    var [version, setVersion] = useState("");
+
+    if (version == "") {
+        setVersion(" ...");
+
+        setTimeout(async () => {
+            setVersion(await igniteView.commandBridge.GetVersion());
+        });
+    }
+
     return (
         <div className={'app loaded about'}>
             <div onMouseOver={window.igniteView.dragWindow} className="draggableHeader">
@@ -13,7 +25,7 @@ export default function About() {
             </div>
 
             <img src="/Image/IconSmall.png"></img>
-            <h4>TopNotify v3.0.0</h4>
+            <h4>TopNotify{version}</h4>
             <h6>Developed by SamsidParty • Powered by IgniteView</h6>
 
             <div className="aboutButtons">
