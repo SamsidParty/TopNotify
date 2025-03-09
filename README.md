@@ -18,7 +18,7 @@
   <a href="">![Stars Count](https://img.shields.io/github/stars/SamsidParty/TopNotify.svg?style=for-the-badge)</a>
   <a href="">![Code Size](https://img.shields.io/github/languages/code-size/SamsidParty/TopNotify?style=for-the-badge)<a href="">
   <a href="">![Repo Size](https://img.shields.io/github/repo-size/SamsidParty/TopNotify?style=for-the-badge)</a>
-  <a href="">[![Get It From Microsoft](ms-windows-store://pdp/?ProductId=9pfmdk0qhkqj&mode=mini)</a>
+  <a href="">[![Get It From Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/productId/9PFMDK0QHKQJ?ocid=pdpshare)</a>
     
   </div>
 </div>
