@@ -46,9 +46,9 @@ namespace TopNotify.GUI
         {
             try
             {
-                var results = await CurrentApp.RequestProductPurchaseAsync("donation1");
+                var results = await Program.Context.RequestPurchaseAsync("9P92HZT8QC8R");
 
-                if (results.Status == ProductPurchaseStatus.Succeeded)
+                if (results.Status == Windows.Services.Store.StorePurchaseStatus.Succeeded)
                 {
                     NotificationTester.MessageBox("Thank You For Donating", "Your contribution is much appreciated ❤️");
                 }

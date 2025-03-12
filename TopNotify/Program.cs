@@ -11,12 +11,13 @@ using IgniteView.Core;
 using IgniteView.Desktop;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Windows.Services.Store;
 
 namespace TopNotify.Common
 {
     public class Program
     {
-
+        public static StoreContext Context;
         public static Daemon.Daemon Background;
         public static AppManager GUI;
         public static IEnumerable<Process> ValidTopNotifyInstances;
@@ -124,6 +125,9 @@ namespace TopNotify.Common
                 .With((w) => (w as Win32WebWindow).BackgroundMode = Win32WebWindow.WindowBackgroundMode.Acrylic)
                 .WithoutTitleBar()
                 .Show();
+
+            Context = StoreContext.GetDefault();
+            WinRT.Interop.InitializeWithWindow.Initialize(Context, mainWindow.NativeHandle);
 
             // Clean Up
             GUI.OnCleanUp += () =>
