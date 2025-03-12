@@ -98,7 +98,10 @@ function App() {
                 <ManageNotificationSounds></ManageNotificationSounds>
             </Container>
 
-            <Button onClick={() => igniteView.commandBridge.About()}>&#xeac5; About TopNotify</Button>
+            <div className='aboutButtons'>
+                <Button onClick={() => igniteView.commandBridge.About()}>&#xeac5; About TopNotify</Button>
+                <Button onClick={() => igniteView.commandBridge.Donate()}>&#xeb84; Donate</Button>
+            </div>
         </div>
     )
 }

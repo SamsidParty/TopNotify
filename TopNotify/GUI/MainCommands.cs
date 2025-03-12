@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
 using TopNotify.Daemon;
+using Windows.ApplicationModel.Store;
 
 namespace TopNotify.GUI
 {
@@ -38,6 +39,28 @@ namespace TopNotify.GUI
                 .With((w) => (w as Win32WebWindow).BackgroundMode = Win32WebWindow.WindowBackgroundMode.Acrylic)
                 .WithoutTitleBar()
                 .Show();
+        }
+
+        [Command("Donate")] 
+        public static async void Donate()
+        {
+            try
+            {
+                var results = await CurrentApp.RequestProductPurchaseAsync("donation1");
+
+                if (results.Status == ProductPurchaseStatus.Succeeded)
+                {
+                    NotificationTester.MessageBox("Thank You For Donating", "Your contribution is much appreciated ❤️");
+                }
+                else
+                {
+                    NotificationTester.MessageBox("Failed To Purchase Donation", results.Status.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationTester.MessageBox("Failed To Purchase Donation", ex.Message);
+            }
         }
 
         [Command("GetVersion")]
