@@ -3,7 +3,7 @@
   <!--Package created by MSIX Packaging Tool version: 1.2023.807.0-->
   <!--Use CN=68C2D20A-96CA-43CC-A323-A549C2786CDA For Prod-->
   <!--Use CN=SamsidParty For Beta-->
-  <Identity Name="55968SamsidGameStudios.TopNotifyBeta" Publisher="CN=SamsidParty" Version="3.0.2.0" ProcessorArchitecture="x64" />
+  <Identity Name="55968SamsidGameStudios.TopNotifyBeta" Publisher="CN=SamsidParty" Version="3.0.3.0" ProcessorArchitecture="x64" />
   <Properties>
     <DisplayName>TopNotify Beta</DisplayName>
     <PublisherDisplayName>SamsidParty</PublisherDisplayName>
