@@ -13,6 +13,7 @@ window.serverURL = "http://" + window.location.host + "/";
 var defaultTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
 localStorage.setItem("chakra-ui-color-mode", defaultTheme);
 document.documentElement.setAttribute("data-theme", defaultTheme);
+document.body.setAttribute("chakra-ui-theme", "chakra-ui-" + defaultTheme);
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
     location.reload();

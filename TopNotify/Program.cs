@@ -92,8 +92,6 @@ namespace TopNotify.Common
 
             DesktopPlatformManager.Activate(); // Needed here to initiate plugin DLL loading
 
-            if (args.Contains("--debug-process")) { Debugger.Launch(); } // Start Debugging
-
             #if !GUI_DEBUG
             if (args.Contains("--settings"))
             #else

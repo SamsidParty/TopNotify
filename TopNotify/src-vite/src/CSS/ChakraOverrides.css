@@ -13,6 +13,10 @@
     margin-top: 1vh;
 }
 
+.chakra-button, .chakra-button * {
+    transition: none !important;
+}
+
 h2, .chakra-modal__header {
     margin: 0 !important;
     line-height: 65px !important;
