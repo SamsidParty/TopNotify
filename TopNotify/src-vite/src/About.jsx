@@ -29,11 +29,11 @@ export default function About() {
             <h6>Developed by SamsidParty • Powered by IgniteView</h6>
 
             <div className="aboutButtons">
-                <Button onClick={() => igniteView.commandBridge.OpenURL("https://www.samsidparty.com/software/topnotify")}>&#xeb54; Official Website</Button>
-                <Button onClick={() => igniteView.commandBridge.OpenURL("https://github.com/SamsidParty/TopNotify")}>&#xec1c; GitHub</Button>
-                <Button onClick={() => igniteView.commandBridge.OpenURL("ms-windows-store://pdp/?ProductId=9pfmdk0qhkqj")}>&#xecd8; Microsoft Store</Button>
-                <Button onClick={() => igniteView.commandBridge.OpenURL("ms-windows-store://review/?ProductId=9pfmdk0qhkqj")}>&#xf6a6; Leave A Review</Button>
-                <Button onClick={() => igniteView.commandBridge.OpenURL("https://github.com/SamsidParty/TopNotify/blob/main/LICENSE")}>&#xea7b; License</Button>
+                <Button onClick={() => window.open("https://www.samsidparty.com/software/topnotify")}>&#xeb54; Official Website</Button>
+                <Button onClick={() => window.open("https://github.com/SamsidParty/TopNotify")}>&#xec1c; GitHub</Button>
+                <Button onClick={() => window.open("ms-windows-store://pdp/?ProductId=9pfmdk0qhkqj")}>&#xecd8; Microsoft Store</Button>
+                <Button onClick={() => window.open("ms-windows-store://review/?ProductId=9pfmdk0qhkqj")}>&#xf6a6; Leave A Review</Button>
+                <Button onClick={() => window.open("https://github.com/SamsidParty/TopNotify/blob/main/LICENSE")}>&#xea7b; License</Button>
             </div>
         </div>
     )

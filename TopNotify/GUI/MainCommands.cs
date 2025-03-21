@@ -82,15 +82,6 @@ namespace TopNotify.GUI
         }
 
         //Called By JavaScript
-        //Opens a URL
-        [Command("OpenURL")]
-        public static void OpenURL(string url)
-        {
-            url = url.Replace("&", "^&");
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
-        }
-
-        //Called By JavaScript
         //Sends The Config File
         [Command("RequestConfig")]
         public static void RequestConfig(WebWindow target)
