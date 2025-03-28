@@ -37,13 +37,13 @@
 }
 
 .soundPack h3 {
-    font-size: 18px;
+    font-size: 1.3rem;
     font-weight: 500;
     letter-spacing: -0.05em;
 }
 
 .soundPack h4 {
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: -0.05em;
     opacity: 0.6;
@@ -63,17 +63,17 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    min-width: 134px;
-    max-width: 134px;
-    min-height: 134px;
-    max-height: 134px;
+    min-width: 23vw;
+    max-width: 23vw;
+    min-height: 23vw;
+    max-height: 23vw;
     background-color: var(--col-tertiary);
     border-radius: 5px;
 }
 
 .soundItem .soundItemButton {
     width: 100%;
-    height: calc(134px - 28px);
+    height: calc(17vw);
 }
 
 .soundItem img {
@@ -81,13 +81,13 @@
 }
 
 .soundItem .iconButton {
-    width: 20px !important;
-    height: 20px !important;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
     padding: 0 !important;
     font-weight: 400 !important;
 }
 
 .soundItem h5 {
     margin: auto;
-    font-size: 12px;
+    font-size: 0.8rem;
 }

@@ -29,7 +29,7 @@
     box-sizing: border-box;
     user-select: none;
     -webkit-user-select: none;
-    font-size: 1.7vh;
+    font-size: 11px;
 
     --col-bg: white;
     --col-overlay: rgba(255, 255, 255, 0.5);
@@ -44,7 +44,6 @@
     --col-border: #bbbbbb;
     --col-disabled: #251F29;
     --image-bg: url("/Image/BackgroundLight.png");
-
 
     image-rendering: auto;
 }
@@ -72,17 +71,23 @@
     opacity: 0.5;
 }
 
-body {
+html, body {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
     display: flex;
+    overflow: hidden;
+}
+
+body {
     flex-direction: column;
-    padding: 20px;
+    padding: 1.5rem;
     padding-top: 7px;
-    overflow: auto;
     height: 100vh;
     width: 100vw;
-    background-color: transparent !important;
     background-image: var(--image-bg) !important;
-    background-size: cover !important;
+    background-size: 120vw !important;
+    background-repeat: no-repeat;
     image-rendering: pixelated;
 }
 
@@ -141,18 +146,18 @@ body {
     margin-right: 15%;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 17px;
+    margin-bottom: 4.3vw;
 }
 
 .draggableHeader img {
-    height: 5vh;
+    height: 8vw;
     width: auto;
 }
 
 .windowCloseButton {
     position: absolute;
     right: 0px;
-    top: 18px;
+    top: 2vw;
 }
 
 .windowCloseButton button {
@@ -168,14 +173,14 @@ body {
 }
 
 label {
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 button {
     width: auto;
     height: 25px;
     padding: 14px !important;
-    font-size: 12px !important;
+    font-size: 1rem !important;
     font-weight: 400 !important;
     color: var(--col-text) !important;
     border-radius: 3px !important;
@@ -186,11 +191,11 @@ button:hover {
 }
 
 .iconButton {
-    width: 25px !important;
+    width: 2rem !important;
     min-width: 0px !important;
-    height: 25px !important;
+    height: 2rem !important;
     padding: 2px !important;
-    font-size: 17px !important;
+    font-size: 1.2rem !important;
     color: white !important;
     background-color: var(--col-primary) !important;
 }
@@ -252,19 +257,19 @@ button:hover {
 }
 
 .gap20 {
-    gap: 20px;
+    gap: 2rem;
 }
 
 .gap15 {
-    gap: 15px;
+    gap: 1.5rem;
 }
 
 .gap10 {
-    gap: 10px;
+    gap: 1rem;
 }
 
 .gap5 {
-    gap: 5px;
+    gap: 0.5rem;
 }
 
 .tacenter {

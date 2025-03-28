@@ -81,12 +81,14 @@
 
 	<!-- IgniteView -->
 	<ItemGroup>
-		<PackageReference Include="IgniteView.Desktop" Version="2.0.7" />
+		<PackageReference Include="IgniteView.Desktop" Version="2.1.0" />
+		<PackageReference Include="IgniteView.Core" Version="2.1.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Include="iv2runtime\win-x64\native\TopNotify.Native.dll">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="iv2runtime\**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</Content>
 	</ItemGroup>
 	<PropertyGroup>
 		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>

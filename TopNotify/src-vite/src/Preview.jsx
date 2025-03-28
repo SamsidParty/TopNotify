@@ -2,10 +2,10 @@
 import { Button } from "@chakra-ui/react";
 import "./CSS/Preview.css";
 
-var previewScale = 0.241666667; // Relative to actual scale
+var previewWidth = 352;
+var previewScale = previewWidth / 1920; // Relative to actual scale
 
 function CalculatePreviewContainerStyle() {
-    var previewWidth = 464;
     var aspect = 0.5625; // 16:9
 
     if (window.Config.__ScreenWidth) {

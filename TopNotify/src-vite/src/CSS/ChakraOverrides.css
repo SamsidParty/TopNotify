@@ -19,15 +19,15 @@
 
 h2, .chakra-modal__header {
     margin: 0 !important;
-    line-height: 65px !important;
+    line-height: 11vw !important;
     font-size: 6.5vw !important;
     font-weight: 600 !important;
     letter-spacing: -0.05em !important;
 }
 
 .chakra-modal__header {
-    padding-top: 1vh !important;
-    padding-bottom: 1vh !important;
+    padding-top: 1.5vw !important;
+    padding-bottom: 1.5vw !important;
     margin-right: 10vw !important;
 }
 
