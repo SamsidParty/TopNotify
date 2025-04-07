@@ -41,7 +41,7 @@
 # Supported Windows Versions 🪟
 
 - Windows 11 (All Versions)
-- Windows 10 22H2+ (Requires WebView2 Runtime)
+- Windows 10 23H2+ (Requires WebView2 Runtime)
 
 Earlier versions of windows 10 may work, but are not officially supported.
 
