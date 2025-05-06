@@ -132,35 +132,46 @@ namespace TopNotify.Daemon
         public async void OnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
         {
             var userNotifications = await Listener.GetNotificationsAsync(NotificationKinds.Toast);
-            var toBeRemoved = new List<uint>(HandledNotifications);
+            var toBeRemoved = new List<uint>();
+
+            lock (HandledNotifications)
+            {
+                toBeRemoved.AddRange(HandledNotifications);
+            }
 
             foreach (var userNotification in userNotifications)
             {
-                if (HandledNotifications.Contains(userNotification.Id))
+                lock (HandledNotifications)
                 {
-                    toBeRemoved.Remove(userNotification.Id);
-                }
-                else
-                {
-                    //Only Count As New Notification If It's Less Than A Second Old
-                    if (DateTime.UtcNow - userNotification.CreationTime.UtcDateTime < TimeSpan.FromSeconds(1))
+                    if (HandledNotifications.Contains(userNotification.Id))
                     {
-                        foreach (Interceptor i in Interceptors)
+                        toBeRemoved.Remove(userNotification.Id);
+                    }
+                    else
+                    {
+                        //Only Count As New Notification If It's Less Than A Second Old
+                        if (DateTime.UtcNow - userNotification.CreationTime.UtcDateTime < TimeSpan.FromSeconds(1))
                         {
-                            try
+                            foreach (Interceptor i in Interceptors)
                             {
-                                i.OnNotification(userNotification);
+                                try
+                                {
+                                    i.OnNotification(userNotification);
+                                }
+                                catch { }
                             }
-                            catch { }
+                            HandledNotifications.Add(userNotification.Id);
                         }
-                        HandledNotifications.Add(userNotification.Id);
                     }
                 }
             }
 
-            foreach (uint id in toBeRemoved)
+            lock (HandledNotifications)
             {
-                HandledNotifications.Remove(id);
+                foreach (uint id in toBeRemoved)
+                {
+                    HandledNotifications.Remove(id);
+                }
             }
 
             Update();
