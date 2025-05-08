@@ -91,15 +91,18 @@ namespace TopNotify.GUI
         {
             if (DragModeWindow != null)
             {
+                var finalWindow = DragModeWindow;
+                DragModeWindow = null;
+
                 ShowCursor(true);
 
                 //Show The Main Window
-                var mainWindow = DragModeWindow.CurrentAppManager.OpenWindows[0];
+                var mainWindow = finalWindow.CurrentAppManager.OpenWindows[0];
                 var mainHwnd = mainWindow.NativeHandle;
                 ShowWindow(mainHwnd, 5);
                 SetForegroundWindow(mainHwnd);
 
-                var hwnd = DragModeWindow.NativeHandle;
+                var hwnd = finalWindow.NativeHandle;
 
                 //Find Position Of Window
                 Rectangle DragRect = new Rectangle();
@@ -127,8 +130,7 @@ namespace TopNotify.GUI
 
                 mainWindow.SendConfig();
 
-                DragModeWindow.Close();
-                DragModeWindow = null;
+                finalWindow.Close();
             }
         }
 
