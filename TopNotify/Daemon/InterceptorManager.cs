@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -21,7 +22,7 @@ namespace TopNotify.Daemon
         public int TimeSinceReflow = 0;
         public const int ReflowTimeout = 50;
 
-        public List<uint> HandledNotifications = new List<uint>();
+        public ConcurrentDictionary<uint, Action?> CleanUpFunctions = new ConcurrentDictionary<uint, Action?>(); // Maps HandledNotifications to the associated clean up function
         public UserNotificationListener Listener;
         public bool CanListenToNotifications = false;
 
@@ -132,45 +133,17 @@ namespace TopNotify.Daemon
         public async void OnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
         {
             var userNotifications = await Listener.GetNotificationsAsync(NotificationKinds.Toast);
-            var toBeRemoved = new List<uint>();
+            var userNotification = userNotifications.Where((n) => n.Id == args.UserNotificationId).FirstOrDefault();
 
-            lock (HandledNotifications)
+            if (args.ChangeKind == UserNotificationChangedKind.Added)
             {
-                toBeRemoved.AddRange(HandledNotifications);
-            }
-
-            foreach (var userNotification in userNotifications)
-            {
-                lock (HandledNotifications)
+                foreach (Interceptor i in Interceptors)
                 {
-                    if (HandledNotifications.Contains(userNotification.Id))
+                    try
                     {
-                        toBeRemoved.Remove(userNotification.Id);
+                        i.OnNotification(userNotification);
                     }
-                    else
-                    {
-                        // Only Count As New Notification If It's Less Than A Second Old
-                        if (DateTime.UtcNow - userNotification.CreationTime.UtcDateTime < TimeSpan.FromSeconds(1))
-                        {
-                            foreach (Interceptor i in Interceptors)
-                            {
-                                try
-                                {
-                                    i.OnNotification(userNotification);
-                                }
-                                catch { }
-                            }
-                            HandledNotifications.Add(userNotification.Id);
-                        }
-                    }
-                }
-            }
-
-            lock (HandledNotifications)
-            {
-                foreach (uint id in toBeRemoved)
-                {
-                    HandledNotifications.Remove(id);
+                    catch { }
                 }
             }
 
