@@ -128,7 +128,7 @@ namespace TopNotify.Daemon
             }
         }
 
-        //Runs When A New Notification Is Added Or Removed
+        // Runs When A New Notification Is Added Or Removed
         public async void OnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
         {
             var userNotifications = await Listener.GetNotificationsAsync(NotificationKinds.Toast);
@@ -149,7 +149,7 @@ namespace TopNotify.Daemon
                     }
                     else
                     {
-                        //Only Count As New Notification If It's Less Than A Second Old
+                        // Only Count As New Notification If It's Less Than A Second Old
                         if (DateTime.UtcNow - userNotification.CreationTime.UtcDateTime < TimeSpan.FromSeconds(1))
                         {
                             foreach (Interceptor i in Interceptors)

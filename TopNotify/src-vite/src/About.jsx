@@ -16,7 +16,7 @@ export default function About() {
 
     return (
         <div className={'app loaded about'}>
-            <div onMouseOver={window.igniteView.dragWindow} className="draggableHeader">
+            <div data-webview-drag className="draggableHeader">
                 <h2>About</h2>
             </div>
 

@@ -63,7 +63,7 @@ function App() {
 
             <DebugMenu></DebugMenu>
 
-            <div onMouseOver={window.igniteView.dragWindow} className="draggableHeader">
+            <div data-webview-drag className="draggableHeader">
                 <img src="/Image/IconTiny.png"></img>
                 <h2>TopNotify</h2>
             </div>
