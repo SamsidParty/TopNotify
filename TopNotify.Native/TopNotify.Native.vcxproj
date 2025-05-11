@@ -101,13 +101,13 @@
     <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
+    <OutDir>$(SolutionDir)\iv2runtime\win-arm64\native</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
+    <OutDir>$(SolutionDir)\iv2runtime\win-arm64\native</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
