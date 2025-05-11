@@ -154,6 +154,18 @@ namespace TopNotify.Daemon
             catch { }
         }
 
+        public override void OnKeyUpdate()
+        {
+            // Delay until the keypress has been processed
+            Task.Run(async () =>
+            {
+                await Task.Delay(100);
+                ExStyleManager.Update(hwnd);
+            });
+            
+            base.OnKeyUpdate();
+        }
+
         public override void Update()
         {
             base.Update();

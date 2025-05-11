@@ -98,16 +98,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>.\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <OutDir>.\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>.\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <OutDir>.\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)\iv2runtime\win-x64\native</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -217,6 +223,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KeyboardHook.cpp" />
     <ClCompile Include="WindowFinder.cpp" />
   </ItemGroup>
   <ItemGroup>

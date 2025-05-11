@@ -21,6 +21,9 @@ namespace SamsidParty_TopNotify.Daemon
         [DllImport("user32.dll")]
         public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
 
+        [DllImport("user32.dll")]
+        public static extern short GetKeyState(int nVirtKey);
+
         #endregion
 
         #region Constants
@@ -52,6 +55,13 @@ namespace SamsidParty_TopNotify.Daemon
             foreach (var style in Styles)
             {
                 styleToApply |= style;
+            }
+
+            // Checks If VK_MENU (Alt Key) is down and reverts to the default style if it is held
+            // This allows the user to temporarily bypass the click-through window and interact with the notification
+            if ((GetKeyState(0x12) & 0x8000) > 0)
+            {
+                styleToApply = BaseStyle;
             }
 
             if (styleToApply != LastStyle)

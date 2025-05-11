@@ -13,10 +13,12 @@ namespace TopNotify.Daemon
         public Settings Settings { get { return InterceptorManager.Instance.CurrentSettings; } }
           
 
-        public virtual void Restart()
-        {
+        public virtual void Restart() { }
 
-        }
+        /// <summary>
+        /// Used To Update The Interceptor When Certain Keys Are Pressed Or Released
+        /// </summary>
+        public virtual void OnKeyUpdate() { }
 
         /// <summary>
         /// Detects Whether The Interceptor Should Run
@@ -37,19 +39,9 @@ namespace TopNotify.Daemon
         /// <summary>
         /// Run Often Just To Rediscover Windows/Configs And Such
         /// </summary>
-        public virtual void Reflow()
-        {
+        public virtual void Reflow() { }
+        public virtual void Start() { }
+        public virtual void Update() { }
 
-        }
-
-        public virtual void Start()
-        {
-            
-        }
-
-        public virtual void Update()
-        {
-
-        }
     }
 }

@@ -4,16 +4,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
 using Windows.UI.Notifications;
 using Windows.UI.Notifications.Management;
+using static TopNotify.Daemon.NativeInterceptor;
 
 namespace TopNotify.Daemon
 {
     public class InterceptorManager
     {
+        #region WinAPI Methods
+
+        // Called when certain keys are pressed or released
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void KeyUpdateCallback();
+
+        [DllImport("TopNotify.Native")]
+        private static extern bool TopNotifyRegisterKeyboardHook(KeyUpdateCallback onKeyUpdate);
+
+        #endregion
+
         public static InterceptorManager Instance;
         public List<Interceptor> Interceptors = new();
 
@@ -48,6 +61,7 @@ namespace TopNotify.Daemon
                 }
             }
 
+            TopNotifyRegisterKeyboardHook(OnKeyUpdate); // Listen to certain key events
 
             Listener = UserNotificationListener.Current;
             Task.Run(async () =>
@@ -124,6 +138,18 @@ namespace TopNotify.Daemon
                 try
                 {
                     i.Update();
+                }
+                catch (Exception ex) { }
+            }
+        }
+
+        public void OnKeyUpdate()
+        {
+            foreach (Interceptor i in Interceptors)
+            {
+                try
+                {
+                    i.OnKeyUpdate();
                 }
                 catch (Exception ex) { }
             }
