@@ -51,4 +51,10 @@ Download the latest MSIX/EXE release from the [releases](https://github.com/Sams
 
 # Star History ⭐
 
-[![Star History Chart](https://api.star-history.com/svg?repos=SamsidParty/TopNotify&type=Date)](https://star-history.com/#SamsidParty/TopNotify&Date)
+<a href="https://www.star-history.com/#SamsidParty/TopNotify&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=SamsidParty/TopNotify&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=SamsidParty/TopNotify&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=SamsidParty/TopNotify&type=Date" />
+ </picture>
+</a>
