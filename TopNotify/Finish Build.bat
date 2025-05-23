@@ -2,7 +2,7 @@
 cd .\bin\production\x64
 signtool sign /f "%USERPROFILE%\Documents\Certificates\SamsidParty Private.pfx" /p %SP_KEY% /fd SHA256 .\TopNotify.exe
 
-cd ..\..\..\..\..\
+cd ..\..\..\
 
 SET F=".\BUILD"
  
