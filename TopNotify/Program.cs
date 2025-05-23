@@ -105,7 +105,7 @@ namespace TopNotify.Common
                 Logger = new LoggerConfiguration()
                     .WriteTo.File(Path.Join(Settings.GetAppDataFolder(), "gui.log"), rollingInterval: RollingInterval.Infinite)
                     .CreateLogger();
-                Logger.Information(Logging.GetLogWatermark("GUI"));
+                Logging.WriteWatermark("GUI");
 
                 // Open The GUI App In Settings Mode
                 GUI = new ViteAppManager();
@@ -117,7 +117,7 @@ namespace TopNotify.Common
                 Logger = new LoggerConfiguration()
                     .WriteTo.File(Path.Join(Settings.GetAppDataFolder(), "daemon.log"), rollingInterval: RollingInterval.Infinite)
                     .CreateLogger();
-                Logger.Information(Logging.GetLogWatermark("daemon"));
+                Logging.WriteWatermark("daemon");
 
                 // Open The Background Daemon
                 Background = new Daemon.Daemon();

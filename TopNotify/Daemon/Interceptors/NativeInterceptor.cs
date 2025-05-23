@@ -117,6 +117,7 @@ namespace TopNotify.Daemon
 
                 if (Settings.EnableDebugForceFallbackMode)
                 {
+                    Program.Logger.Information($"Fallback detection is being forced");
                     foundHwnd = IntPtr.Zero; // Always use fallback mode if this setting is enabled
                 }
 
@@ -129,6 +130,7 @@ namespace TopNotify.Daemon
                 //The Notification Isn't In A Supported Language
                 if (foundHwnd == IntPtr.Zero)
                 {
+                    Program.Logger.Information($"Couldn't use language-specific window detection, using fallback detection");
                     //The Notification Window Is The Only One That Is 396 x 152
                     foreach (var win in FindCoreWindows())
                     {
@@ -142,12 +144,17 @@ namespace TopNotify.Daemon
                     }
                 }
 
-                if (foundHwnd != IntPtr.Zero)
+                if (foundHwnd != IntPtr.Zero && hwnd != foundHwnd)
                 {
+                    Program.Logger.Information($"Found notification window {foundHwnd}");
                     hwnd = foundHwnd;
                 }
+                else if (foundHwnd == IntPtr.Zero)
+                {
+                    Program.Logger.Error($"Couldn't find the handle of the notification window");
+                }
 
-                Update();
+                    Update();
                 ExStyleManager.Update(hwnd);
 
             }
