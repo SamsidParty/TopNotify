@@ -12,6 +12,8 @@ using IgniteView.Desktop;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Windows.Services.Store;
+using Serilog;
+using Serilog.Core;
 
 namespace TopNotify.Common
 {
@@ -21,6 +23,7 @@ namespace TopNotify.Common
         public static Daemon.Daemon Background;
         public static AppManager GUI;
         public static IEnumerable<Process> ValidTopNotifyInstances;
+        public static Logger Logger;
 
         public static bool IsDaemonRunning => ValidTopNotifyInstances.Where((p) => {
             try
@@ -98,13 +101,25 @@ namespace TopNotify.Common
             if (true)
             #endif
             {
-                //Open The GUI App In Settings Mode
+                // Initialize Logging For GUI
+                Logger = new LoggerConfiguration()
+                    .WriteTo.File(Path.Join(Settings.GetAppDataFolder(), "gui.log"), rollingInterval: RollingInterval.Infinite)
+                    .CreateLogger();
+                Logger.Information(Logging.GetLogWatermark("GUI"));
+
+                // Open The GUI App In Settings Mode
                 GUI = new ViteAppManager();
                 App();
             }
             else
             {
-                //Open The Background Daemon
+                // Initialize Logging For Daemon
+                Logger = new LoggerConfiguration()
+                    .WriteTo.File(Path.Join(Settings.GetAppDataFolder(), "daemon.log"), rollingInterval: RollingInterval.Infinite)
+                    .CreateLogger();
+                Logger.Information(Logging.GetLogWatermark("daemon"));
+
+                // Open The Background Daemon
                 Background = new Daemon.Daemon();
             }
 
