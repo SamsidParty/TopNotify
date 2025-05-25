@@ -23,7 +23,7 @@ namespace TopNotify.Daemon
         public delegate void KeyUpdateCallback();
 
         [DllImport("TopNotify.Native")]
-        private static extern bool TopNotifyRegisterKeyboardHook(KeyUpdateCallback onKeyUpdate);
+        private static extern bool TopNotifyRegisterKeyboardHook(IntPtr functionPointer);
 
         #endregion
 
@@ -61,8 +61,6 @@ namespace TopNotify.Daemon
                 }
             }
 
-            TopNotifyRegisterKeyboardHook(OnKeyUpdate); // Listen to certain key events
-
             Listener = UserNotificationListener.Current;
             Task.Run(async () =>
             {
@@ -98,6 +96,9 @@ namespace TopNotify.Daemon
             {
                 i.Start();
             }
+
+            TopNotifyRegisterKeyboardHook(Marshal.GetFunctionPointerForDelegate(TryOnKeyUpdate)); // Start listening to key events
+
             MainLoop();
         }
 
@@ -141,6 +142,13 @@ namespace TopNotify.Daemon
                 }
                 catch (Exception ex) { }
             }
+        }
+
+        // Called from C++ to safely invoke the OnKeyUpdate method
+        public static void TryOnKeyUpdate()
+        {
+            if (Instance == null) { return; }
+            Instance.OnKeyUpdate();
         }
 
         public void OnKeyUpdate()
