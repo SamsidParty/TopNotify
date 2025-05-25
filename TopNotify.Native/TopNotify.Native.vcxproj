@@ -223,7 +223,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KeyboardHook.cpp" />
     <ClCompile Include="WindowFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
