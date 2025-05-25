@@ -154,8 +154,7 @@ namespace TopNotify.Daemon
                     Program.Logger.Error($"Couldn't find the handle of the notification window");
                 }
 
-                    Update();
-                ExStyleManager.Update(hwnd);
+                Update();
 
             }
             catch { }
@@ -176,6 +175,9 @@ namespace TopNotify.Daemon
         public override void Update()
         {
             base.Update();
+
+            // Update extended styles
+            ExStyleManager.Update(hwnd);
 
             // Find The Bounds Of The Notification Window
             Rectangle NotifyRect = new Rectangle();

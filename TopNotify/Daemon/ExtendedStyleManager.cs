@@ -24,6 +24,8 @@ namespace SamsidParty_TopNotify.Daemon
         [DllImport("user32.dll")]
         public static extern short GetKeyState(int nVirtKey);
 
+        public static bool AltKeyDown => ((GetKeyState(0x12) & 0x8000) > 0);
+
         #endregion
 
         #region Constants
@@ -59,7 +61,7 @@ namespace SamsidParty_TopNotify.Daemon
 
             // Checks If VK_MENU (Alt Key) is down and reverts to the default style if it is held
             // This allows the user to temporarily bypass the click-through window and interact with the notification
-            if ((GetKeyState(0x12) & 0x8000) > 0)
+            if (AltKeyDown)
             {
                 styleToApply = BaseStyle;
             }
