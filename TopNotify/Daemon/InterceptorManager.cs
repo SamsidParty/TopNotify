@@ -18,13 +18,6 @@ namespace TopNotify.Daemon
     {
         #region WinAPI Methods
 
-        // Called when certain keys are pressed or released
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void KeyUpdateCallback();
-
-        [DllImport("TopNotify.Native")]
-        private static extern bool TopNotifyRegisterKeyboardHook(IntPtr functionPointer);
-
         #endregion
 
         public static InterceptorManager Instance;
@@ -96,8 +89,6 @@ namespace TopNotify.Daemon
             {
                 i.Start();
             }
-
-            TopNotifyRegisterKeyboardHook(Marshal.GetFunctionPointerForDelegate(TryOnKeyUpdate)); // Start listening to key events
 
             MainLoop();
         }
