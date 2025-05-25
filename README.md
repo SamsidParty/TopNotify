@@ -31,7 +31,7 @@
 - Click-Through notifications
 - Customize notification sounds for each app
 - Efficient performance with minimal CPU/RAM usage
-- ARM64 Support
+- Native ARM64 Support
 
 ![TopNotify Header](/Docs/Screenshot3.png)
 
