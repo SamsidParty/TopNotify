@@ -1,19 +1,17 @@
-import { Button, Divider } from '@chakra-ui/react'
+import { Button, Divider } from '@chakra-ui/react';
 
-import { useState, Fragment } from 'react';
-import { useFirstRender } from './Helper.jsx'
+import { Fragment, useState } from 'react';
+import { useFirstRender } from './Helper.jsx';
 
 import "./CSS/NotificationSounds.css";
 
 import {
     Drawer,
     DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
     DrawerContent,
-    DrawerCloseButton
-} from '@chakra-ui/react'
+    DrawerFooter,
+    DrawerHeader
+} from '@chakra-ui/react';
 
 export default function ManageNotificationSounds() {
 

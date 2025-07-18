@@ -36,9 +36,8 @@
     --col-text: #111111;
     --col-text-inverted: #F1ECF3;
     --col-text-overlay: rgb(107 114 128);
-    --col-primary: #5536e0;
-    --col-primary-hover: #492fbb;
-    --col-secondary: #acee3a;
+    --col-primary: var(--system-accent);
+    --col-secondary: var(--system-accent);
     --col-tertiary: #ffffffab;
     --col-contrast: #ebebeb;
     --col-border: #bbbbbb;
@@ -55,9 +54,8 @@
         --col-text: #F1ECF3;
         --col-text-inverted: #111111;
         --col-text-overlay: rgb(107 114 128);
-        --col-primary: #767df9;
-        --col-primary-hover: #6268d3;
-        --col-secondary: #BEF264;
+        --col-primary: var(--system-accent);
+        --col-secondary: var(--system-accent);
         --col-tertiary: #50505031;
         --col-contrast: #343434;
         --col-disabled: #251F29;
