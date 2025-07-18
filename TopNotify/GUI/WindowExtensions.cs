@@ -12,7 +12,8 @@ namespace TopNotify.GUI
     {
         public static void SendConfig(this WebWindow target)
         {
-            target.CallFunction("SetConfig", Settings.GetForIPC());
+            var config = Settings.GetForIPC();
+            target.CallFunction("SetConfig", config);
         }
     }
 }
