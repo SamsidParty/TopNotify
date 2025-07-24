@@ -10,6 +10,9 @@ using TopNotify.Daemon;
 
 namespace TopNotify.GUI
 {
+    /// <summary>
+    /// This class makes heavy use of reflection because winforms isnt actually referenced in the project.
+    /// </summary>
     public class TrayIcon
     {
         public static Assembly WinForms;
@@ -17,7 +20,7 @@ namespace TopNotify.GUI
 
 
         /// <summary>
-        /// Dynamically Loads Winforms And Sets Up A Tray Icon
+        /// Dynamically Loads Winforms And Sets Up A Tray Icon.
         /// </summary>
         public static void Setup()
         {
@@ -51,7 +54,7 @@ namespace TopNotify.GUI
                 else if (type.Name == "ToolStripItemClickedEventHandler")
                 {
                     // handler = new ToolStripItemClickedEventHandler(Quit);
-                    handler = Delegate.CreateDelegate(type, typeof(TrayIcon).GetMethod(nameof(Quit)));
+                    handler = Delegate.CreateDelegate(type, typeof(TrayIcon).GetMethod(nameof(OnTrayButtonClicked)));
                 }
             }
 
@@ -61,6 +64,7 @@ namespace TopNotify.GUI
             notify.Text = "SamsidParty TopNotify";
             notify.DoubleClick += new EventHandler(LaunchSettingsMode);
             notify.ContextMenuStrip = menuStrip;
+            notify.ContextMenuStrip.Items.Add("Create Bug Report");
             notify.ContextMenuStrip.Items.Add("Quit TopNotify");
             notify.ContextMenuStrip.ItemClicked += handler;
         }
@@ -83,7 +87,23 @@ namespace TopNotify.GUI
         }
 
 
-        public static void Quit(object Sender, EventArgs e)
+        public static void OnTrayButtonClicked(object Sender, EventArgs e)
+        {
+            // var item = e.ClickedItem;
+            var item = e.GetType().GetProperty("ClickedItem")!.GetValue(e);
+            var itemText = item.GetType().GetProperty("Text")!.GetValue(item).ToString();
+
+            if (itemText == "Create Bug Report")
+            {
+
+            }
+            else if (itemText == "Quit TopNotify")
+            {
+                Quit();
+            }   
+        }
+
+        public static void Quit()
         {
             //Kill Other Instances
             var instances = Process.GetProcessesByName("TopNotify");
