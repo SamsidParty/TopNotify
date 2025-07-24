@@ -95,7 +95,7 @@ namespace TopNotify.GUI
 
             if (itemText == "Create Bug Report")
             {
-
+                BugReport.DisplayBugReport(BugReport.CreateBugReport());
             }
             else if (itemText == "Quit TopNotify")
             {
