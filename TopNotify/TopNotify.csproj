@@ -82,8 +82,9 @@
 
 	<!-- IgniteView -->
 	<ItemGroup>
-		<PackageReference Include="IgniteView.Desktop" Version="2.2.0" />
-		<PackageReference Include="IgniteView.Core" Version="2.2.0" />
+		<PackageReference Include="IgniteView.Desktop" Version="2.2.2" />
+		<PackageReference Include="IgniteView.Core" Version="2.2.2" />
+		<PackageReference Include="IgniteView.FileDialogs" Version="2.2.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="iv2runtime\**">

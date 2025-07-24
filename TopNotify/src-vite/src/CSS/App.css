@@ -1,12 +1,7 @@
 @font-face {
     font-family: Main;
     size-adjust: 110%;
-    src: url("/Font/InterVariable.woff2");
-}
-
-@font-face {
-    font-family: Icon;
-    src: url("/Font/Tabler.ttf");
+    src: url("/Font/Sora.ttf") format("truetype");
 }
 
 
@@ -24,7 +19,7 @@
 }
 
 * {
-    font-family: Main, Icon;
+    font-family: Main, sans-serif;
     color: var(--col-text);
     box-sizing: border-box;
     user-select: none;
@@ -103,9 +98,15 @@ body {
     margin-top: 12px;
 }
 
-.errorMessage h4 {
-    font-size: 20px;
-    color: var(--col-secondary);
+.errorMessage svg {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    min-height: 2.5rem;
+}
+
+.errorMessage svg * {
+    color: var(--system-accent);
 }
 
 .errorMessage.medium {
@@ -165,6 +166,16 @@ body {
     border-radius: 3px !important;
 }
 
+.windowCloseButton svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+
+}
+
+.windowCloseButton svg * {
+    color: var(--col-text) !important;
+}
+
 .buttonContainer button {
     font-weight: 550 !important;
     border-radius: 3px !important;
@@ -198,6 +209,20 @@ button:hover {
     background-color: var(--col-primary) !important;
 }
 
+button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    stroke-width: 2.5;
+}
+
+button svg * {
+    color: var(--system-accent-foreground);
+}
+
+.iconButton svg, .locationSelectButton svg, .selectSoundButton svg {
+    margin-right: 0 !important;
+}
 
 *::-webkit-scrollbar {
     background: transparent;

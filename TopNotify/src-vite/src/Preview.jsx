@@ -1,12 +1,19 @@
 
 import { Button } from "@chakra-ui/react";
+import {
+    TbChevronsDownLeft,
+    TbChevronsDownRight,
+    TbChevronsUpLeft,
+    TbChevronsUpRight,
+    TbCurrentLocation
+} from "react-icons/tb";
 import "./CSS/Preview.css";
 
-var previewWidth = 352;
-var previewScale = previewWidth / 1920; // Relative to actual scale
+let previewWidth = 352;
+let previewScale = previewWidth / 1920; // Relative to actual scale
 
 function CalculatePreviewContainerStyle() {
-    var aspect = 0.5625; // 16:9
+    let aspect = 0.5625; // 16:9
 
     if (window.Config.__ScreenWidth) {
         aspect = window.Config.__ScreenHeight / window.Config.__ScreenWidth;
@@ -17,7 +24,7 @@ function CalculatePreviewContainerStyle() {
 
 function CalculateTaskbarPreviewStyle() {
     //Windows taskbar is 48px high
-    var standardHeight = 48 * previewScale;
+    let standardHeight = 48 * previewScale;
 
     return { 
         height: window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
@@ -27,18 +34,18 @@ function CalculateTaskbarPreviewStyle() {
 function CalculateNotificationWindowPreviewStyle() {
 
     //The window size (not displayed size) of windows notifications are 396 * 152
-    var standardWidth = 396 * previewScale;
-    var standardHeight = 152 * previewScale;
+    let standardWidth = 396 * previewScale;
+    let standardHeight = 152 * previewScale;
 
-    var style = { 
+    let style = { 
         width: window.Config.__ScreenScale ? (standardWidth * window.Config.__ScreenScale) : standardWidth,
         height: window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
     };
 
-    var posX = 0;
-    var posY = 0;
-    var scaledMainDisplayWidth = CalculatePreviewContainerStyle().width;
-    var scaledMainDisplayHeight = CalculatePreviewContainerStyle().height;
+    let posX = 0;
+    let posY = 0;
+    let scaledMainDisplayWidth = CalculatePreviewContainerStyle().width;
+    let scaledMainDisplayHeight = CalculatePreviewContainerStyle().height;
 
     if (window.Config.Location) {
         if (window.Config.Location == 0) { // Top left
@@ -81,7 +88,7 @@ function CalculateNotificationPreviwStyle() {
         width: CalculateNotificationWindowPreviewStyle().width * 0.919191917,
         height: CalculateNotificationWindowPreviewStyle().height * 0.717105263,
         opacity: (Config.Opacity != undefined) ? (1 - (Config.Opacity / 5)) : 0
-    }
+    };
 }
 
 export default function Preview() {
@@ -93,15 +100,15 @@ export default function Preview() {
                 </div>
             </div>
             <div className="locationSelect">
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(0)} >{"\ued0f"}</Button>
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(1)} >{"\ued10"}</Button>
-                <Button className="locationSelectButton customLocationSelectButton" onClick={() => igniteView.commandBridge.EnterDragMode()}>{"\uecef"}</Button>
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(2)} >{"\ued0d"}</Button>
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(3)} >{"\ued0e"}</Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(0)} ><TbChevronsUpLeft/></Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(1)} ><TbChevronsUpRight/></Button>
+                <Button className="locationSelectButton customLocationSelectButton" onClick={() => igniteView.commandBridge.EnterDragMode()}><TbCurrentLocation/></Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(2)} ><TbChevronsDownLeft/></Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(3)} ><TbChevronsDownRight/></Button>
             </div>
             <div className="taskbarPreview" style={CalculateTaskbarPreviewStyle()}><img src="/Image/Taskbar.png"></img></div>
         </div>
-    )
+    );
 }
 
 

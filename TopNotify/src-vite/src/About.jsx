@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import "./CSS/About.css";
 import { useState } from "react";
+import {TbBrandGithub, TbGlobe, TbLicense, TbShoppingBag, TbStar, TbStarFilled, TbWorld, TbX} from "react-icons/tb";
 
 export default function About() {
 
@@ -21,7 +22,7 @@ export default function About() {
             </div>
 
             <div className="windowCloseButton">
-                <Button className="iconButton" onClick={() => window.close()}>&#xeb55;</Button>
+                <Button className="iconButton" onClick={() => window.close()}><TbX/></Button>
             </div>
 
             <img src="/Image/IconSmall.png"></img>
@@ -29,11 +30,11 @@ export default function About() {
             <h6>Developed by SamsidParty • Powered by IgniteView</h6>
 
             <div className="aboutButtons">
-                <Button onClick={() => window.open("https://www.samsidparty.com/software/topnotify")}>&#xeb54; Official Website</Button>
-                <Button onClick={() => window.open("https://github.com/SamsidParty/TopNotify")}>&#xec1c; GitHub</Button>
-                <Button onClick={() => window.open("ms-windows-store://pdp/?ProductId=9pfmdk0qhkqj")}>&#xecd8; Microsoft Store</Button>
-                <Button onClick={() => window.open("ms-windows-store://review/?ProductId=9pfmdk0qhkqj")}>&#xf6a6; Leave A Review</Button>
-                <Button onClick={() => window.open("https://github.com/SamsidParty/TopNotify/blob/main/LICENSE")}>&#xea7b; License</Button>
+                <Button onClick={() => window.open("https://www.samsidparty.com/software/topnotify")}><TbWorld/> Official Website</Button>
+                <Button onClick={() => window.open("https://github.com/SamsidParty/TopNotify")}><TbBrandGithub/> GitHub</Button>
+                <Button onClick={() => window.open("ms-windows-store://pdp/?ProductId=9pfmdk0qhkqj")}><TbShoppingBag/> Microsoft Store</Button>
+                <Button onClick={() => window.open("ms-windows-store://review/?ProductId=9pfmdk0qhkqj")}><TbStar/> Leave A Review</Button>
+                <Button onClick={() => window.open("https://github.com/SamsidParty/TopNotify/blob/main/LICENSE")}><TbLicense/> License</Button>
             </div>
         </div>
     )

@@ -12,6 +12,7 @@ import {
     DrawerFooter,
     DrawerHeader
 } from '@chakra-ui/react';
+import {TbAlertTriangle, TbPencil, TbVolume, TbX} from "react-icons/tb";
 
 export default function ManageNotificationSounds() {
 
@@ -55,7 +56,7 @@ export default function ManageNotificationSounds() {
         <div className="flexx facenter fillx gap20 buttonContainer">
             <label data-greyed-out={(!window.isInterceptionEnabled).toString()}>Edit Notification Sounds</label>
             <Button data-greyed-out={(!window.isInterceptionEnabled).toString()} style={{ marginLeft: "auto" }} className="iconButton" onClick={() => setIsOpen(true)}>
-                &#xeb04;
+                <TbPencil/>
             </Button>
             <Drawer
                 blockScrollOnMount={false}
@@ -66,13 +67,13 @@ export default function ManageNotificationSounds() {
                 <DrawerContent>
                     
                     <div className="windowCloseButton">
-                        <Button className="iconButton" onClick={() => setIsOpen(false)}>&#xea5f;</Button>
+                        <Button className="iconButton" onClick={() => setIsOpen(false)}><TbX/></Button>
                     </div>
 
                     <DrawerHeader onMouseOver={window.igniteView.dragWindow}>Notification Sounds</DrawerHeader>
 
                     <DrawerBody>
-                        <div className="errorMessage medium"><h4>&#xea06;</h4>Some apps will play their own sounds, you may have to turn them off in-app to prevent overlapping audio.</div>
+                        <div className="errorMessage medium"><TbAlertTriangle/>Some apps will play their own sounds, you may have to turn them off in-app to prevent overlapping audio.</div>
                             {
                                 window.Config.AppReferences.map((appReference, i) => {
                                     return (
@@ -84,9 +85,7 @@ export default function ManageNotificationSounds() {
                                 })
                             }
                             <Divider/>
-                            {
-                                window.Config.AppReferences.length == 0 ? (<p>When an app sends a notification, TopNotify will capture it and it will show up here for you to modify the sounds.</p>) : null
-                            }
+                        <p>When an app sends a notification, TopNotify will capture it and it will show up here for you to modify the sounds.</p>
                     </DrawerBody>
 
                     <DrawerFooter>
@@ -111,7 +110,7 @@ function AppReferenceSoundItem(props) {
             <img src={props.appReference.DisplayIcon || "/Image/DefaultAppReferenceIcon.svg"}></img>
             <h4>{props.appReference.DisplayName}</h4>
             <div className="selectSoundButton">
-                <Button onClick={pickSound}>{props.appReference.SoundDisplayName}&nbsp;&#xeb04;</Button>
+                <Button onClick={pickSound}>{props.appReference.SoundDisplayName}&nbsp;<TbPencil/></Button>
             </div>
         </div>
     )
@@ -138,7 +137,7 @@ function SoundPicker(props) {
             <DrawerContent>
                 
                 <div className="windowCloseButton">
-                    <Button className="iconButton" onClick={() => props.setIsPickerOpen(false)}>&#xea5f;</Button>
+                    <Button className="iconButton" onClick={() => props.setIsPickerOpen(false)}><TbX/></Button>
                 </div>
 
                 <DrawerHeader>Select Sound</DrawerHeader>
@@ -178,7 +177,7 @@ function SoundPack(props) {
                                 <Button onClick={() => props.applySound(sound)} className="soundItemButton">
                                     <img src={sound.Icon}></img>
                                 </Button>
-                                <h5>{sound.Name}&nbsp;<Button onClick={() => playSound(sound)} className="iconButton">&#xeb51;</Button></h5>
+                                <h5>{sound.Name}&nbsp;<Button onClick={() => playSound(sound)} className="iconButton"><TbVolume/></Button></h5>
                             </div>
                         )
                     })

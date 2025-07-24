@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react-swc';
+import { join, resolve } from 'path';
+import { defineConfig } from 'vite';
 import transformPlugin from 'vite-plugin-transform';
-import { resolve, join } from 'path';
 
-var version = "3.0.0";
+var version = "3.1.0";
 
 // https://vitejs.dev/config/
 export default defineConfig({

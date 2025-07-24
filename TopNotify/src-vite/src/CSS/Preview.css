@@ -57,14 +57,18 @@
 
 .previewContainer .locationSelectButton {
     background-color: var(--col-overlay) !important;
+    padding: 0 !important;
     width: 2.5rem;
     height: 2.5rem;
-    font-size: 1.8rem !important;
-    font-weight: 100;
 }
 
 .previewContainer .locationSelectButton:hover {
     opacity: 0.8;
+}
+
+.previewContainer .locationSelectButton svg {
+    width: 2rem;
+    height: 2rem;
 }
 
 .previewContainer .customLocationSelectButton { 

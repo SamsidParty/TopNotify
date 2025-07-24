@@ -13,7 +13,7 @@
     float: right;
 }
 
-.appReferenceSoundItem img, .appReferenceSoundItem svg {
+.appReferenceSoundItem img, .appReferenceSoundItem > svg {
     width: 24px;
     height: 24px;
 }

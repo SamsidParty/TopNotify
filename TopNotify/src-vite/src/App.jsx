@@ -1,16 +1,16 @@
+import { Button, Container, Divider } from '@chakra-ui/react'
 import { useState } from 'react'
-import { Button, Switch, Divider, Container } from '@chakra-ui/react'
-import NotificationTransparency from './Transparency'
+import {TbAlertTriangle, TbCurrencyDollar, TbInfoCircle, TbX} from "react-icons/tb";
 import ClickThrough from './ClickThrough'
-import TestNotification from './TestNotification'
+import { DebugMenu } from './DebugMenu'
+import { useFirstRender } from './Helper'
+import MonitorSelect from './MonitorSelect'
 import ManageNotificationSounds from './NotificationSounds'
 import Preview from './Preview'
-import { DebugMenu } from './DebugMenu'
 import ReadAloud from './ReadAloud'
-import MonitorSelect from './MonitorSelect'
 import SoundInterceptionToggle from './SoundInterceptionToggle'
-import { useFirstRender } from './Helper'
-
+import TestNotification from './TestNotification'
+import NotificationTransparency from './Transparency'
 
 window.Config = {
     Location: -1,
@@ -69,7 +69,7 @@ function App() {
             </div>
 
             <div className="windowCloseButton">
-                <Button className="iconButton" onClick={() => window.close()}>&#xeb55;</Button>
+                <Button className="iconButton" onClick={() => window.close()}><TbX /></Button>
             </div>
 
             <TestNotification></TestNotification>
@@ -99,8 +99,8 @@ function App() {
             </Container>
 
             <div className='aboutButtons'>
-                <Button onClick={() => igniteView.commandBridge.About()}>&#xeac5; About TopNotify</Button>
-                <Button onClick={() => igniteView.commandBridge.Donate()}>&#xeb84; Donate</Button>
+                <Button onClick={() => igniteView.commandBridge.About()}><TbInfoCircle/>About TopNotify</Button>
+                <Button onClick={() => igniteView.commandBridge.Donate()}><TbCurrencyDollar/>Donate</Button>
             </div>
         </div>
     )
@@ -108,7 +108,7 @@ function App() {
 
 function ErrorMessage(props) {
     return (
-        <div className="errorMessage"><h4>&#xea06;</h4>{props.error.Text}</div>
+        <div className="errorMessage"><TbAlertTriangle/>{props.error.Text}</div>
     )
 }
 

@@ -11,6 +11,7 @@ import {
 
 import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
 import { useState } from 'react'
+import {TbExternalLink, TbX} from "react-icons/tb";
 
 export function DebugMenu() {
 
@@ -43,7 +44,7 @@ export function DebugMenu() {
                 <DrawerContent>
                     
                     <div className="windowCloseButton">
-                        <Button className="iconButton" onClick={() => setIsOpen(false)}>&#xea5f;</Button>
+                        <Button className="iconButton" onClick={() => setIsOpen(false)}><TbX/></Button>
                     </div>
 
                     <DrawerHeader>Debug Menu</DrawerHeader>
@@ -52,7 +53,7 @@ export function DebugMenu() {
                         <div className="flexx facenter fillx gap20 buttonContainer">
                             <label>Open App Folder</label>
                             <Button style={{ marginLeft: "auto" }} className="iconButton" onClick={() => { igniteView.commandBridge.OpenAppFolder(); }}>
-                                &#xea99;
+                                <TbExternalLink/>
                             </Button>
                         </div>
 
