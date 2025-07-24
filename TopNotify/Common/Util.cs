@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IgniteView.Core;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -36,8 +37,18 @@ namespace TopNotify.Common
 
         public static Icon FindAppIcon()
         {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dist", "Image", "Icon.ico");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "iv2runtime", "Icon.ico");
             return new Icon(path);
+        }
+
+        public static FileResolver GetFileResolver()
+        {
+            if (AppManager.Instance?.CurrentServerManager?.Resolver != null) 
+            { 
+                return AppManager.Instance.CurrentServerManager.Resolver;
+            }
+
+            return new TarFileResolver();
         }
 
         public static string FindExe()

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <assembly xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
     <assemblyIdentity
-        version="%{TOPNOTIFY_VERSION}%.0"
-        name="SamsidParty TopNotify"
+        version="3.1.0.0"
+        name="TopNotify by SamsidParty"
         type="win32"
     />
-    <description>Display Notifications At The Top Of The Screen</description>
+    <description>The ultimate notification customization tool for Windows</description>
     <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
         <security>
             <requestedPrivileges>

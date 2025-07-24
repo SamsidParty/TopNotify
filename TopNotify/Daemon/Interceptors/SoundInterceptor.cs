@@ -144,7 +144,7 @@ namespace TopNotify.Daemon
         /// </summary>
         public static string GetSourceSoundPath(string soundRelativePath)
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dist", "Audio", soundRelativePath.Replace("/", "\\") + ".wav");
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "iv2runtime", "audio", soundRelativePath.Replace("/", "\\") + ".wav");
         }
 
         /// <summary>

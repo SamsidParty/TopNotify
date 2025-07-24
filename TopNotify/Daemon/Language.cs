@@ -6,6 +6,7 @@ using System.IO.Enumeration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Common;
 
 namespace TopNotify.Daemon
 {
@@ -24,7 +25,7 @@ namespace TopNotify.Daemon
                     var currentLanguageID = CultureInfo.CurrentUICulture.Name;
 
                     // Parse the CSV file
-                    var namesCSVFile = File.ReadAllText(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "dist", "Meta", "NotificationNames.csv"));
+                    var namesCSVFile = Util.GetFileResolver().ReadFileAsText("/Meta/NotificationNames.csv");
                     var namesCSVLines = namesCSVFile.Trim().Split("\n", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
                     // Iterate languages

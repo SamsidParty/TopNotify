@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TopNotify.Common;
 using TopNotify.Daemon;
 
 namespace TopNotify.GUI
@@ -17,7 +18,7 @@ namespace TopNotify.GUI
         public static string FindSounds()
         {
             // Read The Current List Of Sound Packs
-            var jsonFile = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dist", "Meta", "SoundPacks.json"));
+            var jsonFile = Util.GetFileResolver().ReadFileAsText("/Meta/SoundPacks.json");
             var soundPacks = JsonConvert.DeserializeObject<List<ExpandoObject>>(jsonFile);
 
             // Inject Files From Music Folder Into The JSON File
