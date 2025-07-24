@@ -1,7 +1,7 @@
-import { Button, Divider } from '@chakra-ui/react';
+import { Button, Divider } from "@chakra-ui/react";
 
-import { Fragment, useState } from 'react';
-import { useFirstRender } from './Helper.jsx';
+import { Fragment, useState } from "react";
+import { useFirstRender } from "./Helper.jsx";
 
 import "./CSS/NotificationSounds.css";
 
@@ -11,15 +11,15 @@ import {
     DrawerContent,
     DrawerFooter,
     DrawerHeader
-} from '@chakra-ui/react';
-import {TbAlertTriangle, TbPencil, TbVolume, TbX} from "react-icons/tb";
+} from "@chakra-ui/react";
+import {TbAlertTriangle, TbChevronDown, TbPencil, TbVolume, TbX} from "react-icons/tb";
 
 export default function ManageNotificationSounds() {
 
-    var [isOpen, _setIsOpen] = useState(false);
-    var [isPickerOpen, _setIsPickerOpen] = useState(false);
+    let [isOpen, _setIsOpen] = useState(false);
+    let [isPickerOpen, _setIsPickerOpen] = useState(false);
 
-    var setIsOpen = (v) => {
+    let setIsOpen = (v) => {
 
         if (v && rerender < 0) { return; }
 
@@ -31,16 +31,16 @@ export default function ManageNotificationSounds() {
         }
 
         _setIsOpen(v);
-    }
+    };
 
-    var setIsPickerOpen = (v, id) => {
+    let setIsPickerOpen = (v, id) => {
         _setIsOpen(!v);
         _setIsPickerOpen(v);
-    }
+    };
 
-    var applySound = (sound) => {
+    let applySound = (sound) => {
 
-        for (var i = 0; i < Config.AppReferences.length; i++) {
+        for (let i = 0; i < Config.AppReferences.length; i++) {
             if (Config.AppReferences[i].ID == window.soundPickerReferenceID) {
                 Config.AppReferences[i].SoundPath = sound.Path;
                 Config.AppReferences[i].SoundDisplayName = sound.Name;
@@ -50,7 +50,7 @@ export default function ManageNotificationSounds() {
 
         UploadConfig();
         setIsPickerOpen(false);
-    }
+    };
 
     return (
         <div className="flexx facenter fillx gap20 buttonContainer">
@@ -67,24 +67,24 @@ export default function ManageNotificationSounds() {
                 <DrawerContent>
                     
                     <div className="windowCloseButton">
-                        <Button className="iconButton" onClick={() => setIsOpen(false)}><TbX/></Button>
+                        <Button className="iconButton" onClick={() => setIsOpen(false)}><TbChevronDown/></Button>
                     </div>
 
                     <DrawerHeader onMouseOver={window.igniteView.dragWindow}>Notification Sounds</DrawerHeader>
 
                     <DrawerBody>
                         <div className="errorMessage medium"><TbAlertTriangle/>Some apps will play their own sounds, you may have to turn them off in-app to prevent overlapping audio.</div>
-                            {
-                                window.Config.AppReferences.map((appReference, i) => {
-                                    return (
-                                        <Fragment key={i}>
-                                            <Divider/>
-                                            <AppReferenceSoundItem setIsPickerOpen={setIsPickerOpen} appReference={appReference}></AppReferenceSoundItem>
-                                        </Fragment>
-                                    )
-                                })
-                            }
-                            <Divider/>
+                        {
+                            window.Config.AppReferences.map((appReference, i) => {
+                                return (
+                                    <Fragment key={i}>
+                                        <Divider/>
+                                        <AppReferenceSoundItem setIsPickerOpen={setIsPickerOpen} appReference={appReference}></AppReferenceSoundItem>
+                                    </Fragment>
+                                );
+                            })
+                        }
+                        <Divider/>
                         <p>When an app sends a notification, TopNotify will capture it and it will show up here for you to modify the sounds.</p>
                     </DrawerBody>
 
@@ -95,15 +95,15 @@ export default function ManageNotificationSounds() {
             </Drawer>
             <SoundPicker applySound={applySound} setIsPickerOpen={setIsPickerOpen} isOpen={isPickerOpen}></SoundPicker>
         </div>
-    )
+    );
 }
 
 function AppReferenceSoundItem(props) {
 
-    var pickSound = () => {
+    let pickSound = () => {
         window.soundPickerReferenceID = props.appReference.ID;
         props.setIsPickerOpen(true);
-    }
+    };
 
     return (
         <div className="appReferenceSoundItem">
@@ -113,16 +113,16 @@ function AppReferenceSoundItem(props) {
                 <Button onClick={pickSound}>{props.appReference.SoundDisplayName}&nbsp;<TbPencil/></Button>
             </div>
         </div>
-    )
+    );
 }
 
 function SoundPicker(props) {
 
-    var [soundPacks, setSoundPacks] = useState([]);
+    let [soundPacks, setSoundPacks] = useState([]);
 
     if (useFirstRender()) {
         setTimeout(async () => {
-            var newSounds = JSON.parse(await igniteView.commandBridge.FindSounds());
+            let newSounds = JSON.parse(await igniteView.commandBridge.FindSounds());
             setSoundPacks(newSounds);
         }, 0);
     }
@@ -146,7 +146,7 @@ function SoundPicker(props) {
                     <div className="soundPackList">
                         {
                             soundPacks.map((soundPack, i) => {
-                                return (<SoundPack applySound={props.applySound} soundPack={soundPack} key={i}></SoundPack>)
+                                return (<SoundPack applySound={props.applySound} soundPack={soundPack} key={i}></SoundPack>);
                             })
                         }
                     </div>
@@ -157,12 +157,12 @@ function SoundPicker(props) {
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>
-    )
+    );
 }
 
 function SoundPack(props) {
 
-    var playSound = (sound) => igniteView.commandBridge.PreviewSound(sound.Path);
+    let playSound = (sound) => igniteView.commandBridge.PreviewSound(sound.Path);
 
     return (
         <div className="soundPack">
@@ -179,10 +179,10 @@ function SoundPack(props) {
                                 </Button>
                                 <h5>{sound.Name}&nbsp;<Button onClick={() => playSound(sound)} className="iconButton"><TbVolume/></Button></h5>
                             </div>
-                        )
+                        );
                     })
                 }
             </div>
         </div>
-    )
+    );
 }

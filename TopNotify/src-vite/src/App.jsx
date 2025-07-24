@@ -1,29 +1,29 @@
-import { Button, Container, Divider } from '@chakra-ui/react'
-import { useState } from 'react'
+import { Button, Container, Divider } from "@chakra-ui/react";
+import { useState } from "react";
 import {TbAlertTriangle, TbCurrencyDollar, TbInfoCircle, TbX} from "react-icons/tb";
-import ClickThrough from './ClickThrough'
-import { DebugMenu } from './DebugMenu'
-import { useFirstRender } from './Helper'
-import MonitorSelect from './MonitorSelect'
-import ManageNotificationSounds from './NotificationSounds'
-import Preview from './Preview'
-import ReadAloud from './ReadAloud'
-import SoundInterceptionToggle from './SoundInterceptionToggle'
-import TestNotification from './TestNotification'
-import NotificationTransparency from './Transparency'
+import ClickThrough from "./ClickThrough";
+import { DebugMenu } from "./DebugMenu";
+import { useFirstRender } from "./Helper";
+import MonitorSelect from "./MonitorSelect";
+import ManageNotificationSounds from "./NotificationSounds";
+import Preview from "./Preview";
+import ReadAloud from "./ReadAloud";
+import SoundInterceptionToggle from "./SoundInterceptionToggle";
+import TestNotification from "./TestNotification";
+import NotificationTransparency from "./Transparency";
 
 window.Config = {
     Location: -1,
     Opacity: 0,
     ReadAloud: false,
     AppReferences: []
-}
+};
 
 // Called By C#, Sets The window.Config Object To The Saved Config File
 window.SetConfig = async (config) => {
     Config = JSON.parse(config);
     window.setRerender(rerender + 1);
-}
+};
 
 window.UploadConfig = () => {
 
@@ -34,23 +34,23 @@ window.UploadConfig = () => {
 
     igniteView.commandBridge.WriteConfigFile(JSON.stringify(Config));
     window.setRerender(rerender + 1);
-}
+};
 
 window.ChangeSwitch = function (key, e) {
     Config[key] = e.target.checked;
     UploadConfig();
     window.setRerender(rerender + 1);
-}
+};
 
 window.ChangeValue = function (key, e) {
     Config[key] = e;
     UploadConfig();
     window.setRerender(rerender + 1);
-}
+};
 
 function App() {
 
-    var [rerender, setRerender] = useState(0);
+    let [rerender, setRerender] = useState(0);
     window.rerender = rerender;
     window.setRerender = setRerender;
     
@@ -59,7 +59,7 @@ function App() {
     }
 
     return (
-        <div className={'app' + ((rerender > 0) ? " loaded" : "")}>
+        <div className={"app" + ((rerender > 0) ? " loaded" : "")}>
 
             <DebugMenu></DebugMenu>
 
@@ -80,7 +80,7 @@ function App() {
 
             {
                 window.errorList?.map((error, i) => {
-                    return (<ErrorMessage key={i} error={error}></ErrorMessage>)
+                    return (<ErrorMessage key={i} error={error}></ErrorMessage>);
                 })
             }
 
@@ -103,14 +103,14 @@ function App() {
                 <Button onClick={() => igniteView.commandBridge.Donate()}><TbCurrencyDollar/>Donate</Button>
             </div>
         </div>
-    )
+    );
 }
 
 function ErrorMessage(props) {
     return (
         <div className="errorMessage"><TbAlertTriangle/>{props.error.Text}</div>
-    )
+    );
 }
 
 
-export default App
+export default App;

@@ -7,17 +7,17 @@ import {
     DrawerOverlay,
     DrawerContent,
     DrawerCloseButton
-} from '@chakra-ui/react'
+} from "@chakra-ui/react";
 
-import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
-import { useState } from 'react'
-import {TbExternalLink, TbX} from "react-icons/tb";
+import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from "@chakra-ui/react";
+import { useState } from "react";
+import {TbChevronDown, TbExternalLink, TbX} from "react-icons/tb";
 
 export function DebugMenu() {
 
-    var [isOpen, _setIsOpen] = useState(false);
+    let [isOpen, _setIsOpen] = useState(false);
 
-    var setIsOpen = (v) => {
+    let setIsOpen = (v) => {
 
         if (v && rerender < 0) { return; }
 
@@ -29,7 +29,7 @@ export function DebugMenu() {
         }
 
         _setIsOpen(v);
-    }
+    };
 
     window.openDebugMenu = () => setIsOpen(true);
 
@@ -44,7 +44,7 @@ export function DebugMenu() {
                 <DrawerContent>
                     
                     <div className="windowCloseButton">
-                        <Button className="iconButton" onClick={() => setIsOpen(false)}><TbX/></Button>
+                        <Button className="iconButton" onClick={() => setIsOpen(false)}><TbChevronDown/></Button>
                     </div>
 
                     <DrawerHeader>Debug Menu</DrawerHeader>
@@ -78,7 +78,7 @@ export function DebugMenu() {
                 </DrawerContent>
             </Drawer>
         </>
-    )
+    );
 }
 
 addEventListener("keydown", (e) => {
@@ -86,4 +86,4 @@ addEventListener("keydown", (e) => {
         window.openDebugMenu();
         e.preventDefault();
     }
-})
+});

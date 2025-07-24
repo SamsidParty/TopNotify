@@ -1,5 +1,5 @@
 
-import { Switch } from '@chakra-ui/react'
+import { Switch } from "@chakra-ui/react";
 
 export default function ClickThrough() {
 
@@ -9,5 +9,5 @@ export default function ClickThrough() {
             <label>Enable Click-Through</label>
             <Switch onChange={(e) => ChangeSwitch("EnableClickThrough", e)} isChecked={Config.EnableClickThrough} style={{ marginLeft: "auto" }} size='lg' />
         </div>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from '@chakra-ui/react'
+import { Button, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Divider } from "@chakra-ui/react";
 
 export default function NotificationTransparency() {
     return (
@@ -19,7 +19,7 @@ export default function NotificationTransparency() {
                     )
             }
         </div>
-    )
+    );
 }
 
 function ChangeTransparency(opacity) {

@@ -1,5 +1,5 @@
-import { Button } from '@chakra-ui/react'
-import { TbExternalLink } from "react-icons/tb"
+import { Button } from "@chakra-ui/react";
+import { TbExternalLink } from "react-icons/tb";
 
 export default function TestNotification() {
     return (
@@ -9,5 +9,5 @@ export default function TestNotification() {
                 <TbExternalLink />
             </Button>
         </div>
-    )
+    );
 }

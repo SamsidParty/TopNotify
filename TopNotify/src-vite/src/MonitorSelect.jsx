@@ -1,4 +1,4 @@
-import { Button, Switch, Divider, Select } from '@chakra-ui/react'
+import { Button, Switch, Divider, Select } from "@chakra-ui/react";
 
 export default function MonitorSelect(props) {
     return (
@@ -6,9 +6,9 @@ export default function MonitorSelect(props) {
             <option value="primary">Primary Monitor</option>
             {
                 Config?.__MonitorData?.map((monitor) => {
-                    return (<option key={monitor.ID} value={monitor.ID}>{monitor.DisplayName}</option>)
+                    return (<option key={monitor.ID} value={monitor.ID}>{monitor.DisplayName}</option>);
                 })
             }
         </Select>
-    )
+    );
 }

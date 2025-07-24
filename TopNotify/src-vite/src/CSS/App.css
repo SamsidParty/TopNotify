@@ -217,6 +217,10 @@ button svg {
 }
 
 button svg * {
+    color: var(--col-text);
+}
+
+.iconButton svg * {
     color: var(--system-accent-foreground);
 }
 

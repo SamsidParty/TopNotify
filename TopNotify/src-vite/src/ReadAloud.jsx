@@ -1,5 +1,5 @@
 
-import { Switch } from '@chakra-ui/react'
+import { Switch } from "@chakra-ui/react";
 
 export default function ReadAloud() {
 
@@ -9,5 +9,5 @@ export default function ReadAloud() {
             <label>Read Notifications To Me</label>
             <Switch onChange={(e) => ChangeSwitch("ReadAloud", e)} isChecked={Config.ReadAloud} style={{ marginLeft: "auto" }} size='lg' />
         </div>
-    )
+    );
 }

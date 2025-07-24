@@ -5,7 +5,7 @@ import {TbBrandGithub, TbGlobe, TbLicense, TbShoppingBag, TbStar, TbStarFilled, 
 
 export default function About() {
 
-    var [version, setVersion] = useState("");
+    let [version, setVersion] = useState("");
 
     if (version == "") {
         setVersion(" ...");
@@ -16,7 +16,7 @@ export default function About() {
     }
 
     return (
-        <div className={'app loaded about'}>
+        <div className={"app loaded about"}>
             <div data-webview-drag className="draggableHeader">
                 <h2>About</h2>
             </div>
@@ -37,5 +37,5 @@ export default function About() {
                 <Button onClick={() => window.open("https://github.com/SamsidParty/TopNotify/blob/main/LICENSE")}><TbLicense/> License</Button>
             </div>
         </div>
-    )
+    );
 }
