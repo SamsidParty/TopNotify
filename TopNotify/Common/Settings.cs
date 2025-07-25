@@ -87,47 +87,27 @@ namespace TopNotify.Common
         /// </summary>
         public static string GetFilePath()
         {
-            var defaultSettings = JsonConvert.SerializeObject(GetDefaultSettings(), Formatting.Indented);
-            var value = GetFilePath("Settings.json", Encoding.UTF8.GetBytes(defaultSettings));
+            var value = GetFilePath("Settings.json", () => Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(FirstLaunch.GetDefaultSettings(), Formatting.Indented)));
             return value;
         }
 
-        public static Settings GetDefaultSettings()
-        {
-            var defaultSettings = new Settings();
-
-            // Add The Default App Reference
-            defaultSettings.AppReferences.Add(new AppReference()
-                {
-                    ReferenceType = 0,
-                    ID = "Other",
-                    DisplayName = "All Other Apps",
-                    DisplayIcon = "/Image/DefaultAppReferenceIcon.svg",
-                    SoundPath = "windows/win11",
-                    SoundDisplayName = "Notify 11"
-                } 
-            );
-
-            return defaultSettings;
-        }
 
         /// <summary>
         /// Returns The Full Path Of fileName Located In TopNotify's AppData Directory
-        /// Uses defaultValue if the file doesn't exist
+        /// Calls getDefaultValue and uses the result if the file doesn't exist
         /// </summary>
-        public static string GetFilePath(string fileName, byte[] defaultValue)
+        public static string GetFilePath(string fileName, Func<byte[]> getDefaultValue)
         {
             var appFolder = GetAppDataFolder();
             var file = Path.Combine(appFolder, fileName);
             if (!File.Exists(file))
             {
                 //Create Default File
-                File.WriteAllBytes(file, defaultValue != null ? defaultValue : new byte[0]); // Write default value if it's not null
+                File.WriteAllBytes(file, getDefaultValue != null ? getDefaultValue() : new byte[0]); // Write default value if it's not null
 
                 if (fileName == "Settings.json")
                 {
-                    //Show First Launch Notification
-                    NotificationTester.Toast("TopNotify Has Been Installed", "You Can Find The Settings For TopNotify In The System Tray");
+                    FirstLaunch.SetupTopNotify();
                 }
 
             }

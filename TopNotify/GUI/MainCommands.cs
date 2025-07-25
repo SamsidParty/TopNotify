@@ -111,7 +111,7 @@ namespace TopNotify.GUI
         [Command("OpenAppFolder")]
         public static async Task OpenAppFolder(WebWindow target)
         {
-            Process.Start("explorer.exe", target.CurrentAppManager.CurrentIdentity.AppDataPath);
+            Process.Start("explorer.exe", Settings.GetAppDataFolder());
         }
     }
 }
