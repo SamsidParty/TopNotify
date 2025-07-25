@@ -1,7 +1,6 @@
 import { Button, Divider } from "@chakra-ui/react";
 
 import { Fragment, useState } from "react";
-import { useFirstRender } from "./Helper.jsx";
 
 import "./CSS/NotificationSounds.css";
 
@@ -12,7 +11,8 @@ import {
     DrawerFooter,
     DrawerHeader
 } from "@chakra-ui/react";
-import {TbAlertTriangle, TbChevronDown, TbPencil, TbVolume, TbX} from "react-icons/tb";
+import React from "react";
+import { TbAlertTriangle, TbChevronDown, TbFolder, TbMusicPlus, TbPencil, TbVolume, TbX } from "react-icons/tb";
 
 export default function ManageNotificationSounds() {
 
@@ -93,7 +93,7 @@ export default function ManageNotificationSounds() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
-            <SoundPicker applySound={applySound} setIsPickerOpen={setIsPickerOpen} isOpen={isPickerOpen}></SoundPicker>
+            <SoundPicker applySound={applySound} setIsPickerOpen={setIsPickerOpen} key={window.soundPickerReferenceID + isPickerOpen || "soundPicker"} isOpen={isPickerOpen}></SoundPicker>
         </div>
     );
 }
@@ -118,14 +118,7 @@ function AppReferenceSoundItem(props) {
 
 function SoundPicker(props) {
 
-    let [soundPacks, setSoundPacks] = useState([]);
-
-    if (useFirstRender()) {
-        setTimeout(async () => {
-            let newSounds = JSON.parse(await igniteView.commandBridge.FindSounds());
-            setSoundPacks(newSounds);
-        }, 0);
-    }
+    const soundPacks = JSON.parse(igniteView.withReact(React).useCommandResult("FindSounds") || "[]");
 
     return (
         <Drawer
@@ -181,6 +174,21 @@ function SoundPack(props) {
                             </div>
                         );
                     })
+                }
+                {
+                    props.soundPack.Name == "Your Collection" && (
+                        <div className="soundItem" key={"add"}>
+                            <Button onClick={async () => {
+                                let result = await igniteView.commandBridge.ImportSound();
+                                if (result.length == 2) {
+                                    props.applySound({ Path: result[0], Name: result[1] });
+                                }
+                            }} className="soundItemButton">
+                                <TbMusicPlus/>
+                            </Button>
+                            <h5>Import&nbsp;<Button onClick={() => igniteView.commandBridge.OpenSoundFolder()} className="iconButton"><TbFolder/></Button></h5>
+                        </div>
+                    )
                 }
             </div>
         </div>

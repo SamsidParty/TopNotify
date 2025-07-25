@@ -1,7 +1,7 @@
 [
     {
         "Name": "Your Collection",
-        "Description": ".WAV files from your music folder will show up here",
+        "Description": "Use your own custom .WAV files as your notification sound",
         "ID": "custom_sound_path",
         "Sounds": [
             {

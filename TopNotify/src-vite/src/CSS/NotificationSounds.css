@@ -76,8 +76,13 @@
     height: calc(17vw);
 }
 
-.soundItem img {
-    height: 60px;
+.soundItem img, .soundItem > .soundItemButton svg {
+    height: 50px;
+    width: 50px;
+}
+
+.soundItem > .soundItemButton * {
+    color: #757DF9;
 }
 
 .soundItem .iconButton {

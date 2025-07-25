@@ -1,4 +1,5 @@
 ﻿using IgniteView.Core;
+using IgniteView.FileDialogs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace TopNotify.GUI
 {
     public class SoundFinder
     {
+        public static string ImportedSoundFolder => Path.Join(Settings.GetAppDataFolder(), "NotificationSounds", "imported");
+
         [Command("FindSounds")]
         public static string FindSounds()
         {
@@ -23,7 +26,7 @@ namespace TopNotify.GUI
 
             // Inject Files From Music Folder Into The JSON File
             dynamic packToInject = soundPacks.Where((dynamic pack) => pack.ID == "custom_sound_path").FirstOrDefault();
-            var wavFiles = GetWAVFilesInMusicFolder();
+            var wavFiles = GetImportedWAVFiles();
 
             foreach (var wavFile in wavFiles)
             {
@@ -39,6 +42,33 @@ namespace TopNotify.GUI
         }
 
         /// <summary>
+        /// Opens a file dialog to select a sound file and imports it
+        /// </summary>
+        [Command("ImportSound")]
+        public static string[] ImportSound()
+        {
+            var soundPath = FileDialog.PickFile(new FileFilter("wav"));
+
+            if (!string.IsNullOrEmpty(soundPath) && File.Exists(soundPath) && Path.GetExtension(soundPath).ToLower() == ".wav")
+            {
+                GetImportedWAVFiles(); // Makes sure ImportedSoundFolder exists
+                var soundName = Path.GetFileNameWithoutExtension(soundPath);
+
+                // Prevent duplicate files
+                while (File.Exists(Path.Join(ImportedSoundFolder, soundName + ".wav")))
+                {
+                    soundName += "_";
+                }
+
+                var copiedSoundPath = Path.Join(ImportedSoundFolder, soundName + ".wav");
+                File.Copy(soundPath, copiedSoundPath, true);
+                return new string[] { "custom_sound_path/" + copiedSoundPath, Path.GetFileNameWithoutExtension(soundPath) };
+            }
+
+            return new string[0];
+        }
+
+        /// <summary>
         /// Plays the provided sound ID
         /// </summary>
         [Command("PreviewSound")]
@@ -50,17 +80,23 @@ namespace TopNotify.GUI
         /// <summary>
         /// Returns A List Of WAV Files In The Music Folder
         /// </summary>
-        public static string[] GetWAVFilesInMusicFolder()
+        public static string[] GetImportedWAVFiles()
         {
             try
             {
                 var musicFolder = Environment.ExpandEnvironmentVariables("%USERPROFILE%\\Music");
 
+                if (!Directory.Exists(ImportedSoundFolder)) { Directory.CreateDirectory(ImportedSoundFolder); }
+
+                var importedFiles = Directory.GetFiles(ImportedSoundFolder, "*.wav", SearchOption.AllDirectories);
+
                 // Music folder doesn't always exist https://github.com/SamsidParty/TopNotify/issues/40#issuecomment-2692353622
                 if (Directory.Exists(musicFolder))
                 {
-                    return Directory.GetFiles(musicFolder, "*.wav", SearchOption.AllDirectories);
+                    return Directory.GetFiles(musicFolder, "*.wav", SearchOption.AllDirectories).Concat(importedFiles).ToArray();
                 }
+
+                return importedFiles;
             }
             catch { }
 

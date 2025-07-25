@@ -113,5 +113,11 @@ namespace TopNotify.GUI
         {
             Process.Start("explorer.exe", Settings.GetAppDataFolder());
         }
+
+        [Command("OpenSoundFolder")]
+        public static async Task OpenSoundFolder(WebWindow target)
+        {
+            Process.Start("explorer.exe", SoundFinder.ImportedSoundFolder);
+        }
     }
 }
