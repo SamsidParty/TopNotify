@@ -3,6 +3,7 @@ import { useState } from "react";
 import {TbAlertTriangle, TbCurrencyDollar, TbInfoCircle, TbX} from "react-icons/tb";
 import ClickThrough from "./ClickThrough";
 import { DebugMenu } from "./DebugMenu";
+import ForceForeground from "./ForceForeground";
 import { useFirstRender } from "./Helper";
 import MonitorSelect from "./MonitorSelect";
 import ManageNotificationSounds from "./NotificationSounds";
@@ -86,6 +87,8 @@ function App() {
 
             <Container>
                 <ClickThrough></ClickThrough>
+                <Divider />
+                <ForceForeground></ForceForeground>
                 <Divider />
                 <NotificationTransparency></NotificationTransparency>
             </Container>

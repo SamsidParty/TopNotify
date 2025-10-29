@@ -26,6 +26,9 @@ namespace TopNotify.Common
         // Accessibility
         public bool ReadAloud = false;
 
+        // Window Behavior
+        public bool ForceForegroundOnClick = false;
+
         // From 0 To 5 (0 Is Fully Opaque, 5 Is Mostly Transparent)
         public float Opacity = 0;
 

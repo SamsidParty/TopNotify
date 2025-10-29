@@ -37,7 +37,8 @@ namespace TopNotify.Daemon
             new NativeInterceptor(),
             new DiscoveryInterceptor(),
             new SoundInterceptor(),
-            new ReadAloudInterceptor()
+            new ReadAloudInterceptor(),
+            new ForegroundInterceptor()
         };
 
         public void Start()
