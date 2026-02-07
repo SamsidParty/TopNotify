@@ -1,7 +1,8 @@
-﻿#define TRACE // Enable Trace.WriteLine
+#define TRACE // Enable Trace.WriteLine
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using Microsoft.Toolkit.Uwp.Notifications;
 using TopNotify.Daemon;
@@ -11,6 +12,7 @@ using IgniteView.Core;
 using IgniteView.Desktop;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using Windows.Services.Store;
 using Serilog;
 using Serilog.Core;
@@ -109,6 +111,18 @@ namespace TopNotify.Common
 
                 // Open The GUI App In Settings Mode
                 GUI = new ViteAppManager();
+
+                // WebView2 fails to read/write its data directory when the path contains
+                // non-ASCII characters (e.g. Japanese usernames). If non-ASCII characters
+                // are detected, fall back to an ASCII-safe path under ProgramData.
+                if (GUI.CurrentIdentity.AppDataPath.Any(c => c > 127))
+                {
+                    GUI.CurrentIdentity = new AsciiSafeAppIdentity(
+                        GUI.CurrentIdentity.Name,
+                        GUI.CurrentIdentity.Developer
+                    );
+                }
+
                 App();
             }
             else
@@ -152,6 +166,35 @@ namespace TopNotify.Common
             GUI.Run();
         }
 
+    }
+
+    /// <summary>
+    /// AppIdentity subclass that works around WebView2's inability to handle non-ASCII paths.
+    /// When the user profile path contains non-ASCII characters (e.g. Japanese usernames),
+    /// this class redirects the data directory to an ASCII-safe path under ProgramData (C:\ProgramData).
+    /// </summary>
+    public class AsciiSafeAppIdentity : AppIdentity
+    {
+        [SetsRequiredMembers]
+        public AsciiSafeAppIdentity(string name, string developer) : base(name, developer) { }
+
+        public override string AppDataPath
+        {
+            get
+            {
+                // ProgramData (C:\ProgramData) always has an ASCII-only path,
+                // making it safe to use as the WebView2 data directory
+                var basePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var fullPath = Path.Join(basePath, Developer, Name);
+
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+
+                return fullPath;
+            }
+        }
     }
 }
 
