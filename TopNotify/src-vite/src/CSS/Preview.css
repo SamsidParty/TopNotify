@@ -9,6 +9,8 @@
     border-bottom-left-radius: 0px;
     position: relative;
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: hidden;
     display: flex;
     justify-content: center;

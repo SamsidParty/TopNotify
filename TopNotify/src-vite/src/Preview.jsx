@@ -10,7 +10,7 @@ import {
 import "./CSS/Preview.css";
 
 let previewWidth = 352;
-let previewScale = previewWidth / 1920; // Relative to actual scale
+let previewHeight = 198;
 
 function CalculatePreviewContainerStyle() {
     let aspect = 0.5625; // 16:9
@@ -19,12 +19,20 @@ function CalculatePreviewContainerStyle() {
         aspect = window.Config.__ScreenHeight / window.Config.__ScreenWidth;
     }
 
-    return { width: previewWidth, height: (previewWidth * aspect), backgroundImage: `url('${igniteView.resolverURL + "/wallpaper.jpg"}')` };
+    const isPortraitAspect = aspect > 1;
+
+    return { 
+        width: isPortraitAspect ? (previewHeight / aspect) : previewWidth,
+        height: isPortraitAspect ? previewHeight : (previewWidth * aspect),
+        previewScale: isPortraitAspect ? (previewHeight) / 1920 : previewWidth / 1920,
+        backgroundImage: `url('${igniteView.resolverURL + "/wallpaper.jpg"}')`
+    };
 }
+
 
 function CalculateTaskbarPreviewStyle() {
     //Windows taskbar is 48px high
-    let standardHeight = 48 * previewScale;
+    let standardHeight = 48 * CalculatePreviewContainerStyle().previewScale;
 
     return { 
         height: window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
@@ -33,9 +41,11 @@ function CalculateTaskbarPreviewStyle() {
 
 function CalculateNotificationWindowPreviewStyle() {
 
+    const containerStyle = CalculatePreviewContainerStyle();
+
     //The window size (not displayed size) of windows notifications are 396 * 152
-    let standardWidth = 396 * previewScale;
-    let standardHeight = 152 * previewScale;
+    let standardWidth = 396 * containerStyle.previewScale;
+    let standardHeight = 152 * containerStyle.previewScale;
 
     let style = { 
         width: window.Config.__ScreenScale ? (standardWidth * window.Config.__ScreenScale) : standardWidth,
@@ -44,8 +54,8 @@ function CalculateNotificationWindowPreviewStyle() {
 
     let posX = 0;
     let posY = 0;
-    let scaledMainDisplayWidth = CalculatePreviewContainerStyle().width;
-    let scaledMainDisplayHeight = CalculatePreviewContainerStyle().height;
+    let scaledMainDisplayWidth = containerStyle.width;
+    let scaledMainDisplayHeight = containerStyle.height;
 
     if (window.Config.Location) {
         if (window.Config.Location == 0) { // Top left
@@ -58,11 +68,11 @@ function CalculateNotificationWindowPreviewStyle() {
         }
         else if (window.Config.Location == 2) { // Bottom Left
             posX = 0;
-            posY = scaledMainDisplayHeight - style.height - (50 * previewScale);
+            posY = scaledMainDisplayHeight - style.height - (50 * containerStyle.previewScale);
         }
         else if (window.Config.Location == 3) { // Bottom Right
             posX = scaledMainDisplayWidth - style.width;
-            posY = scaledMainDisplayHeight - style.height - (50 * previewScale);
+            posY = scaledMainDisplayHeight - style.height - (50 * containerStyle.previewScale);
         }
         else { // Custom
             posX = window.Config.CustomPositionPercentX / 100 * scaledMainDisplayWidth;
