@@ -96,7 +96,7 @@ namespace TopNotify.GUI
 
                 ShowCursor(true);
 
-                //Show The Main Window
+                // Show The Main Window
                 var mainWindow = finalWindow.CurrentAppManager.OpenWindows[0];
                 var mainHwnd = mainWindow.NativeHandle;
                 ShowWindow(mainHwnd, 5);
@@ -104,12 +104,14 @@ namespace TopNotify.GUI
 
                 var hwnd = finalWindow.NativeHandle;
 
-                //Find Position Of Window
+                // Find Position Of Window
                 Rectangle DragRect = new Rectangle();
                 NativeInterceptor.GetWindowRect(hwnd, ref DragRect);
 
-                // Find The Bounds Of The Preferred Monitor
-                var hMonitor = ResolutionFinder.GetPreferredDisplay();
+                // Get The Monitor Where The Window Is Located
+                var hMonitor = ResolutionFinder.MonitorFromPoint(new Point(DragRect.X, DragRect.Y), 2);
+
+                // Lock The Bounds To That Monitor
                 MonitorInfo currentMonitorInfo = new MonitorInfo();
                 ResolutionFinder.GetMonitorInfo(hMonitor, currentMonitorInfo);
                 var originX = currentMonitorInfo.Monitor.Left;
@@ -124,6 +126,7 @@ namespace TopNotify.GUI
 
                 //Write It To The Config
                 var currentConfig = Settings.Get();
+                currentConfig.PreferredMonitor = currentMonitorInfo.DeviceName;
                 currentConfig.CustomPositionPercentX = ((float)DragRect.X - (16f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
                 currentConfig.CustomPositionPercentY = ((float)DragRect.Y - (29f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
                 MainCommands.WriteConfigFile(mainWindow, JsonConvert.SerializeObject(currentConfig));
