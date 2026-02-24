@@ -1,8 +1,95 @@
 en-*,New notification
+af-za,Nuwe kennisgewing
+am-et,አዲስ ማሳወቂያ
+as-in,নতুন জাননী
+az-latn-az,Yeni bildiriş
+be-by,Новае апавяшчэнне
+bn-in,নতুন বিজ্ঞপ্তি
+bs-latn-ba,Novo obavještenje
+ca-es-valencia,Notificació nova
+chr-cher-us,ᎢᏤᎢ ᎧᏃᎮᏓ
+cy-gb,Hysbysiad newydd
+fa-ir,اعلان جدید
+fil-ph,Bagong notification
+ga-ie,Fógra nua
+gd-gb,Brath ùr
+gu-in,નવી સૂચના
+hi-in,नई अधिसूचना
+hy-am,Նոր ծանուցում
+is-is,Ný tilkynning
+ka-ge,ახალი შეტყობინება
+kk-kz,Жаңа хабарландыру
+km-kh,ការ​ជា​ន្ដេីង​ថ្មី
+kn-in,ಹೊಸ ಪ್ರಕಟಣೆ
+kok-in,नवी अधिसुचोवणी
+lb-lu,Nei Notifikatioun
+lo-la,ການແຈ້ງເຕືອນໃໝ່
+mi-nz,Whakamōhiotanga hōu
+mk-mk,Ново известување
+ml-in,പുതിയ അറിയിപ്പ്
+mr-in,नवीन सूचना
+ms-my,Pemberitahuan baharu
+mt-mt,Notifika ġdida
+ne-np,नयाँ सूचना
+nn-no,Nytt varsel
+or-in,ନୂତନ ବିଜ୍ଞପ୍ତି
+pa-in,ਨਵੀਂ ਸੂਚਨਾ
+quz-pe,Musuq willana
+sq-al,Njoftim i ri
+sr-cyrl-ba,Ново обавјешчење
+sr-cyrl-rs,Ново обавештење
+ta-in,புதிய அறிவிப்பு
+te-in,కొత్త నోటిఫికేషన్
+tt-ru,Яңа белдерү
+ug-cn,يېڭى ئۇقتۇرۇش
+ur-pk,نئی اطلاع
+uz-latn-uz,Yangi xabarnoma
+ar-sa,إعلام جديد
+bg-bg,Ново известие
+ca-es,Notificació nova
+cs-cz,Nové oznámení
+da-dk,Ny meddelelse
+de-de,Neue Benachrichtigung
+el-gr,Νέα ειδοποίηση
+en-gb,New notification
+en-us,New notification
+es-mx,Nueva notificación
+et-ee,Uus teatis
+eu-es,Jakinarazpen berria
+fi-fi,Uusi ilmoitus
+fr-ca,Nouvelle notification
+fr-fr,Nouvelle notification
+gl-es,Nova notificación
+he-il,הודעה חדשה
+hr-hr,Nova obavijesti
+hu-hu,Új értesítés
+id-id,Pemberitahuan baru
+it-it,Nuova notifica
+ja-jp,新しい通知
+ko-kr,새 알림
+lt-lt,Naujas pranešimas
+lv-lv,Jauns paziņojums
+nb-no,Ny varsling
+nl-nl,Nieuwe melding
+pl-pl,Nowe powiadomienie
+pt-br,Nova notificação
+pt-pt,Nova notificação
+ro-ro,Notificare nouă
+ru-ru,Новое уведомление
+sk-sk,Nové oznámenie
+sl-si,Novo obvestilo
+sr-latn-rs,Novo obaveštenje
+sv-se,Nytt meddelande
+th-th,การแจ้งให้ทราบใหม่
+tr-tr,Yeni bildirim
+uk-ua,Нове сповіщення
+vi-vn,Thông báo mới
+zh-cn,新通知
+zh-tw,新通知
 nl-*,Nieuwe melding
 fr-*,Nouvelle notification
 he-*,הודעה חדשה
-es-ES,Notificación nueva
+es-es,Notificación nueva
 es-*,Nueva notificación
 ja-*,新しい通知
 pt-*,Nova notificação

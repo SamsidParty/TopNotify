@@ -36,7 +36,7 @@ namespace TopNotify.Daemon
 
                         // In the CSV file, the languages will be stored as xx-*, we need to pattern match them
                         // Some languages will be stored as their full form like xx-YY, so we still have to check them
-                        if (FileSystemName.MatchesSimpleExpression(languageID, currentLanguageID) || languageID == currentLanguageID)
+                        if (FileSystemName.MatchesSimpleExpression(languageID.ToLower(), currentLanguageID.ToLower()) || languageID == currentLanguageID)
                         {
                             _NotificationName = languageNotificationName;
                             break;
