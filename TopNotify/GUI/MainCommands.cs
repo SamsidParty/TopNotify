@@ -41,7 +41,7 @@ namespace TopNotify.GUI
                 .Show();
         }
 
-        [Command("Donate")] 
+        [Command("Donate")]
         public static async void Donate()
         {
             try
@@ -68,7 +68,7 @@ namespace TopNotify.GUI
         {
             // Read version from Appx Manifest
             var appxManifest = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "AppxManifest.xml");
-            if (File.Exists(appxManifest)) { 
+            if (File.Exists(appxManifest)) {
                 var manifestData = File.ReadAllText(appxManifest);
 
                 var from = manifestData.IndexOf("Version=\"") + "Version=\"".Length;
@@ -86,6 +86,17 @@ namespace TopNotify.GUI
         [Command("RequestConfig")]
         public static void RequestConfig(WebWindow target)
         {
+            // Calculate window height based on preview aspect ratio
+            var resolution = ResolutionFinder.GetRealResolution();
+            float aspect = (float)resolution.Height / resolution.Width;
+
+            // Preview width is 352px, so preview height = 352 * aspect
+            // Add fixed UI height for header, dropdown, controls, buttons, and padding
+            float previewHeight = 352f * aspect;
+            float windowHeight = previewHeight + 420f;
+
+            target.Bounds = new WindowBounds((int)(400f * ResolutionFinder.GetScale()), (int)(windowHeight * ResolutionFinder.GetScale()));
+
             target.SendConfig();
         }
 
