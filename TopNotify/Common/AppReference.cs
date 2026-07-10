@@ -50,6 +50,29 @@ namespace TopNotify.Common
         /// </summary>
         public string SoundDisplayName;
 
+        public NotificationStickyMode StickyMode = NotificationStickyMode.Default;
+        public int StickyDurationSeconds = 5;
+
+        public NotificationStickyMode GetStickyMode(Settings settings)
+        {
+            if (StickyMode == NotificationStickyMode.Default)
+            {
+                return settings.StickyMode;
+            }
+
+            return StickyMode;
+        }
+
+        public int GetStickyDurationSeconds(Settings settings)
+        {
+            if (StickyMode == NotificationStickyMode.Default)
+            {
+                return settings.StickyDurationSeconds;
+            }
+
+            return StickyDurationSeconds;
+        }
+
         /// <summary>
         /// Identifies An AppReference Based On A Notification
         /// </summary>

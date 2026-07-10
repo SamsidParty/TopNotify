@@ -1,0 +1,233 @@
+.stickySection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stickySection .stickyControls {
+    width: 100%;
+}
+
+.stickySettingsTitle, .stickySection h3 {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.chakra-drawer__body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden !important;
+}
+
+.stickyAddApp {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    padding: 10px 0 14px;
+}
+
+.stickyAddApp button {
+    align-self: flex-start;
+}
+
+.stickyAppPicker {
+    background-color: var(--col-bg) !important;
+    height: 80vh;
+    max-height: 80vh;
+}
+
+.stickyAppPicker > * {
+    background-color: var(--col-bg) !important;
+}
+
+.stickyAppPicker .chakra-modal__body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.stickySearchBox {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+.stickySearchBox svg {
+    width: 20px;
+    height: 20px;
+}
+
+.stickySearchBox input {
+    height: 34px;
+    border-radius: 5px;
+    background-color: var(--col-tertiary);
+    border-color: var(--col-border);
+}
+
+.stickySearchResults {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    border-radius: 5px;
+    background-color: var(--col-tertiary);
+    margin-top: 12px;
+}
+
+.stickySearchResult {
+    display: flex !important;
+    gap: 10px;
+    align-items: center;
+    width: 100% !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    padding: 7px 10px !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.stickySearchResult img {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.stickySearchResult span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.stickySearchResult svg {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+.stickySearchEmpty {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.65;
+}
+
+.stickyAppItem {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 32px;
+    grid-template-rows: auto auto;
+    gap: 10px 12px;
+    align-items: center;
+    min-height: 94px;
+    padding: 10px 6px 10px 0;
+}
+
+.stickyAppIdentity {
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    gap: 10px;
+    align-items: center;
+    min-width: 0;
+}
+
+.stickyAppIdentity img {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.stickyAppItem h4 {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stickyAppItem > .iconButton {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: end;
+}
+
+.stickyAppItem > .stickyControls {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.stickyAppList {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.stickyAppList::-webkit-scrollbar {
+    width: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.stickyAppList::-webkit-scrollbar-thumb {
+    min-height: 40px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background-clip: padding-box;
+    background-color: rgba(255, 255, 255, 0.55);
+}
+
+.stickyControls {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    min-width: 0;
+}
+
+.stickyControls > .chakra-select__wrapper {
+    flex: 0 0 176px;
+    width: 176px;
+}
+
+.stickyControls > .chakra-select__wrapper .chakra-select__icon-wrapper {
+    right: 8px;
+}
+
+.stickyControls select {
+    height: 34px;
+    width: 176px;
+    min-width: 176px;
+    padding-right: 32px;
+    border-radius: 5px;
+    background-color: var(--col-tertiary);
+    border-color: var(--col-border);
+}
+
+.stickySeconds {
+    width: 92px;
+    height: 34px;
+}
+
+.stickySeconds.hidden {
+    display: none;
+}
+
+.stickySeconds input {
+    height: 34px;
+    min-width: 0;
+    padding-left: 8px;
+    padding-right: 4px;
+    background-color: var(--col-tertiary);
+    border-color: var(--col-border);
+}
+
+.stickySection + hr {
+    margin-top: 14px;
+}
