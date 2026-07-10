@@ -29,8 +29,11 @@ namespace TopNotify.Daemon
         public const int ReflowTimeout = 50;
 
         public ConcurrentDictionary<uint, Action?> CleanUpFunctions = new ConcurrentDictionary<uint, Action?>(); // Maps HandledNotifications to the associated clean up function
+        public ConcurrentDictionary<uint, bool> KnownNotificationIds = new ConcurrentDictionary<uint, bool>();
         public UserNotificationListener Listener;
         public bool CanListenToNotifications = false;
+        public bool IsPollingNotifications = false;
+        public DateTime LastNotificationPoll = DateTime.MinValue;
 
         public static Interceptor[] InstalledInterceptors =
         {
@@ -44,6 +47,7 @@ namespace TopNotify.Daemon
         {
             Instance = this;
             CurrentSettings = Settings.Get();
+            NotificationLifetimeController.Apply(CurrentSettings);
 
             foreach (var possibleInterceptor in InstalledInterceptors)
             {
@@ -62,8 +66,7 @@ namespace TopNotify.Daemon
                 var access = await Listener.RequestAccessAsync();
                 if (access != UserNotificationListenerAccessStatus.Allowed)
                 {
-                    var msg = "Failed To Start Notification Listener: Permission Denied";
-                    DaemonErrorHandler.ThrowNonCritical(new DaemonError("listener_failure_no_permission", msg));
+                    Program.Logger.Warning("Failed To Start Notification Listener: Permission Denied");
                     return;
                 }
 
@@ -76,12 +79,12 @@ namespace TopNotify.Daemon
                 }
                 catch (Exception ex)
                 {
-                    var msg = "Failed To Start Notification Listener: Not Packaged";
-                    DaemonErrorHandler.ThrowNonCritical(new DaemonError("listener_failure_not_packaged", msg));
+                    Program.Logger.Warning("Failed To Start Notification Listener: Not Packaged");
                     return;
                 }
 
                 CanListenToNotifications = true;
+                PollNotifications();
 
             });
 
@@ -105,6 +108,7 @@ namespace TopNotify.Daemon
                     Reflow();
                 }
 
+                PollNotifications();
                 Update();
 
                 Thread.Sleep(10);
@@ -162,22 +166,70 @@ namespace TopNotify.Daemon
 
             if (args.ChangeKind == UserNotificationChangedKind.Added)
             {
-                foreach (Interceptor i in Interceptors)
+                if (KnownNotificationIds.TryAdd(args.UserNotificationId, true))
                 {
-                    try
-                    {
-                        i.OnNotification(userNotification);
-                    }
-                    catch { }
+                    DispatchNotification(userNotification);
                 }
+            }
+            else
+            {
+                KnownNotificationIds.TryRemove(args.UserNotificationId, out _);
             }
 
             Update();
         }
 
+        public void PollNotifications()
+        {
+            if (!CanListenToNotifications) { return; }
+            if (IsPollingNotifications) { return; }
+            if ((DateTime.Now - LastNotificationPoll).TotalMilliseconds < 500) { return; }
+
+            IsPollingNotifications = true;
+            LastNotificationPoll = DateTime.Now;
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var userNotifications = await Listener.GetNotificationsAsync(NotificationKinds.Toast);
+                    foreach (var notification in userNotifications)
+                    {
+                        if (KnownNotificationIds.TryAdd(notification.Id, true))
+                        {
+                            DispatchNotification(notification);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Program.Logger?.Warning($"Failed to poll notifications: {ex.Message}");
+                }
+                finally
+                {
+                    IsPollingNotifications = false;
+                }
+            });
+        }
+
+        public void DispatchNotification(UserNotification userNotification)
+        {
+            if (userNotification == null) { return; }
+
+            foreach (Interceptor i in Interceptors)
+            {
+                try
+                {
+                    i.OnNotification(userNotification);
+                }
+                catch { }
+            }
+        }
+
         public void OnSettingsChanged()
         {
             CurrentSettings = Settings.Get();
+            NotificationLifetimeController.Apply(CurrentSettings);
 
             foreach (Interceptor i in Interceptors)
             {

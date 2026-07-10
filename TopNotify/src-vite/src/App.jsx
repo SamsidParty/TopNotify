@@ -9,6 +9,7 @@ import ManageNotificationSounds from "./NotificationSounds";
 import Preview from "./Preview";
 import ReadAloud from "./ReadAloud";
 import SoundInterceptionToggle from "./SoundInterceptionToggle";
+import StickyNotifications from "./StickyNotifications";
 import TestNotification from "./TestNotification";
 import NotificationTransparency from "./Transparency";
 
@@ -16,13 +17,40 @@ window.Config = {
     Location: -1,
     Opacity: 0,
     ReadAloud: false,
+    StickyMode: 1,
+    StickyDurationSeconds: 5,
     AppReferences: []
 };
 
 // Called By C#, Sets The window.Config Object To The Saved Config File
 window.SetConfig = async (config) => {
     Config = JSON.parse(config);
+    window.NormalizeConfig();
     window.setRerender(rerender + 1);
+};
+
+window.NormalizeConfig = () => {
+    if (Config.StickyMode == undefined) {
+        Config.StickyMode = 1;
+    }
+
+    if (Config.StickyDurationSeconds == undefined) {
+        Config.StickyDurationSeconds = 5;
+    }
+
+    if (!Config.AppReferences) {
+        Config.AppReferences = [];
+    }
+
+    for (let i = 0; i < Config.AppReferences.length; i++) {
+        if (Config.AppReferences[i].StickyMode == undefined) {
+            Config.AppReferences[i].StickyMode = 0;
+        }
+
+        if (Config.AppReferences[i].StickyDurationSeconds == undefined) {
+            Config.AppReferences[i].StickyDurationSeconds = 5;
+        }
+    }
 };
 
 window.UploadConfig = () => {
@@ -88,6 +116,8 @@ function App() {
                 <ClickThrough></ClickThrough>
                 <Divider />
                 <NotificationTransparency></NotificationTransparency>
+                <Divider />
+                <StickyNotifications></StickyNotifications>
             </Container>
 
             <Container>

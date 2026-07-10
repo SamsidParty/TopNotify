@@ -18,7 +18,13 @@ export default defineConfig([
             ecmaVersion: 2020,
             globals: {
                 ...globals.browser,
+                ChangeSwitch: "readonly",
+                ChangeValue: "readonly",
+                Config: "writable",
                 igniteView: "readonly",
+                rerender: "readonly",
+                setRerender: "readonly",
+                UploadConfig: "readonly",
             },
             parserOptions: {
                 ecmaVersion: "latest",

@@ -396,3 +396,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 TopNotify/.DS_Store
+/TopNotify/dist/

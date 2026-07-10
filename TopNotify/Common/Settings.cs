@@ -37,6 +37,9 @@ namespace TopNotify.Common
 
         public string PreferredMonitor = "primary";
 
+        public NotificationStickyMode StickyMode = NotificationStickyMode.WindowsDefault;
+        public int StickyDurationSeconds = 5;
+
         public List<AppReference> AppReferences = new List<AppReference>();
 
         // Dynamic Fields That Are Cached, Useful For Interop
@@ -162,5 +165,13 @@ namespace TopNotify.Common
         BottomLeft,
         BottomRight,
         Custom
+    }
+
+    public enum NotificationStickyMode
+    {
+        Default,
+        WindowsDefault,
+        Seconds,
+        Permanent
     }
 }
