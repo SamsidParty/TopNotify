@@ -31,6 +31,9 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# IgniteView runtime (downloaded/extracted at build time)
+**/iv2runtime/
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
