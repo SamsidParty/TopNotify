@@ -134,7 +134,15 @@ namespace TopNotify.Common
             var mainWindow =
                 WebWindow.Create()
                 .WithTitle("TopNotify")
-                .WithBounds(new LockedWindowBounds((int)(400f * ResolutionFinder.GetScale()), (int)(650f * ResolutionFinder.GetScale())))
+                .WithBounds(new WindowBounds
+                {
+                    InitialWidth = (int)(400f * ResolutionFinder.GetScale()),
+                    InitialHeight = (int)(650f * ResolutionFinder.GetScale()),
+                    MinWidth = (int)(400f * ResolutionFinder.GetScale()),
+                    MinHeight = (int)(500f * ResolutionFinder.GetScale()),
+                    MaxWidth = int.MaxValue,
+                    MaxHeight = int.MaxValue
+                })
                 .With((w) => (w as Win32WebWindow).BackgroundMode = Win32WebWindow.WindowBackgroundMode.Acrylic)
                 .WithoutTitleBar()
                 .Show();
