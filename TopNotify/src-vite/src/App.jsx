@@ -72,35 +72,37 @@ function App() {
                 <Button className="iconButton" onClick={() => window.close()}><TbX /></Button>
             </div>
 
-            <TestNotification></TestNotification>
+            <div className="scrollableContent">
+                <TestNotification></TestNotification>
 
-            <Preview></Preview>
+                <Preview></Preview>
 
-            <MonitorSelect></MonitorSelect>
+                <MonitorSelect></MonitorSelect>
 
-            {
-                window.errorList?.map((error, i) => {
-                    return (<ErrorMessage key={i} error={error}></ErrorMessage>);
-                })
-            }
+                {
+                    window.errorList?.map((error, i) => {
+                        return (<ErrorMessage key={i} error={error}></ErrorMessage>);
+                    })
+                }
 
-            <Container>
-                <ClickThrough></ClickThrough>
-                <Divider />
-                <NotificationTransparency></NotificationTransparency>
-            </Container>
+                <Container>
+                    <ClickThrough></ClickThrough>
+                    <Divider />
+                    <NotificationTransparency></NotificationTransparency>
+                </Container>
 
-            <Container>
-                <ReadAloud></ReadAloud>
-                <Divider />
-                <SoundInterceptionToggle></SoundInterceptionToggle>
-                <Divider />
-                <ManageNotificationSounds></ManageNotificationSounds>
-            </Container>
+                <Container>
+                    <ReadAloud></ReadAloud>
+                    <Divider />
+                    <SoundInterceptionToggle></SoundInterceptionToggle>
+                    <Divider />
+                    <ManageNotificationSounds></ManageNotificationSounds>
+                </Container>
 
-            <div className='aboutButtons'>
-                <Button onClick={() => igniteView.commandBridge.About()}><TbInfoCircle/>About TopNotify</Button>
-                <Button onClick={() => igniteView.commandBridge.Donate()}><TbCurrencyDollar/>Donate</Button>
+                <div className='aboutButtons'>
+                    <Button onClick={() => igniteView.commandBridge.About()}><TbInfoCircle/>About TopNotify</Button>
+                    <Button onClick={() => igniteView.commandBridge.Donate()}><TbCurrencyDollar/>Donate</Button>
+                </div>
             </div>
         </div>
     );

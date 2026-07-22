@@ -1,5 +1,5 @@
-
 import { Button } from "@chakra-ui/react";
+import { useRef, useState, useEffect } from "react";
 import {
     TbChevronsDownLeft,
     TbChevronsDownRight,
@@ -9,10 +9,7 @@ import {
 } from "react-icons/tb";
 import "./CSS/Preview.css";
 
-let previewWidth = 352;
-let previewHeight = 198;
-
-function CalculatePreviewContainerStyle() {
+function CalculatePreviewContainerStyle(containerWidth) {
     let aspect = 0.5625; // 16:9
 
     if (window.Config.__ScreenWidth) {
@@ -21,27 +18,28 @@ function CalculatePreviewContainerStyle() {
 
     const isPortraitAspect = aspect > 1;
 
+    const width = isPortraitAspect ? (containerWidth * aspect) : containerWidth;
+    const height = isPortraitAspect ? containerWidth : (containerWidth * aspect);
+
     return { 
-        width: isPortraitAspect ? (previewHeight / aspect) : previewWidth,
-        height: isPortraitAspect ? previewHeight : (previewWidth * aspect),
-        previewScale: isPortraitAspect ? (previewHeight) / 1920 : previewWidth / 1920,
+        width,
+        height,
+        previewScale: isPortraitAspect ? (height / 1920) : (width / 1920),
         backgroundImage: `url('${igniteView.resolverURL + "/wallpaper.jpg"}')`
     };
 }
 
 
-function CalculateTaskbarPreviewStyle() {
+function CalculateTaskbarPreviewStyle(containerStyle) {
     //Windows taskbar is 48px high
-    let standardHeight = 48 * CalculatePreviewContainerStyle().previewScale;
+    let standardHeight = 48 * containerStyle.previewScale;
 
     return { 
         height: window.Config.__ScreenScale ? (standardHeight * window.Config.__ScreenScale) : standardHeight
     };
 }
 
-function CalculateNotificationWindowPreviewStyle() {
-
-    const containerStyle = CalculatePreviewContainerStyle();
+function CalculateNotificationWindowPreviewStyle(containerStyle) {
 
     //The window size (not displayed size) of windows notifications are 396 * 152
     let standardWidth = 396 * containerStyle.previewScale;
@@ -90,33 +88,55 @@ function CalculateNotificationWindowPreviewStyle() {
     return style;
 }
 
-function CalculateNotificationPreviwStyle() { 
+function CalculateNotificationPreviwStyle(containerStyle) { 
 
     //The displayed size is 364 * 109, which has a scale of 0.919191917 * 0.717105263 relative to the window
 
+    const windowStyle = CalculateNotificationWindowPreviewStyle(containerStyle);
+
     return {
-        width: CalculateNotificationWindowPreviewStyle().width * 0.919191917,
-        height: CalculateNotificationWindowPreviewStyle().height * 0.717105263,
+        width: windowStyle.width * 0.919191917,
+        height: windowStyle.height * 0.717105263,
         opacity: (Config.Opacity != undefined) ? (1 - (Config.Opacity / 5)) : 0
     };
 }
 
 export default function Preview() {
+    const wrapperRef = useRef(null);
+    const [containerWidth, setContainerWidth] = useState(352); // fallback default until measured
+
+    useEffect(() => {
+        if (!wrapperRef.current) return;
+
+        const observer = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                setContainerWidth(entry.contentRect.width);
+            }
+        });
+
+        observer.observe(wrapperRef.current);
+        return () => observer.disconnect();
+    }, []);
+
+    const containerStyle = CalculatePreviewContainerStyle(containerWidth);
+
     return (
-        <div className="previewContainer" style={CalculatePreviewContainerStyle()}>
-            <div className="notificationWindowPreview" style={CalculateNotificationWindowPreviewStyle()}>
-                <div className="notificationPreview" style={CalculateNotificationPreviwStyle()}>
-                    <img src="/Image/NotificationPreview.png"></img>
+        <div ref={wrapperRef} style={{ width: '100%' }}>
+            <div className="previewContainer" style={containerStyle}>
+                <div className="notificationWindowPreview" style={CalculateNotificationWindowPreviewStyle(containerStyle)}>
+                    <div className="notificationPreview" style={CalculateNotificationPreviwStyle(containerStyle)}>
+                        <img src="/Image/NotificationPreview.png"></img>
+                    </div>
                 </div>
+                <div className="locationSelect">
+                    <Button className="locationSelectButton" onClick={() => SetPresetPosition(0)} ><TbChevronsUpLeft/></Button>
+                    <Button className="locationSelectButton" onClick={() => SetPresetPosition(1)} ><TbChevronsUpRight/></Button>
+                    <Button className="locationSelectButton customLocationSelectButton" onClick={() => igniteView.commandBridge.EnterDragMode()}><TbCurrentLocation/></Button>
+                    <Button className="locationSelectButton" onClick={() => SetPresetPosition(2)} ><TbChevronsDownLeft/></Button>
+                    <Button className="locationSelectButton" onClick={() => SetPresetPosition(3)} ><TbChevronsDownRight/></Button>
+                </div>
+                <div className="taskbarPreview" style={CalculateTaskbarPreviewStyle(containerStyle)}><img src="/Image/Taskbar.png"></img></div>
             </div>
-            <div className="locationSelect">
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(0)} ><TbChevronsUpLeft/></Button>
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(1)} ><TbChevronsUpRight/></Button>
-                <Button className="locationSelectButton customLocationSelectButton" onClick={() => igniteView.commandBridge.EnterDragMode()}><TbCurrentLocation/></Button>
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(2)} ><TbChevronsDownLeft/></Button>
-                <Button className="locationSelectButton" onClick={() => SetPresetPosition(3)} ><TbChevronsDownRight/></Button>
-            </div>
-            <div className="taskbarPreview" style={CalculateTaskbarPreviewStyle()}><img src="/Image/Taskbar.png"></img></div>
         </div>
     );
 }
