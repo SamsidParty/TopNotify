@@ -9,6 +9,7 @@ import ManageNotificationSounds from "./NotificationSounds";
 import Preview from "./Preview";
 import ReadAloud from "./ReadAloud";
 import SoundInterceptionToggle from "./SoundInterceptionToggle";
+import StartupToggle from "./StartupToggle";
 import TestNotification from "./TestNotification";
 import NotificationTransparency from "./Transparency";
 
@@ -88,6 +89,8 @@ function App() {
                 <ClickThrough></ClickThrough>
                 <Divider />
                 <NotificationTransparency></NotificationTransparency>
+                <Divider />
+                <StartupToggle></StartupToggle>
             </Container>
 
             <Container>
