@@ -1,6 +1,7 @@
 ﻿using IgniteView.Core;
 using Microsoft.Win32;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -23,8 +24,11 @@ namespace TopNotify.Daemon
         // This File Is Used To Replace The Default Notification Sounds, So That TopNotify Can Play A Different Sound
         const string FAKE_SOUND = "internal/silent";
 
-        SoundPlayer Player;
-        bool isPlaying = false;
+        // Bounded so a genuine flood can't grow this unbounded; normal back-to-back
+        // notifications (a couple per second) never get close to this ceiling.
+        const int MAX_QUEUED_SOUNDS = 8;
+        readonly BlockingCollection<string> soundQueue = new BlockingCollection<string>(MAX_QUEUED_SOUNDS);
+        bool consumerStarted = false;
 
         bool allowedToPlaySound = false;
 
@@ -193,22 +197,45 @@ namespace TopNotify.Daemon
             var appRef = AppReference.FromNotification(notification);
             var soundFilePath = GetSoundPath(appRef.SoundPath);
 
-            if (!isPlaying)
+            // Enqueue Instead Of Dropping: Two Notifications Arriving Close Together
+            // (E.g. Two Chat Apps Within The Same Second) Now Both Get A Sound Cue,
+            // Played In Order, Instead Of The Second One Silently Vanishing.
+            //
+            // NOTE: TryAdd(item) WITHOUT a timeout is NOT a non-blocking call on
+            // BlockingCollection<T> - it behaves like Add() and blocks the calling
+            // thread (here, the WinRT notification-event thread) until space frees up.
+            // Passing TimeSpan.Zero is what actually makes this a non-blocking attempt.
+            if (!soundQueue.TryAdd(soundFilePath, TimeSpan.Zero))
             {
-                isPlaying = true;
-
-                // Play Sound Without Blocking The Main Thread
-                Task.Run(() =>
-                {
-                    Player = new SoundPlayer(soundFilePath);
-                    Player.Load();
-                    Player.PlaySync();
-                    Player.Dispose();
-                    isPlaying = false;
-                });
+                Program.Logger.Warning($"SoundInterceptor: queue full ({MAX_QUEUED_SOUNDS} pending), dropping sound for {appRef.ID}");
             }
 
             base.OnNotification(notification);
+        }
+
+        /// <summary>
+        /// Dedicated Background Worker That Plays Queued Sounds One At A Time, In Order.
+        /// Runs For The Lifetime Of The Daemon Process.
+        /// </summary>
+        void RunPlaybackConsumer()
+        {
+            foreach (var soundFilePath in soundQueue.GetConsumingEnumerable())
+            {
+                try
+                {
+                    using (var player = new SoundPlayer(soundFilePath))
+                    {
+                        player.Load();
+                        player.PlaySync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Non-critical: a single bad/locked sound file shouldn't take down
+                    // playback for every notification after it, so log and keep consuming.
+                    Program.Logger.Warning(ex, $"SoundInterceptor: failed to play {soundFilePath}");
+                }
+            }
         }
 
         /// <summary>
@@ -241,6 +268,14 @@ namespace TopNotify.Daemon
         public override void Start()
         {
             Restart();
+
+            if (!consumerStarted)
+            {
+                consumerStarted = true;
+                var worker = new Thread(RunPlaybackConsumer) { IsBackground = true, Name = "SoundInterceptor.Playback" };
+                worker.Start();
+            }
+
             base.Start();
         }
     }
