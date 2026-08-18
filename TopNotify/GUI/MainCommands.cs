@@ -103,7 +103,13 @@ namespace TopNotify.GUI
             Thread.Sleep(100); // Prevent Crashing Daemon From Spamming Button
 
             // Tell The Daemon The Config Has Changed
-            Daemon.Daemon.SendCommandToDaemon("UpdateConfig");
+            var delivered = Daemon.Daemon.SendCommandToDaemon("UpdateConfig");
+            if (!delivered)
+            {
+                // Settings Were Saved To Disk Either Way, But The Running Daemon May Not
+                // Have Picked Them Up - Surface This Rather Than Failing Silently.
+                Program.Logger.Warning("Settings were saved but the daemon did not acknowledge the update - it may be using stale config until restarted");
+            }
 
             isSaving = false;
         }
