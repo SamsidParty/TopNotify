@@ -1,6 +1,7 @@
 ﻿using IgniteView.Core;
 using Microsoft.Win32;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -8,12 +9,13 @@ using System.Drawing;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
-using System.Media;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using TopNotify.Common;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.UI.Notifications;
 
 namespace TopNotify.Daemon
@@ -23,8 +25,17 @@ namespace TopNotify.Daemon
         // This File Is Used To Replace The Default Notification Sounds, So That TopNotify Can Play A Different Sound
         const string FAKE_SOUND = "internal/silent";
 
-        SoundPlayer Player;
-        bool isPlaying = false;
+        // Bounded so a genuine flood can't grow this unbounded; normal back-to-back
+        // notifications (a couple per second) never get close to this ceiling.
+        const int MAX_QUEUED_SOUNDS = 8;
+        readonly BlockingCollection<string> soundQueue = new BlockingCollection<string>(MAX_QUEUED_SOUNDS);
+        bool consumerStarted = false;
+
+        // Ceiling on a single sound's playback wait. MediaPlayer is event-driven rather
+        // than synchronous like the old SoundPlayer, so without a bound a corrupted or
+        // unsupported file whose MediaEnded/MediaFailed never fires would wedge the
+        // consumer thread forever, silencing every notification sound after it.
+        const int MAX_PLAYBACK_WAIT_MS = 30000;
 
         bool allowedToPlaySound = false;
 
@@ -193,26 +204,46 @@ namespace TopNotify.Daemon
             var appRef = AppReference.FromNotification(notification);
             var soundFilePath = GetSoundPath(appRef.SoundPath);
 
-            if (!isPlaying)
+            // Enqueue Instead Of Dropping: Two Notifications Arriving Close Together
+            // (E.g. Two Chat Apps Within The Same Second) Now Both Get A Sound Cue,
+            // Played In Order, Instead Of The Second One Silently Vanishing.
+            //
+            // NOTE: TryAdd(item) WITHOUT a timeout is NOT a non-blocking call on
+            // BlockingCollection<T> - it behaves like Add() and blocks the calling
+            // thread (here, the WinRT notification-event thread) until space frees up.
+            // Passing TimeSpan.Zero is what actually makes this a non-blocking attempt.
+            if (!soundQueue.TryAdd(soundFilePath, TimeSpan.Zero))
             {
-                isPlaying = true;
-
-                // Play Sound Without Blocking The Main Thread
-                Task.Run(() =>
-                {
-                    Player = new SoundPlayer(soundFilePath);
-                    Player.Load();
-                    Player.PlaySync();
-                    Player.Dispose();
-                    isPlaying = false;
-                });
+                Program.Logger.Warning($"SoundInterceptor: queue full ({MAX_QUEUED_SOUNDS} pending), dropping sound for {appRef.ID}");
             }
 
             base.OnNotification(notification);
         }
 
         /// <summary>
-        /// Plays a sound without any delay or timeout
+        /// Dedicated Background Worker That Plays Queued Sounds One At A Time, In Order.
+        /// Runs For The Lifetime Of The Daemon Process.
+        /// </summary>
+        void RunPlaybackConsumer()
+        {
+            foreach (var soundFilePath in soundQueue.GetConsumingEnumerable())
+            {
+                try
+                {
+                    PlaySoundBlocking(soundFilePath, MAX_PLAYBACK_WAIT_MS);
+                }
+                catch (Exception ex)
+                {
+                    // Non-critical: a single bad/locked sound file shouldn't take down
+                    // playback for every notification after it, so log and keep consuming.
+                    Program.Logger.Warning(ex, $"SoundInterceptor: failed to play {soundFilePath}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Plays a sound without any delay or timeout (fire-and-forget from the caller's
+        /// perspective - runs on its own background task).
         /// </summary>
         public static void PlaySoundWithoutTimeout(string soundPath)
         {
@@ -220,11 +251,54 @@ namespace TopNotify.Daemon
 
             Task.Run(() =>
             {
-                using (var p = new SoundPlayer(soundFilePath))
+                try
                 {
-                    p.Play();
+                    PlaySoundBlocking(soundFilePath, MAX_PLAYBACK_WAIT_MS);
+                }
+                catch (Exception ex)
+                {
+                    Program.Logger.Warning(ex, $"SoundInterceptor: preview playback failed for {soundFilePath}");
                 }
             });
+        }
+
+        /// <summary>
+        /// Plays a single sound file to completion (or until timeoutMs elapses / playback
+        /// fails) using Windows.Media.Playback.MediaPlayer, which - unlike the old
+        /// System.Media.SoundPlayer (a thin wrapper over the WAV-only Win32 PlaySound API) -
+        /// is backed by Media Foundation and natively decodes WAV, MP3, AAC/M4A, WMA, and
+        /// FLAC. Unlike SoundPlayer, MediaPlayer stops playback immediately when disposed,
+        /// so the caller must be kept alive (via the Wait below) until MediaEnded fires -
+        /// disposing right after calling Play() would truncate the sound before it's heard.
+        ///
+        /// If SilenceTrimmer found leading silence for this file (a ".trim" sidecar next to
+        /// it, written at import time), playback starts from that offset instead of 0 -
+        /// verified against a real trimmed file that playback duration actually shortens
+        /// by the expected amount, not just that no exception is thrown.
+        /// </summary>
+        static void PlaySoundBlocking(string filePath, int timeoutMs)
+        {
+            using (var player = new MediaPlayer())
+            {
+                var tcs = new TaskCompletionSource<bool>();
+                var trimOffset = SilenceTrimmer.ReadTrimOffset(filePath);
+
+                player.MediaEnded += (s, e) => tcs.TrySetResult(true);
+                player.MediaFailed += (s, e) => tcs.TrySetException(new Exception($"MediaPlayer failed ({e.Error}): {e.ErrorMessage}"));
+
+                if (trimOffset.HasValue)
+                {
+                    player.MediaOpened += (s, e) => { player.PlaybackSession.Position = trimOffset.Value; };
+                }
+
+                player.Source = MediaSource.CreateFromUri(new Uri(filePath));
+                player.Play();
+
+                if (!tcs.Task.Wait(timeoutMs))
+                {
+                    throw new TimeoutException($"Playback of \"{filePath}\" did not complete within {timeoutMs}ms");
+                }
+            }
         }
 
         public override void Reflow()
@@ -241,6 +315,14 @@ namespace TopNotify.Daemon
         public override void Start()
         {
             Restart();
+
+            if (!consumerStarted)
+            {
+                consumerStarted = true;
+                var worker = new Thread(RunPlaybackConsumer) { IsBackground = true, Name = "SoundInterceptor.Playback" };
+                worker.Start();
+            }
+
             base.Start();
         }
     }

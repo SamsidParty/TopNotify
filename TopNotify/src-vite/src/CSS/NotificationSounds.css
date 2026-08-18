@@ -18,6 +18,13 @@
     height: 24px;
 }
 
+/* Deliberately not data-greyed-out - that attribute sets pointer-events: none app-wide,
+   which would make the row unclickable. This needs to stay clickable so the user can
+   give the app its own preference, which is the whole point of showing it dimmed. */
+.appReferenceSoundItem[data-inherited="true"] {
+    opacity: 0.6;
+}
+
 .soundPackList {
     display: flex;
     justify-content: center;
@@ -58,7 +65,8 @@
 }
 
 .soundItem {
-    transition: opacity 0.3s;
+    position: relative;
+    transition: opacity 0.3s, outline-color 0.2s, background-color 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -69,11 +77,49 @@
     max-height: 23vw;
     background-color: var(--col-tertiary);
     border-radius: 5px;
+    outline: 2px solid transparent;
+}
+
+.soundItem[data-active="true"] {
+    outline-color: #757DF9;
+    background-color: rgba(117, 125, 249, 0.18);
+}
+
+.soundItem .activeCheckbox {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background-color: #757DF9;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.soundItem .deleteSoundButton {
+    position: absolute !important;
+    top: 6px;
+    left: 6px;
+    /* Red rather than the standard icon-button blue, to read as destructive at a glance. */
+    background-color: #d9534f !important;
 }
 
 .soundItem .soundItemButton {
     width: 100%;
     height: calc(17vw);
+    /* Chakra's Button defaults to a solid background (resolving to --col-bg, a solid
+       #222222) which sat on top of .soundItem's own translucent tile background,
+       showing as a mismatched grey box behind the icon. Let the tile's background
+       (and its active-state tint) show through instead. */
+    background-color: transparent !important;
+}
+
+.soundItem .soundItemButton:hover {
+    background-color: transparent !important;
 }
 
 .soundItem img, .soundItem > .soundItemButton svg {
@@ -93,6 +139,32 @@
 }
 
 .soundItem h5 {
-    margin: auto;
+    margin: 0;
+    width: 100%;
+    /* Asymmetric on purpose: left padding gives the truncated name room to breathe,
+       right padding is minimal so the icon button anchors to the tile's true edge
+       instead of floating in dead space that made it read as an inline glyph. */
+    padding: 0 4px 0 10px;
+    box-sizing: border-box;
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.soundItem h5 span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.soundItem h5 .iconButton {
+    flex-shrink: 0;
+}
+
+.trimSilenceOption {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    opacity: 0.85;
 }

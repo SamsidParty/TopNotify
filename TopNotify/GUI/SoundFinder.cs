@@ -17,6 +17,12 @@ namespace TopNotify.GUI
     {
         public static string ImportedSoundFolder => Path.Join(Settings.GetAppDataFolder(), "NotificationSounds", "imported");
 
+        // Formats Windows Media Foundation decodes natively on a stock install - what
+        // MediaPlayer in SoundInterceptor can actually play. Deliberately excludes OGG,
+        // which needs a separate Store codec extension on some systems and isn't reliably
+        // available out of the box.
+        static readonly string[] SupportedExtensions = { "wav", "mp3", "aac", "m4a", "wma", "flac" };
+
         [Command("FindSounds")]
         public static string FindSounds()
         {
@@ -26,14 +32,19 @@ namespace TopNotify.GUI
 
             // Inject Files From Music Folder Into The JSON File
             dynamic packToInject = soundPacks.Where((dynamic pack) => pack.ID == "custom_sound_path").FirstOrDefault();
-            var wavFiles = GetImportedWAVFiles();
+            var soundFiles = GetImportedSoundFiles();
 
-            foreach (var wavFile in wavFiles)
+            var importedFolderFull = Path.GetFullPath(ImportedSoundFolder);
+
+            foreach (var soundFile in soundFiles)
             {
                 dynamic soundToInject = new ExpandoObject();
-                soundToInject.Path = "custom_sound_path/" + wavFile;
-                soundToInject.Name = Path.GetFileNameWithoutExtension(wavFile);
+                soundToInject.Path = "custom_sound_path/" + soundFile;
+                soundToInject.Name = Path.GetFileNameWithoutExtension(soundFile);
                 soundToInject.Icon = "/Image/Sound.svg";
+                // Only Files We Actually Copied Into ImportedSoundFolder Are Deletable -
+                // Never A File Picked Up From Scanning The User's Own Music Folder.
+                soundToInject.IsDeletable = Path.GetFullPath(soundFile).StartsWith(importedFolderFull, StringComparison.OrdinalIgnoreCase);
                 packToInject.Sounds.Add(soundToInject);
             }
 
@@ -45,23 +56,47 @@ namespace TopNotify.GUI
         /// Opens a file dialog to select a sound file and imports it
         /// </summary>
         [Command("ImportSound")]
-        public static string[] ImportSound()
+        public static async Task<string[]> ImportSound(bool trimSilence)
         {
-            var soundPath = FileDialog.PickFile(new FileFilter("wav"));
+            // A single combined filter, not one FileFilter per extension - keeps the dialog's
+            // dropdown to one "Audio Files" entry instead of listing each format separately.
+            // The underlying dialog is Native File Dialog Extended (NFDe, via IgniteView's
+            // NFDBindings) - confirmed by decompiling IgniteView.FileDialogs.dll that Pattern
+            // is passed through to NFDFilterU8.Spec verbatim, with zero transformation. NFDe's
+            // spec format is a COMMA-separated extension list, not semicolon-separated - a
+            // semicolon-joined pattern silently matches nothing.
+            var filterName = $"Audio Files ({string.Join(", ", SupportedExtensions.Select(ext => ext.ToUpper()))})";
+            var filters = new[] { new FileFilter(filterName, string.Join(",", SupportedExtensions)) };
+            var soundPath = FileDialog.PickFile(filters);
 
-            if (!string.IsNullOrEmpty(soundPath) && File.Exists(soundPath) && Path.GetExtension(soundPath).ToLower() == ".wav")
+            if (!string.IsNullOrEmpty(soundPath) && File.Exists(soundPath))
             {
-                GetImportedWAVFiles(); // Makes sure ImportedSoundFolder exists
+                var extension = Path.GetExtension(soundPath).ToLower().TrimStart('.');
+
+                if (!SupportedExtensions.Contains(extension))
+                {
+                    return new string[0];
+                }
+
+                GetImportedSoundFiles(); // Makes sure ImportedSoundFolder exists
                 var soundName = Path.GetFileNameWithoutExtension(soundPath);
 
                 // Prevent duplicate files
-                while (File.Exists(Path.Join(ImportedSoundFolder, soundName + ".wav")))
+                while (File.Exists(Path.Join(ImportedSoundFolder, soundName + "." + extension)))
                 {
                     soundName += "_";
                 }
 
-                var copiedSoundPath = Path.Join(ImportedSoundFolder, soundName + ".wav");
+                var copiedSoundPath = Path.Join(ImportedSoundFolder, soundName + "." + extension);
                 File.Copy(soundPath, copiedSoundPath, true);
+
+                if (trimSilence)
+                {
+                    // Awaited So The Sidecar Is Already In Place By The Time The Import
+                    // Promise Resolves And The User Can Preview/Select The New Sound.
+                    await SilenceTrimmer.DetectAndStoreTrim(copiedSoundPath);
+                }
+
                 return new string[] { "custom_sound_path/" + copiedSoundPath, Path.GetFileNameWithoutExtension(soundPath) };
             }
 
@@ -78,9 +113,57 @@ namespace TopNotify.GUI
         }
 
         /// <summary>
-        /// Returns A List Of WAV Files In The Music Folder
+        /// Deletes an imported sound file (and its trim sidecar, if any). Only ever deletes
+        /// files inside ImportedSoundFolder - refuses for anything else (e.g. a file picked
+        /// up from scanning the user's own Music folder), matching the IsDeletable flag
+        /// FindSounds already reports so the GUI shouldn't even offer this for those.
         /// </summary>
-        public static string[] GetImportedWAVFiles()
+        [Command("DeleteSound")]
+        public static bool DeleteSound(string soundPath)
+        {
+            if (string.IsNullOrEmpty(soundPath) || !soundPath.StartsWith("custom_sound_path/"))
+            {
+                return false;
+            }
+
+            var filePath = soundPath.Replace("custom_sound_path/", "");
+            var importedFolderFull = Path.GetFullPath(ImportedSoundFolder);
+            string fileFull;
+
+            try
+            {
+                fileFull = Path.GetFullPath(filePath);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            if (!fileFull.StartsWith(importedFolderFull, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            try
+            {
+                if (File.Exists(fileFull)) { File.Delete(fileFull); }
+
+                var trimSidecar = SilenceTrimmer.GetTrimSidecarPath(fileFull);
+                if (File.Exists(trimSidecar)) { File.Delete(trimSidecar); }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Program.Logger.Warning(ex, $"DeleteSound: failed to delete {fileFull}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns A List Of Supported-Format Sound Files In The Music Folder And The Imported-Sounds Folder
+        /// </summary>
+        public static string[] GetImportedSoundFiles()
         {
             try
             {
@@ -88,12 +171,16 @@ namespace TopNotify.GUI
 
                 if (!Directory.Exists(ImportedSoundFolder)) { Directory.CreateDirectory(ImportedSoundFolder); }
 
-                var importedFiles = Directory.GetFiles(ImportedSoundFolder, "*.wav", SearchOption.AllDirectories);
+                var importedFiles = SupportedExtensions
+                    .SelectMany(ext => Directory.GetFiles(ImportedSoundFolder, "*." + ext, SearchOption.AllDirectories))
+                    .ToArray();
 
                 // Music folder doesn't always exist https://github.com/SamsidParty/TopNotify/issues/40#issuecomment-2692353622
                 if (Directory.Exists(musicFolder))
                 {
-                    return Directory.GetFiles(musicFolder, "*.wav", SearchOption.AllDirectories).Concat(importedFiles).ToArray();
+                    var musicFiles = SupportedExtensions
+                        .SelectMany(ext => Directory.GetFiles(musicFolder, "*." + ext, SearchOption.AllDirectories));
+                    return musicFiles.Concat(importedFiles).ToArray();
                 }
 
                 return importedFiles;

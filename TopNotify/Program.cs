@@ -52,7 +52,27 @@ namespace TopNotify.Common
         {
             AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
             {
+                // Best-Effort: If This Is The Daemon Process And It's About To Die From An
+                // Unhandled Exception, Revert The Global Notification-Sound Registry Mute
+                // So The User Isn't Left With Silent Windows Notifications System-Wide.
+                // Note This Cannot Help Against A Hard Kill (taskkill /F, Task Manager "End
+                // Task", BSOD) - Those Terminate Before Any Managed Code Runs, In Any App.
+                if (Background != null)
+                {
+                    SoundInterceptor.UninstallSoundInRegistry();
+                }
+
                 NotificationTester.MessageBox("Something went wrong with TopNotify", "Unfortunately, TopNotify has crashed. Details: " + e.ExceptionObject.ToString());
+            };
+
+            AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
+            {
+                // Covers Normal/Graceful Exits (E.g. User Quits From The Tray Icon) That
+                // Don't Go Through The Unhandled-Exception Path Above.
+                if (Background != null)
+                {
+                    SoundInterceptor.UninstallSoundInRegistry();
+                }
             };
 
             //By Default, The App Will Be Launched In Daemon Mode
