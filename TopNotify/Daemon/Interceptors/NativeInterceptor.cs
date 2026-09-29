@@ -212,6 +212,23 @@ namespace TopNotify.Daemon
             {
                 SetWindowPos(hwnd, 0, originX + (RealPreferredDisplayWidth - unscaledWidth), originY + (RealPreferredDisplayHeight - unscaledHeight - (int)Math.Round(50f)), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
             }
+            else if (Settings.Location == NotifyLocation.TopMiddle)
+            {
+                SetWindowPos(hwnd, 0, originX + (RealPreferredDisplayWidth - unscaledWidth) / 2, originY + 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            }
+            else if (Settings.Location == NotifyLocation.BottomMiddle)
+            {
+                SetWindowPos(hwnd, 0, originX + (RealPreferredDisplayWidth - unscaledWidth) / 2, originY + (RealPreferredDisplayHeight - unscaledHeight - (int)Math.Round(50f)), 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            }
+            else if (Settings.Location == NotifyLocation.MiddleLeft)
+            {
+                // Centered In The Space Above The Taskbar
+                SetWindowPos(hwnd, 0, originX + 0, originY + (RealPreferredDisplayHeight - unscaledHeight - (int)Math.Round(50f)) / 2, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            }
+            else if (Settings.Location == NotifyLocation.MiddleRight)
+            {
+                SetWindowPos(hwnd, 0, originX + (RealPreferredDisplayWidth - unscaledWidth), originY + (RealPreferredDisplayHeight - unscaledHeight - (int)Math.Round(50f)) / 2, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            }
             else // Custom Position
             {
                 var xPosition = (int)(Settings.CustomPositionPercentX / 100f * RealPreferredDisplayWidth);
