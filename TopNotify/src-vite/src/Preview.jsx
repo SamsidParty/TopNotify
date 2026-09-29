@@ -1,8 +1,12 @@
 
 import { Button } from "@chakra-ui/react";
 import {
+    TbChevronsDown,
     TbChevronsDownLeft,
     TbChevronsDownRight,
+    TbChevronsLeft,
+    TbChevronsRight,
+    TbChevronsUp,
     TbChevronsUpLeft,
     TbChevronsUpRight,
     TbCurrentLocation
@@ -74,6 +78,22 @@ function CalculateNotificationWindowPreviewStyle() {
             posX = scaledMainDisplayWidth - style.width;
             posY = scaledMainDisplayHeight - style.height - (50 * containerStyle.previewScale);
         }
+        else if (window.Config.Location == 5) { // Top Middle
+            posX = (scaledMainDisplayWidth - style.width) / 2;
+            posY = 0;
+        }
+        else if (window.Config.Location == 6) { // Bottom Middle
+            posX = (scaledMainDisplayWidth - style.width) / 2;
+            posY = scaledMainDisplayHeight - style.height - (50 * containerStyle.previewScale);
+        }
+        else if (window.Config.Location == 7) { // Middle Left
+            posX = 0;
+            posY = (scaledMainDisplayHeight - style.height - (50 * containerStyle.previewScale)) / 2;
+        }
+        else if (window.Config.Location == 8) { // Middle Right
+            posX = scaledMainDisplayWidth - style.width;
+            posY = (scaledMainDisplayHeight - style.height - (50 * containerStyle.previewScale)) / 2;
+        }
         else { // Custom
             posX = window.Config.CustomPositionPercentX / 100 * scaledMainDisplayWidth;
             posY = window.Config.CustomPositionPercentY / 100 * scaledMainDisplayHeight;
@@ -111,9 +131,13 @@ export default function Preview() {
             </div>
             <div className="locationSelect">
                 <Button className="locationSelectButton" onClick={() => SetPresetPosition(0)} ><TbChevronsUpLeft/></Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(5)} ><TbChevronsUp/></Button>
                 <Button className="locationSelectButton" onClick={() => SetPresetPosition(1)} ><TbChevronsUpRight/></Button>
-                <Button className="locationSelectButton customLocationSelectButton" onClick={() => igniteView.commandBridge.EnterDragMode()}><TbCurrentLocation/></Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(7)} ><TbChevronsLeft/></Button>
+                <Button className="locationSelectButton" onClick={() => igniteView.commandBridge.EnterDragMode()}><TbCurrentLocation/></Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(8)} ><TbChevronsRight/></Button>
                 <Button className="locationSelectButton" onClick={() => SetPresetPosition(2)} ><TbChevronsDownLeft/></Button>
+                <Button className="locationSelectButton" onClick={() => SetPresetPosition(6)} ><TbChevronsDown/></Button>
                 <Button className="locationSelectButton" onClick={() => SetPresetPosition(3)} ><TbChevronsDownRight/></Button>
             </div>
             <div className="taskbarPreview" style={CalculateTaskbarPreviewStyle()}><img src="/Image/Taskbar.png"></img></div>
@@ -126,7 +150,11 @@ export default function Preview() {
 // 1 = TopRight,
 // 2 = BottomLeft,
 // 3 = BottomRight,
-// 4 = Custom
+// 4 = Custom,
+// 5 = TopMiddle,
+// 6 = BottomMiddle,
+// 7 = MiddleLeft,
+// 8 = MiddleRight
 function SetPresetPosition(position) {
     window.ChangeValue("Location", position);
 }

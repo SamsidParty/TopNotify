@@ -53,8 +53,8 @@
 .previewContainer .locationSelect {
     border-radius: 5px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
 }
 
 .previewContainer .locationSelectButton {
@@ -71,15 +71,6 @@
 .previewContainer .locationSelectButton svg {
     width: 2rem;
     height: 2rem;
-}
-
-.previewContainer .customLocationSelectButton { 
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
 .monitorSelect {
