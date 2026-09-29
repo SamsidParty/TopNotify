@@ -64,6 +64,9 @@ namespace TopNotify.Daemon
 
         #endregion
 
+        // Window Height Of A Single Standard Notification At 100% Scale
+        public const float StandardNotificationWindowHeight = 152f;
+
         public IntPtr hwnd;
         public ExtendedStyleManager ExStyleManager;
         public int ScaledPreferredDisplayWidth;
@@ -216,6 +219,13 @@ namespace TopNotify.Daemon
             {
                 var xPosition = (int)(Settings.CustomPositionPercentX / 100f * RealPreferredDisplayWidth);
                 var yPosition = (int)(Settings.CustomPositionPercentY / 100f * RealPreferredDisplayHeight);
+
+                if (Settings.CustomPositionGrowUpward)
+                {
+                    // Keep The Bottom Edge Where A Standard Size Notification Would End
+                    var bottomEdge = yPosition + (int)(StandardNotificationWindowHeight * ResolutionFinder.GetScale());
+                    yPosition = bottomEdge - unscaledHeight;
+                }
 
                 if (!Settings.EnableDebugRemoveBoundsCorrection)
                 {

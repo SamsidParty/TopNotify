@@ -3,6 +3,7 @@ import { useState } from "react";
 import {TbAlertTriangle, TbCurrencyDollar, TbInfoCircle, TbX} from "react-icons/tb";
 import ClickThrough from "./ClickThrough";
 import { DebugMenu } from "./DebugMenu";
+import GrowUpward from "./GrowUpward";
 import { useFirstRender } from "./Helper";
 import MonitorSelect from "./MonitorSelect";
 import ManageNotificationSounds from "./NotificationSounds";
@@ -85,6 +86,9 @@ function App() {
             }
 
             <Container>
+                {
+                    (Config.Location == 4) && <><GrowUpward></GrowUpward><Divider /></>
+                }
                 <ClickThrough></ClickThrough>
                 <Divider />
                 <NotificationTransparency></NotificationTransparency>

@@ -35,6 +35,10 @@ namespace TopNotify.Common
         public float CustomPositionPercentX = 0;
         public float CustomPositionPercentY = 0;
 
+        // When True, A Custom Position Keeps The Bottom Edge Of A Standard Size Notification Fixed
+        // So Taller Notifications Grow Upwards Instead Of Downwards
+        public bool CustomPositionGrowUpward = false;
+
         public string PreferredMonitor = "primary";
 
         public List<AppReference> AppReferences = new List<AppReference>();

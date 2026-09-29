@@ -129,6 +129,10 @@ namespace TopNotify.GUI
                 currentConfig.PreferredMonitor = currentMonitorInfo.DeviceName;
                 currentConfig.CustomPositionPercentX = ((float)DragRect.X - (16f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Width * 100f;
                 currentConfig.CustomPositionPercentY = ((float)DragRect.Y - (29f * ResolutionFinder.GetScale())) / (float)ResolutionFinder.GetRealResolution().Height * 100f;
+
+                // Notifications Placed In The Lower Half Grow Upwards, Away From The Taskbar
+                var notificationHeightPercent = NativeInterceptor.StandardNotificationWindowHeight * ResolutionFinder.GetScale() / (float)ResolutionFinder.GetRealResolution().Height * 100f;
+                currentConfig.CustomPositionGrowUpward = currentConfig.CustomPositionPercentY + notificationHeightPercent / 2f > 50f;
                 MainCommands.WriteConfigFile(mainWindow, JsonConvert.SerializeObject(currentConfig));
 
                 mainWindow.SendConfig();
